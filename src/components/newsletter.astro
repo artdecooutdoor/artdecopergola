@@ -44,11 +44,11 @@ const t = useTranslations(locale as Locale);
 			</form>
 
 			<!-- Success overlay (shown after submit) -->
-			<div class="newsletter__success-overlay" id="newsletterSuccess" role="status" aria-live="polite" aria-hidden="true">
+			<div class="newsletter__success-overlay" id="newsletterSuccess" role="status" aria-live="polite">
 				<div class="newsletter__success-icon" aria-hidden="true">✓</div>
 				<h3 class="newsletter__success-title">{t('newsletter.thankYouTitle')}</h3>
 				<p class="newsletter__success-msg">{t('newsletter.thankYouMessage')}</p>
-				<button type="button" class="newsletter__success-close" id="newsletterSuccessClose">Close</button>
+				<button type="button" class="newsletter__success-close" id="newsletterSuccessClose" aria-label="Close success message">Close</button>
 			</div>
 		</div>
 

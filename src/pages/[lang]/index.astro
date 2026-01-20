@@ -29,8 +29,9 @@ const t = useTranslations(locale);
 	<Loader client:load />
 
 	<!-- Desktop: Spline 3D Animation (hide on mobile) -->
+	<!-- Using client:visible for better performance - loads only when scrolled into view -->
 	<div class="desktop-hero">
-		<SplineHero client:idle />
+		<SplineHero client:visible />
 	</div>
 
 	<!-- Mobile: Text + Button + Video (hide on desktop) -->

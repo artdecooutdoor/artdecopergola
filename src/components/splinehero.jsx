@@ -1,14 +1,55 @@
+import { useState, useEffect, useRef } from 'react';
 import Spline from '@splinetool/react-spline';
 
 export default function SplineHero() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    // Intersection Observer for lazy loading
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Load Spline only when element becomes visible
+            setIsLoaded(true);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        rootMargin: '50px', // Start loading 50px before viewport
+        threshold: 0.01
+      }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <div className="spline-hero-wrapper" style={{ 
-      width: '100%', 
-      height: '1100px',
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
-      <Spline scene="https://draft.spline.design/bLAZ8OQgI4ETVhl3/scene.splinecode" />
+    <div 
+      ref={containerRef}
+      className="spline-hero-wrapper" 
+      style={{ 
+        width: '100%', 
+        height: '1100px',
+        position: 'relative',
+        overflow: 'hidden',
+        backgroundColor: '#d2f2b3'
+      }}
+    >
+      {isLoaded && (
+        <Spline scene="https://draft.spline.design/bLAZ8OQgI4ETVhl3/scene.splinecode" />
+      )}
+      
       {/* SEO H1 - hidden but indexable */}
       <h1 style={{
         position: 'absolute',
@@ -20,6 +61,7 @@ export default function SplineHero() {
       }}>
         Premium Pergolas and Outdoor Living Solutions
       </h1>
+      
       {/* Overlay to hide Spline logo */}
       <div style={{
         position: 'absolute',
@@ -31,6 +73,7 @@ export default function SplineHero() {
         zIndex: 99999,
         pointerEvents: 'none'
       }} />
+      
       <style>{`
         .spline-hero-wrapper #logo,
         .spline-hero-wrapper a[href*="spline"],

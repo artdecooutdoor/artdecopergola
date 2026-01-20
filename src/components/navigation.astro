@@ -26,7 +26,7 @@ const getLocalePath = (lang: Locale): string => {
     <div class="navbar-container">
         
         <!-- 1. Logo -->
-        <a href={getLocalizedPath('/', locale)} class="logo">
+        <a href={getLocalizedPath('/', locale)} class="logo" aria-label="ArtDeco Home">
             <svg width="174" height="43" viewBox="0 0 174 43" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M4.47328 18.8731H0.907693V15.2538H6.13122L12.4166 0.820542H13.6563L26.0147 29.056H22.2515L17.8471 18.9141H8.31128L3.89737 29.1041H0L4.47328 18.8731ZM9.73193 15.2327L13.0569 7.61647L16.3084 15.2455H9.72613L9.73193 15.2327Z" fill="#335120"/>
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M42.6231 18.6126L48.8677 29.0654H44.7098L38.5715 18.9187H32.1423V29.125H28.5428V8.72527H32.1026V15.1965H41.1348C41.6196 15.1801 42.0916 15.04 42.5064 14.7911C43.1033 14.4722 43.6512 14.0691 44.1326 13.5948C44.4493 13.2582 44.7284 12.8903 44.9668 12.4942C45.2226 11.979 45.4119 11.4345 45.5322 10.8715C45.6409 10.2453 45.6491 9.60617 45.5568 8.97763C45.4855 8.48693 45.3348 8.01025 45.1105 7.56753C44.8103 6.92022 44.3897 6.33723 43.8698 5.84769C43.4118 5.37576 42.8767 4.98556 42.289 4.69112C41.9794 4.53693 41.6407 4.45162 41.2948 4.4434H28.5497V0.803029H41.2224C42.5554 0.912813 43.8475 1.32527 44.9983 2.00875C45.9424 2.68981 46.7893 3.49827 47.5126 4.40955C48.2111 5.32557 48.7018 6.38164 48.9519 7.50552C49.1785 8.67391 49.2334 9.87025 49.1131 11.0549C49.0056 12.1122 48.6715 13.1333 48.1352 14.0504C47.6749 14.8378 47.1399 15.5797 46.5393 16.2655C45.5124 17.4385 44.142 18.2598 42.6231 18.6126Z" fill="#335120"/>
@@ -92,8 +92,8 @@ const getLocalePath = (lang: Locale): string => {
         <div class="mobile-actions">
             <!-- Mobile Language (Globe Icon) -->
             <div class="mobile-lang-wrapper">
-                <button class="mobile-lang-toggle" id="mobileLangToggle">
-                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                <button class="mobile-lang-toggle" id="mobileLangToggle" aria-label="Change language">
+                     <svg width="22" height="22" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                 </button>
                 <div class="mobile-lang-dropdown" id="mobileLangDropdown">
                     <a href={getLocalePath('az')} class={locale === 'az' ? 'mobile-lang-opt active' : 'mobile-lang-opt'}>AZ</a>
@@ -103,8 +103,8 @@ const getLocalePath = (lang: Locale): string => {
             </div>
 
             <!-- Burger Menu -->
-            <button class="burger" id="burgerBtn">
-                <svg class="icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            <button class="burger" id="burgerBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileDrawer">
+                <svg class="icon-menu" width="24" height="24" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                 <svg class="icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
         </div>
@@ -211,9 +211,14 @@ const getLocalePath = (lang: Locale): string => {
         if (mobileDrawer && burgerBtn && mobileLangDropdown && mobileLangToggle) {
             mobileDrawer.classList.add('open');
             burgerBtn.classList.add('active');
+            burgerBtn.setAttribute('aria-expanded', 'true');
             // Close lang dropdown to avoid clutter
             mobileLangDropdown.classList.remove('open');
             mobileLangToggle.classList.remove('active');
+            // Block body scroll
+            document.body.style.overflow = 'hidden';
+            // Add click outside listener
+            document.addEventListener('click', handleClickOutside);
         }
     }
 
@@ -221,6 +226,20 @@ const getLocalePath = (lang: Locale): string => {
         if (mobileDrawer && burgerBtn) {
             mobileDrawer.classList.remove('open');
             burgerBtn.classList.remove('active');
+            burgerBtn.setAttribute('aria-expanded', 'false');
+            // Restore body scroll
+            document.body.style.overflow = '';
+            // Remove click outside listener
+            document.removeEventListener('click', handleClickOutside);
+        }
+    }
+
+    function handleClickOutside(e: MouseEvent) {
+        const mobileDrawer = document.getElementById('mobileDrawer');
+        const burgerBtn = document.querySelector('.burger-btn');
+        
+        if (mobileDrawer && burgerBtn && !mobileDrawer.contains(e.target as Node) && !burgerBtn.contains(e.target as Node)) {
+            closeMobileMenu();
         }
     }
 

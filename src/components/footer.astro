@@ -112,11 +112,11 @@ const t = useTranslations(locale as Locale);
                 </div>
 
                 <!-- Success overlay for footer form -->
-                <div class="footer__success-overlay" id="footerSuccess" role="status" aria-live="polite" aria-hidden="true">
+                <div class="footer__success-overlay" id="footerSuccess" role="status" aria-live="polite">
                     <div class="footer__success-icon" aria-hidden="true">✓</div>
                     <h3 class="footer__success-title">{t('footer.thankYouTitle')}</h3>
                     <p class="footer__success-msg">{t('footer.thankYouMessage')}</p>
-                    <button type="button" class="footer__success-close" id="footerSuccessClose">{t('common.close')}</button>
+                    <button type="button" class="footer__success-close" id="footerSuccessClose" aria-label="Close success message">{t('common.close')}</button>
                 </div>
             </form>
         </div>

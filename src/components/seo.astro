@@ -69,9 +69,52 @@ const alternateUrls = {
 <meta name="apple-mobile-web-app-title" content="ArtDeco" />
 <link rel="manifest" href="/site.webmanifest" />
 
+<!-- Preconnect to critical third-party origins -->
+<link rel="preconnect" href="https://draft.spline.design" crossorigin />
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin />
+<link rel="dns-prefetch" href="https://unpkg.com" />
+
 <!-- Fonts -->
 <link rel="preload" href="/fonts/Montserrat/montserrat-regular.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/fonts/Montserrat/montserrat-600.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/fonts/Montserrat/montserrat-700.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/fonts/Montserrat/montserrat-800.woff2" as="font" type="font/woff2" crossorigin />
 
+<!-- Async load non-critical CSS to prevent render blocking -->
+<script>
+  // Load non-critical CSS asynchronously after DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadNonCriticalCSS);
+  } else {
+    loadNonCriticalCSS();
+  }
+  
+  function loadNonCriticalCSS() {
+    // Get all stylesheet links that might be render-blocking
+    const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+    
+    stylesheets.forEach(link => {
+      // Defer non-critical CSS (page-specific styles)
+      if (link.href.includes('about.') || 
+          link.href.includes('contact.') ||
+          link.href.includes('products.') ||
+          link.href.includes('projects.') ||
+          link.href.includes('dealer.') ||
+          link.href.includes('privacy.')) {
+        
+        // Use media="print" initially, then switch to "all" after load
+        const originalMedia = link.media || 'all';
+        link.media = 'print';
+        
+        link.onload = () => {
+          link.media = originalMedia;
+        };
+        
+        // Fallback if onload doesn't fire
+        setTimeout(() => {
+          link.media = originalMedia;
+        }, 100);
+      }
+    });
+  }
+</script>

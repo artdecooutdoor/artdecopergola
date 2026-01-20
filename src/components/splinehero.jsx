@@ -4,7 +4,9 @@ import Spline from '@splinetool/react-spline';
 export default function SplineHero() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
   const containerRef = useRef(null);
+  const idleCallbackRef = useRef(null);
 
   useEffect(() => {
     // Notify loader that Spline is ready
@@ -34,6 +36,22 @@ export default function SplineHero() {
             // Only load when visible AND has dimensions
             setIsReady(true);
             setIsLoaded(true);
+            
+            // Use requestIdleCallback to defer Spline rendering to avoid blocking main thread
+            if ('requestIdleCallback' in window) {
+              idleCallbackRef.current = requestIdleCallback(
+                () => {
+                  setShouldRender(true);
+                },
+                { timeout: 2000 } // Fallback after 2s
+              );
+            } else {
+              // Fallback for browsers without requestIdleCallback
+              setTimeout(() => {
+                setShouldRender(true);
+              }, 500);
+            }
+            
             observer.unobserve(entry.target);
           }
         });
@@ -65,6 +83,9 @@ export default function SplineHero() {
       if (containerRef.current) {
         observer.unobserve(containerRef.current);
       }
+      if (idleCallbackRef.current && 'cancelIdleCallback' in window) {
+        cancelIdleCallback(idleCallbackRef.current);
+      }
     };
   }, [isReady]);
 
@@ -86,7 +107,7 @@ export default function SplineHero() {
         backgroundColor: '#d2f2b3'
       }}
     >
-      {isReady && isLoaded && (
+      {isReady && isLoaded && shouldRender && (
         <Spline 
           scene="https://draft.spline.design/bLAZ8OQgI4ETVhl3/scene.splinecode" 
           onLoad={handleSplineLoad}

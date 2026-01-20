@@ -1,0 +1,172 @@
+---
+import Layout from '../../layouts/layout.astro';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../../i18n';
+import '../../styles/pages/contact.css';
+
+export async function getStaticPaths() {
+	return [
+		{ params: { lang: 'en' } },
+		{ params: { lang: 'ru' } },
+		{ params: { lang: 'az' } },
+	];
+}
+
+const locale = getLangFromUrl(Astro.url);
+const t = useTranslations(locale);
+---
+
+<Layout 
+	title={t('contact.title')}
+	description={t('contact.subtitle')}
+>	
+	<!-- Showrooms & Offices Section -->
+	<div class="master-container">
+		<header class="page-header">
+			<span class="pre-title">{t('contact.globalNetwork')}</span>
+			<h1 class="main-title">{t('contact.showroomsTitle')}</h1>
+		</header>
+
+		<div class="nav-tabs-container">
+			<nav class="nav-tabs" id="navTabs">
+			<button class="nav-tab active" data-city="baku">{t('contact.cityBaku')}</button>
+			<button class="nav-tab" data-city="washington">{t('contact.cityWashington')}</button>
+			<button class="nav-tab" data-city="toronto">{t('contact.cityToronto')}</button>
+			<button class="nav-tab" data-city="ankara">{t('contact.cityAnkara')}</button>
+			</nav>
+		</div>
+
+		<section class="showroom-card" id="card">
+			<!-- Success Modal -->
+			<div class="success-overlay" id="successOverlay" role="status" aria-live="polite">
+			<div class="success-icon-wrap">
+				<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+			</div>
+			<h2 style="font-weight: 900; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;">{t('contact.messageSent')}</h2>
+			<p style="opacity: 0.6; max-width: 300px; font-size: 15px; line-height: 1.6;" id="successMessage"></p>
+			<button id="closeSuccessBtn" onclick="closeSuccess()" class="submit-btn" style="width: auto; padding: 16px 45px; margin-top: 30px;">{t('contact.close')}</button>
+			</div>
+
+			<!-- Left: Visual Side -->
+			<section class="pane-visual" id="paneVisual">
+			<img id="cityImg" class="city-bg" src="https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=1600&auto=format&fit=crop" alt="Baku">
+			
+			<div class="visual-content">
+				<span class="city-label">{t('contact.globalFlagship')}</span>
+				<h2 class="city-name" id="dispCity">{t('contact.bakuOffice')}</h2>
+				
+				<div class="info-row">
+				<span class="row-label">{t('contact.addressLabel')}</span>
+				<p class="row-value" id="dispAddr" set:html={t('contact.bakuAddress')}></p>
+				</div>
+
+				<div class="info-row">
+				<span class="row-label">{t('contact.workingHoursLabel')}</span>
+				<p class="row-value" id="dispHours" set:html={t('contact.workingHours')}></p>
+				</div>
+
+				<div class="info-row">
+				<span class="row-label">{t('contact.directContactLabel')}</span>
+				<p class="row-value" style="font-weight: 800; font-size: 1.2em;" id="dispPhone">{t('contact.bakuPhone')}</p>
+				<p class="row-value" style="opacity: 0.7; font-size: 0.9em;" id="dispEmail">{t('contact.emailAddress')}</p>
+				</div>
+			</div>
+			</section>
+
+			<!-- Right: Form Side -->
+			<section class="pane-form">
+			<div class="form-header">
+				<h3>{t('contact.quickInquiry')}</h3>
+				<p>{t('contact.inquirySubtitle')}</p>
+			</div>
+
+			<form id="contactForm">
+				<div class="form-grid">
+				<div class="field">
+					<span class="field-label">{t('contact.firstName')}</span>
+					<input type="text" name="firstName" id="fname" class="input-box" placeholder={t('contact.firstName')} required>
+				</div>
+				
+				<div class="field">
+					<span class="field-label">{t('contact.lastName')}</span>
+					<input type="text" name="lastName" id="lname" class="input-box" placeholder={t('contact.lastName')} required>
+				</div>
+
+				<div class="field full">
+					<span class="field-label">{t('contact.contactPhone')}</span>
+					<input type="tel" name="phone" id="phone" class="input-box" placeholder={t('contact.phonePlaceholder')} required>
+				</div>
+
+				<div class="field full">
+					<span class="field-label">{t('contact.email')}</span>
+					<input type="email" name="email" id="email" class="input-box" placeholder={t('contact.emailPlaceholder')} required>
+				</div>
+
+				<div class="field full">
+					<span class="field-label">{t('contact.message')}</span>
+					<textarea name="message" id="message" class="input-box" style="min-height: 100px; resize: none; border-radius: 20px;" placeholder={t('contact.messagePlaceholder')} required></textarea>
+				</div>
+
+				<div class="field full" style="display: none;">
+					<input type="hidden" name="city" id="cityHidden" value="baku">
+				</div>
+				</div>
+
+				<button type="submit" class="submit-btn">
+				{t('contact.sendMessage')}
+				<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+				</button>
+			</form>
+			</section>
+
+		<script src="/scripts/contact.js" defer></script>
+	</section>
+	</div>
+
+	<!-- Pass translations to JavaScript -->
+	<script define:vars={{ 
+		translations: {
+			baku: {
+				office: t('contact.bakuOffice'),
+				flagship: t('contact.globalFlagship'),
+				address: t('contact.bakuAddress'),
+				hours: t('contact.workingHours'),
+				phone: t('contact.bakuPhone'),
+				email: t('contact.emailAddress'),
+				cityName: t('contact.cityBaku'),
+				image: '/images/backgrounds/baku.webp'
+			},
+			washington: {
+				office: t('contact.washingtonOffice'),
+				flagship: t('contact.globalFlagship'),
+				address: t('contact.washingtonAddress'),
+				hours: t('contact.workingHours'),
+				phone: t('contact.washingtonPhone'),
+				email: t('contact.emailAddress'),
+				cityName: t('contact.cityWashington'),
+				image: '/images/backgrounds/washington.webp'
+			},
+			toronto: {
+				office: t('contact.torontoOffice'),
+				flagship: t('contact.globalFlagship'),
+				address: t('contact.torontoAddress'),
+				hours: t('contact.workingHours'),
+				phone: t('contact.torontoPhone'),
+				email: t('contact.emailAddress'),
+				cityName: t('contact.cityToronto'),
+				image: '/images/backgrounds/toronto.webp'
+			},
+			ankara: {
+				office: t('contact.ankaraOffice'),
+				flagship: t('contact.globalFlagship'),
+				address: t('contact.ankaraAddress'),
+				hours: t('contact.workingHours'),
+				phone: t('contact.ankaraPhone'),
+				email: t('contact.emailAddress'),
+				cityName: t('contact.cityAnkara'),
+				image: '/images/backgrounds/ankara.webp'
+			},
+			successMessage: t('contact.successMessage')
+		}
+	}}>
+		window.contactTranslations = translations;
+	</script>

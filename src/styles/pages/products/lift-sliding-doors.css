@@ -1,0 +1,340 @@
+/* Lift & Sliding Doors Product Page Styles */
+
+:root {
+    --bg-color: #E8F0E6;
+    --accent-green: #2F4F2F;
+    --text-main: #3A403A;
+    --white: #ffffff;
+    --font-main: 'Montserrat', sans-serif;
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    --section-text-muted: #E8EDE8;
+    --duration-slow: 0.8s;
+    --duration-slower: 1.2s;
+    --duration-slowest: 2s;
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --fw-light: 300;
+    --fw-bold: 600;
+    --fw-extra-bold: 700;
+}
+
+/* --- LAYOUT UTILITIES --- */
+.pergola-section {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Content wrapper with max-width */
+.section-content {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+}
+
+/* Color variants for different sections */
+.pergola-section.mechanical-section {
+    background-color: #1f2d14;
+    background-image: 
+    radial-gradient(at 0% 100%, #7E9854 0px, transparent 65%),
+    radial-gradient(at 100% 0%, #7E9854 0px, transparent 65%);
+    background-attachment: fixed;
+}
+
+.pergola-section .col {
+    flex: 1;
+    display: block;
+    min-width: 0;
+    position: relative;
+}
+
+/* Text columns inherit background from parent section */
+.pergola-section .col-text {
+    padding: 6rem 4rem;
+    z-index: 2;
+    background: none;
+    color: var(--white);
+}
+
+/* --- IMAGE COLUMN --- */
+.pergola-section .col-image {
+    position: relative;
+    background: none;
+    min-height: 50vh;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Image Container with rounded corners */
+.pergola-section .image-container {
+    position: relative;
+    width: 90%;
+    max-width: 700px;
+    aspect-ratio: 1 / 1;
+    background:#c4d5a5;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: transform var(--duration-slow) var(--ease-smooth), 
+                box-shadow var(--duration-slow) var(--ease-smooth);
+}
+
+.pergola-section .image-container:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 60px 100px rgba(0, 0, 0, 0.4);
+}
+
+.pergola-section .bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--duration-slowest) var(--ease-out-expo);
+}
+
+
+
+.pergola-section .col-text.padding-left {
+    padding-left: max(4rem, calc((100vw - 1440px) / 2));
+}
+
+/* --- 3. LOGO --- */
+.logo-products {
+    max-height: 100px;
+    display: flex;
+    padding-bottom: 40px;
+    user-select: none;
+    cursor: pointer;
+    transition: transform 0.3s var(--ease-elastic);
+    text-decoration: none;
+    flex-shrink: 0;
+    min-width: fit-content;
+}
+
+.pergola-section .col-text a.logo-products,
+.pergola-section .col-text a.siegenia-logo,
+.pergola-section .col-text a.cuhadaroglu-logo {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.logo-products:hover { transform: scale(1.05); }
+
+/* Button centering on mobile */
+.pergola-section .col-text .cta-button {
+    margin: 0 auto;
+    width: fit-content;
+}
+
+/* --- TYPOGRAPHY STYLES --- */
+.pergola-section h3.item-title {
+    font-size: 1.5rem;
+    font-weight: var(--fw-bold);
+    margin: 0 0 0.5rem 0;
+    text-transform: uppercase;
+    color: var(--white);
+}
+
+.pergola-section p.item-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--section-text-muted);
+    margin: 0;
+    font-weight: var(--fw-light);
+}
+
+.pergola-section .item-block {
+    margin-bottom: 1.5rem;
+}
+
+/* --- ANIMATIONS & KEYFRAMES --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Utility Animation Classes */
+.pergola-section .anim-fade-up {
+    opacity: 0;
+    animation: fadeInUp var(--duration-slow) var(--ease-smooth) forwards;
+}
+
+.pergola-section .anim-fade-in {
+    opacity: 0;
+    animation: fadeIn var(--duration-slower) var(--ease-out-expo) forwards;
+}
+
+.pergola-section .anim-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Stagger Delays */
+.pergola-section .delay-100 { animation-delay: 0.1s; }
+.pergola-section .delay-200 { animation-delay: 0.2s; }
+.pergola-section .delay-300 { animation-delay: 0.3s; }
+.pergola-section .delay-400 { animation-delay: 0.4s; }
+
+.pergola-section .delay-card-1 { animation-delay: 0s; }
+.pergola-section .delay-card-2 { animation-delay: 1.5s; }
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+
+/* iPad landscape and tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .pergola-section .image-container {
+        max-width: 600px !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .pergola-section {
+        flex-direction: column;
+        height: auto;
+        min-height: auto;
+    }
+
+    .section-content {
+        max-width: 1440px;
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding: 4rem 0;
+    }
+
+    .pergola-section.reverse-mobile {
+        flex-direction: column-reverse;
+    }
+
+    .pergola-section .col-image {
+        min-height: auto;
+        width: 100%;
+        padding: 2rem;
+    }
+
+    .pergola-section .image-container {
+        max-width: 90%;
+        margin: 0 auto;
+    }
+
+    .pergola-section .col-text {
+        padding: 4rem 2rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pergola-section .col-text > * {
+        max-width: 100%;
+    }
+
+    .pergola-section h1.main-title {
+        font-size: 3rem;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .section-content {
+        padding: 2rem 0;
+    }
+
+    .pergola-section .col-text {
+        text-align: center;
+        padding: 2rem 3rem;
+        align-items: center;
+    }
+
+    .pergola-section .col-image {
+        padding: 1.5rem;
+    }
+
+    .pergola-section .image-container {
+        max-width: 100%;
+    }
+
+    .pergola-section h1.main-title {
+        font-size: 2rem;
+    }
+
+    .pergola-section h3.item-title {
+        font-size: 1.2rem;
+    }
+
+    .pergola-section p.item-text {
+        font-size: 0.9rem;
+    }
+    .pergola-section .col-text a.cuhadaroglu-logo {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-content {
+        padding: 2rem 0;
+    }
+
+    .pergola-section .col-text {
+        padding: 2rem 3rem;
+        text-align: center;
+        align-items: center;
+    }
+
+    .pergola-section .col-image {
+        padding: 1rem;
+    }
+
+    .pergola-section .image-container {
+        max-width: 100%;
+    }
+
+    .pergola-section h1.main-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .pergola-section h3.item-title {
+        font-size: 1rem;
+    }
+
+    .pergola-section p.item-text {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+
+    .pergola-section .item-block {
+        margin-bottom: 1.5rem;
+    }
+    .pergola-section .col-text a.cuhadaroglu-logo {
+        justify-content: center;
+    }
+}
+
+/* CTA Button */
+/* CTA Button - imported from src/styles/components/button.css */

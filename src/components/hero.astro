@@ -1,0 +1,76 @@
+---
+/**
+ * Reusable Hero Component
+ * Displays a full-screen hero section with customizable text, image, and button
+ * Uses Button component for consistent styling
+ */
+
+import Button from "./button.astro";
+import "../styles/components/hero.css";
+
+interface Props {
+  title: string;
+  description: string | string[];
+  image: string;
+  imageAlt: string;
+  buttonText?: string;
+  buttonHref?: string;
+  buttonVariant?: "premium" | "cta" | "standard" | "hero" | "read-more";
+}
+
+const {
+  title,
+  description,
+  image,
+  imageAlt,
+  buttonText = "Order Now",
+  buttonHref = "#",
+  buttonVariant = "premium",
+} = Astro.props;
+
+// Handle both string and array descriptions
+// @ts-ignore
+const descriptionArray = Array.isArray(description)
+  ? description
+  : [description];
+---
+
+<section class="hero-view">
+  <div class="hero-container">
+    <div class="hero-grid">
+      <!-- Text Content Side -->
+      <div class="hero-content" id="heroContent">
+        <h1 class="hero-title" set:html={title} />
+        <div class="hero-description">
+          {descriptionArray.map((text) => <p set:html={text} />)}
+        </div>
+        <Button
+          variant={buttonVariant}
+          text={buttonText}
+          href={buttonHref}
+          icon={buttonVariant === "premium"}
+        />
+      </div>
+
+      <!-- Image Side -->
+      <div class="hero-image-wrap" id="heroImage">
+        <img src={image} alt={imageAlt} class="hero-main-img" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // @ts-nocheck
+  document.addEventListener("DOMContentLoaded", () => {
+    const content = document.getElementById("heroContent");
+    const image = document.getElementById("heroImage");
+
+    const reveal = () => {
+      if (content) content.classList.add("is-visible");
+      if (image) image.classList.add("is-visible");
+    };
+
+    setTimeout(reveal, 100);
+  });
+</script>

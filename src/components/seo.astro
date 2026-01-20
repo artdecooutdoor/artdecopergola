@@ -1,0 +1,72 @@
+---
+// SEO Component for meta tags
+import { SITE } from '../config/site';
+import type { SeoData } from '../types';
+
+interface Props extends Partial<SeoData> {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  locale?: 'en' | 'ru' | 'az';
+  type?: 'website' | 'article';
+}
+
+const {
+  title = SITE.name,
+  description = SITE.description,
+  image = '/images/og-image.jpg',
+  canonical,
+  locale = 'en',
+  type = 'website',
+} = Astro.props;
+
+const canonicalURL = canonical || new URL(Astro.url.pathname, SITE.url);
+const imageURL = new URL(image, SITE.url);
+const fullTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
+
+// Alternate language URLs
+const alternateUrls = {
+  en: new URL(Astro.url.pathname.replace(/^\/(ru|az)/, ''), SITE.url),
+  ru: new URL(`/ru${Astro.url.pathname.replace(/^\/(ru|az)/, '')}`, SITE.url),
+  az: new URL(`/az${Astro.url.pathname.replace(/^\/(ru|az)/, '')}`, SITE.url),
+};
+---
+
+<!-- Primary Meta Tags -->
+<title>{fullTitle}</title>
+<meta name="title" content={fullTitle} />
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageURL} />
+<meta property="og:locale" content={locale} />
+<meta property="og:site_name" content={SITE.name} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={fullTitle} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={imageURL} />
+
+<!-- Alternate Languages -->
+<link rel="alternate" hreflang="en" href={alternateUrls.en} />
+<link rel="alternate" hreflang="ru" href={alternateUrls.ru} />
+<link rel="alternate" hreflang="az" href={alternateUrls.az} />
+<link rel="alternate" hreflang="x-default" href={alternateUrls.en} />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<!-- Fonts -->
+<link rel="preload" href="/fonts/Montserrat/montserrat-regular.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/Montserrat/montserrat-600.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/Montserrat/montserrat-700.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/Montserrat/montserrat-800.woff2" as="font" type="font/woff2" crossorigin />
+

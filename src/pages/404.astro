@@ -1,0 +1,65 @@
+---
+// 404 Not Found Page
+import Layout from '../layouts/layout.astro';
+import { getLangFromUrl, useTranslations } from '../i18n';
+
+const locale = getLangFromUrl(Astro.url);
+const t = useTranslations(locale);
+---
+
+<Layout 
+  title="404 - Page Not Found"
+  description="The page you're looking for doesn't exist"
+>
+
+  <section class="error-page">
+    <div class="container">
+      <div class="error-content">
+        <h1 class="error-title">404</h1>
+        <h2 class="error-subtitle">{t('common.notFound')}</h2>
+        <p class="error-description">
+          The page you're looking for doesn't exist or has been moved.
+        </p>
+        <a href="/" class="btn btn-primary btn-lg">
+          {t('common.goHome')}
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .error-page {
+    min-height: calc(100vh - var(--header-height));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-3xl) var(--spacing-xl);
+  }
+
+  .error-content {
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .error-title {
+    font-size: clamp(4rem, 10vw, 8rem);
+    color: var(--green-700);
+    margin-bottom: var(--spacing-md);
+    line-height: 1;
+  }
+
+  .error-subtitle {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--green-500);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .error-description {
+    font-size: 1.125rem;
+    color: var(--black);
+    opacity: 0.8;
+    margin-bottom: var(--spacing-3xl);
+  }
+</style>
+

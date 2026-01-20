@@ -1,0 +1,167 @@
+---
+import '../styles/components/ourproducts.css';
+import { useTranslations, getLocalizedPath } from '../i18n';
+import type { Locale } from '../types';
+
+interface Props {
+  locale?: string;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale as Locale);
+---
+
+<section class="products-section">
+	<div class="products-section__container">
+		
+		<!-- Header -->
+		<header class="products-header u-reveal">
+			<h2 class="products-header__title">{t('products.title')}</h2>
+		</header>
+
+		<!-- Grid -->
+		<div class="products-section__grid">
+			
+			<!-- Card 1 -->
+			<a href={getLocalizedPath('/products/retractable-louvered-roof', locale)} class="product-card u-reveal u-delay-100">
+				<div class="product-card__glow"></div>
+				<div class="product-card__image-wrapper">
+					<img src="/images/products/retractable-louvered-roof-mini.webp" 
+						alt="Luxury Retractable Louvered Roof" 
+						class="product-card__image"
+						loading="lazy">
+				</div>
+				<div class="product-card__label">
+					<span class="product-card__text">{t('home.products.retractableLouveredRoofs')}</span>
+					<svg class="product-card__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+						<path d="M5 12H19M19 12L12 5M19 12L12 19" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</div>
+			</a>
+
+			<!-- Card 2 -->
+			<a href={getLocalizedPath('/products/retractable-pergola-roof', locale)} class="product-card u-reveal u-delay-200">
+				<div class="product-card__glow"></div>
+				<div class="product-card__image-wrapper">
+					<img src="/images/products/retractable-pergola-roofs-mini.webp"  
+						alt="Modern Pergola Systems" 
+						class="product-card__image"
+						loading="lazy">
+				</div>
+				<div class="product-card__label">
+					<span class="product-card__text">{t('home.products.pergolaSystems')}</span>
+					<svg class="product-card__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+						<path d="M5 12H19M19 12L12 5M19 12L12 19" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</div>
+			</a>
+
+			<!-- Card 3 -->
+			<a href={getLocalizedPath('/products/sun-room-systems', locale)} class="product-card u-reveal u-delay-300">
+				<div class="product-card__glow"></div>
+				<div class="product-card__image-wrapper">
+					<img src="/images/products/sun-room-systems-mini.webp"  
+						alt="Premium Sun Room Systems" 
+						class="product-card__image"
+						loading="lazy">
+				</div>
+				<div class="product-card__label">
+					<span class="product-card__text">{t('home.products.sunRoomSystems')}</span>
+					<svg class="product-card__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+						<path d="M5 12H19M19 12L12 5M19 12L12 19" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</div>
+			</a>
+
+			<!-- Card 4 -->
+			<a href={getLocalizedPath('/products/lift-sliding-doors', locale)} class="product-card u-reveal u-delay-100">
+				<div class="product-card__glow"></div>
+				<div class="product-card__image-wrapper">
+					<img src="/images/products/lift-sliding-doors-mini.webp"  
+						alt="Architectural Lift-Sliding Door" 
+						class="product-card__image"
+						loading="lazy">
+				</div>
+				<div class="product-card__label">
+					<span class="product-card__text">{t('home.products.liftSlidingDoor')}</span>
+					<svg class="product-card__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+						<path d="M5 12H19M19 12L12 5M19 12L12 19" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</div>
+			</a>
+
+			<!-- Card 5 -->
+			<a href={getLocalizedPath('/products/vertiglass-window', locale)} class="product-card u-reveal u-delay-200">
+				<div class="product-card__glow"></div>
+				<div class="product-card__image-wrapper">
+					<img src="/images/products/vertiglass-window-mini.webp"  
+						alt="Automatic VertiGlass Window" 
+						class="product-card__image"
+						loading="lazy">
+				</div>
+				<div class="product-card__label">
+					<span class="product-card__text">{t('home.products.vertiglassWindow')}</span>
+					<svg class="product-card__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+						<path d="M5 12H19M19 12L12 5M19 12L12 19" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</div>
+			</a>
+
+			<!-- Card 6 -->
+			<a href={getLocalizedPath('/products/sliding-glass-doors', locale)} class="product-card u-reveal u-delay-300">
+				<div class="product-card__glow"></div>
+				<div class="product-card__image-wrapper">
+					<img src="/images/products/sliding-glass-doors-mini.webp"  
+						alt="Frameless Sliding Glass Doors" 
+						class="product-card__image"
+						loading="lazy">
+				</div>
+				<div class="product-card__label">
+					<span class="product-card__text">{t('home.products.slidingGlassDoors')}</span>
+					<svg class="product-card__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+						<path d="M5 12H19M19 12L12 5M19 12L12 19" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</div>
+			</a>
+
+		</div>
+	</div>
+</section>
+
+<script>
+	// @ts-nocheck
+	// Optimized Products Section Script
+	
+	const initProductsReveal = () => {
+		const revealElements = document.querySelectorAll('.products-section .u-reveal');
+		if (revealElements.length === 0) return;
+		
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						requestAnimationFrame(() => {
+							entry.target.classList.add('is-active');
+						});
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{
+				root: null,
+				threshold: 0.15,
+				rootMargin: '0px 0px -80px 0px'
+			}
+		);
+		
+		revealElements.forEach((el) => observer.observe(el));
+	};
+
+	// Run on DOMContentLoaded or immediately if already loaded
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initProductsReveal);
+	} else {
+		initProductsReveal();
+	}
+</script>
+

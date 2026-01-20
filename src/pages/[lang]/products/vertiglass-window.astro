@@ -1,0 +1,219 @@
+---
+import Layout from '../../../layouts/layout.astro';
+import { getLangFromUrl, useTranslations } from '../../../i18n/index';
+import Hero from '../../../components/hero.astro';
+import TechnicalInformation from '../../../components/technical-information.astro';
+import Button from '../../../components/button.astro';
+import SafetyStrength from '../../../components/safety-strength.astro';
+import ColorOptions from '../../../components/coloroptions.astro';
+import Somfy from '../../../components/somfy.astro';
+import '../../../styles/pages/products/vertiglass-window.css';
+import '../../../styles/components/technical-information.css';
+
+// @ts-ignore
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'ru' } },
+    { params: { lang: 'az' } },
+  ];
+}
+
+// @ts-ignore
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Technical Information Component Data
+const technicalData = {
+  title: t('vertiglassWindow.technicalTitle'),
+  description: t('vertiglassWindow.technicalDesc'),
+  diagramUrl: "/images/products/vertiglass-window/RAL9016.webp",
+  features: [
+    { 
+      title: t('vertiglassWindow.doubleGlassTitle'), 
+      desc: t('vertiglassWindow.doubleGlassDesc')
+    },
+    { 
+      title: t('vertiglassWindow.remoteControlTitle'), 
+      desc: t('vertiglassWindow.remoteControlDesc')
+    },
+    { 
+      title: t('vertiglassWindow.movementOptionTitle'), 
+      desc: t('vertiglassWindow.movementOptionDesc')
+    }
+  ],
+  components: [
+    { id: 1, name: "Interpane brush", img: "/images/products/vertiglass-window/details/interpane-brush.webp", x: 14, y: 32 },
+    { id: 2, name: "Drip edge", img: "/images/products/vertiglass-window/details/drip-edge.webp", x: 50, y: 36 },
+    { id: 3, name: "Top brush", img: "/images/products/vertiglass-window/details/top-brush.webp", x: 14, y: 72 },
+  ]
+};
+
+// Color Options Images Map
+const colorImagesMap = {
+  '9016': '/images/products/vertiglass-window/RAL9016.webp',
+  '1013': '/images/products/vertiglass-window/RAL1013.webp',
+  '8014': '/images/products/vertiglass-window/RAL8014.webp',
+  '8019': '/images/products/vertiglass-window/RAL8019.webp',
+  '9005': '/images/products/vertiglass-window/RAL9005.webp',
+  '7016': '/images/products/vertiglass-window/RAL7016.webp'
+};
+---
+
+<Layout title={t('vertiglassWindow.heroTitle')}>
+	<main>
+		<!-- HERO SECTION -->
+		<Hero 
+			title={t('vertiglassWindow.heroTitle')}
+			description={[
+				t('vertiglassWindow.heroDesc1'),
+				t('vertiglassWindow.heroDesc2'),
+				t('vertiglassWindow.heroDesc3')
+			]}
+			image="/images/products/vertiglass-window.webp"
+			imageAlt="VertiGlass Window System showcase"
+			buttonText={t('vertiglassWindow.orderNow')}
+			buttonHref={`/${lang}/contact`}
+			buttonVariant="premium"
+		/>
+
+		<!-- Technical Information Component -->
+		<TechnicalInformation 
+			title={technicalData.title}
+			description={technicalData.description}
+			diagramUrl={technicalData.diagramUrl}
+			features={technicalData.features}
+			components={technicalData.components}
+		/>
+
+		<!-- SECTION 2: MECHANICAL DATA (DUPLICATE) -->
+		<section class="pergola-section mechanical-section">
+			<div class="mechanical-container">
+				<div class="col col-image">
+					<div class="image-frame">
+						<img src="/images/products/vertiglass-window/details/benefits-vertiglass-window.webp" alt="Window mechanisms detail">
+					</div>
+				</div>
+
+				<div class="col col-text">
+					<div class="content-wrapper">
+						<h1 class="main-title anim-fade-up" set:html={t('vertiglassWindow.benefitsTitle')}></h1>
+
+						<div class="item-block anim-fade-up delay-100">
+							<h3 class="item-title">{t('vertiglassWindow.spaceEfficiencyTitle')}</h3>
+							<p class="item-text">
+								{t('vertiglassWindow.spaceEfficiencyDesc')}
+							</p>
+						</div>
+
+						<div class="item-block anim-fade-up delay-200">
+							<h3 class="item-title">{t('vertiglassWindow.ventilationTitle')}</h3>
+							<p class="item-text">
+								{t('vertiglassWindow.ventilationDesc')}
+							</p>
+						</div>
+
+						<div class="item-block anim-fade-up delay-300">
+							<h3 class="item-title">{t('vertiglassWindow.aestheticsTitle')}</h3>
+							<p class="item-text">
+								{t('vertiglassWindow.aestheticsDesc')}
+							</p>
+						</div>
+
+						<div class="item-block anim-fade-up delay-300">
+							<h3 class="item-title">{t('vertiglassWindow.viewsTitle')}</h3>
+							<p class="item-text">
+								{t('vertiglassWindow.viewsDesc')}
+							</p>
+						</div>
+
+						<div class="item-block anim-fade-up delay-300">
+							<h3 class="item-title">{t('vertiglassWindow.lockingSystemsTitle')}</h3>
+							<p class="item-text">
+								{t('vertiglassWindow.lockingSystemsDesc')}
+							</p>
+						</div>
+
+						<Button variant="cta" text={t('vertiglassWindow.orderNow')} href="#" onclick="event.preventDefault(); document.querySelector('footer').scrollIntoView({behavior: 'smooth', block: 'start'});" />
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<SafetyStrength image="/images/products/vertiglass-window/details/glass-options-one.webp" imageAlt="VertiGlass Glass Options" />
+
+		<!-- CHOOSE YOUR PROFILE SECTION -->
+		<section class="models-section">
+			<div class="models-container">
+				<header class="models-header js-reveal">
+					<span class="models-eyebrow">{t('vertiglassWindow.profilesEyebrow')}</span>
+					<h2 class="models-title">{t('vertiglassWindow.profilesTitle')}</h2>
+				</header>
+
+				<div class="models-grid">
+					<!-- 2 Panel -->
+					<div class="models-card js-reveal" style="transition-delay: 0.1s;">
+						<div class="models-photo-frame">
+							<img src="/images/products/vertiglass-window/details/2-panel.webp" alt="2 Panel System">
+						</div>
+						<div class="models-card-info">
+							<h3 class="models-card-title">{t('vertiglassWindow.panel2Title')}</h3>
+							<p class="models-card-desc">{t('vertiglassWindow.panel2Desc')}</p>
+						</div>
+					</div>
+
+					<!-- 3 Panel -->
+					<div class="models-card js-reveal" style="transition-delay: 0.2s;">
+						<div class="models-photo-frame">
+							<img src="/images/products/vertiglass-window/details/3-panel.webp" alt="3 Panel System">
+						</div>
+						<div class="models-card-info">
+							<h3 class="models-card-title">{t('vertiglassWindow.panel3Title')}</h3>
+							<p class="models-card-desc">{t('vertiglassWindow.panel3Desc')}</p>
+						</div>
+					</div>
+
+					<!-- 4 Panel -->
+					<div class="models-card js-reveal" style="transition-delay: 0.3s;">
+						<div class="models-photo-frame">
+							<img src="/images/products/vertiglass-window/details/4-panel.webp" alt="4 Panel System">
+						</div>
+						<div class="models-card-info">
+							<h3 class="models-card-title">{t('vertiglassWindow.panel4Title')}</h3>
+							<p class="models-card-desc">{t('vertiglassWindow.panel4Desc')}</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="models-bottom-panel js-reveal">
+					<div class="models-panel-content">
+						<h4>{t('vertiglassWindow.smartMotionTitle')}</h4>
+						<p set:html={t('vertiglassWindow.smartMotionDesc')}></p>
+					</div>
+				<Button variant="cta" text={t('vertiglassWindow.orderNow')} href="#" onclick="event.preventDefault(); document.querySelector('footer').scrollIntoView({behavior: 'smooth', block: 'start'}); " />
+				</div>
+			</div>
+		</section>
+
+		<!-- SECTION 2: SOMFY -->
+		<Somfy />
+
+		<!-- COLOR OPTIONS COMPONENT -->
+		<ColorOptions images={colorImagesMap} />
+	</main>
+</Layout>
+
+<script>
+	// @ts-nocheck
+	document.addEventListener('DOMContentLoaded', () => {
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('reveal');
+				}
+			});
+		}, { threshold: 0.1 });
+
+		document.querySelectorAll('.js-reveal').forEach(el => observer.observe(el));
+	});
+</script>

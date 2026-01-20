@@ -1,0 +1,419 @@
+---
+import Layout from '../../layouts/layout.astro';
+import Hero from '../../components/hero.astro';
+import Newsletter from '../../components/newsletter.astro';
+import Trustbar from '../../components/trustbar.astro';
+import { useTranslations, getLangFromUrl } from '../../i18n';
+import '../../styles/pages/about.css';
+
+export async function getStaticPaths() {
+	return [
+		{ params: { lang: 'en' } },
+		{ params: { lang: 'ru' } },
+		{ params: { lang: 'az' } },
+	];
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t('aboutPage.heroTitle')}>
+	<main>
+		<!-- HERO SECTION -->
+		<Hero 
+			title={t('aboutPage.heroTitle')}
+			description={[
+				t('aboutPage.heroDesc1'),
+				t('aboutPage.heroDesc2'),
+				t('aboutPage.heroDesc3'),
+				t('aboutPage.heroDesc4')
+			]}
+			image="/images/hero/retractable-louvered-roof-header.webp"
+			imageAlt="ArtDeco outdoor living solutions"
+			buttonText={t('aboutPage.orderNow')}
+			buttonHref={`/${lang}/contact`}
+			buttonVariant="premium"
+		/>
+
+		<!-- TRUST BAR SECTION -->
+		<Trustbar locale={lang} />
+
+		<!-- SECTION 2: GLOBAL OFFICES -->
+		<section class="offices-section" id="offices-section">
+			<div class="watermark-number">8</div>
+
+			<div class="offices-container">
+				<div class="layout-grid-offices">
+					
+					<!-- LEFT COLUMN: Content -->
+					<div class="content-column">
+						
+						<!-- Header -->
+						<div class="header-group reveal-up">
+							<h2 class="main-title">
+								{t('aboutPage.officesTitle')} <br><span class="highlight-text"></span>
+							</h2>
+							<p class="description">
+								{t('aboutPage.officesDesc')}
+							</p>
+						</div>
+
+						<!-- Accordion List -->
+						<div class="accordion-grid">
+							
+							<!-- Column 1 -->
+							<div class="accordion-col reveal-stagger">
+								
+								<!-- UK -->
+								<div class="accordion-item" id="list-uk">
+									<button class="accordion-header" onclick="toggleCountry(event, 'uk')">
+										<span class="country-name">{t('aboutPage.unitedKingdom')}</span>
+										<div class="toggle-icon">
+											<img src="/images/icons/arrow2.svg" alt="Toggle" class="arrow-icon">
+										</div>
+									</button>
+									<div class="accordion-content">
+										<div class="content-inner">
+											<div class="info-group">
+												<div class="info-row">
+													<img src="/images/icons/location.svg" alt="Location" class="info-icon">
+													<span>10 Downing Street, London, SW1A 2AA</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/phone.svg" alt="Phone" class="info-icon">
+													<span>+44 20 7946 0123</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/mail.svg" alt="Email" class="info-icon">
+													<a href="mailto:uk.office@artdeco.com">uk.office@artdeco.com</a>
+												</div>
+											</div>
+											<a href="https://maps.app.goo.gl/EemTq9ABVBfoQeoi9" target="_blank" class="btn-map">
+												<span>{t('aboutPage.unitedKingdomMap')}</span>
+												<svg viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+											</a>
+										</div>
+									</div>
+								</div>
+
+								<!-- USA -->
+								<div class="accordion-item" id="list-usa">
+									<button class="accordion-header" onclick="toggleCountry(event, 'usa')">
+										<span class="country-name">{t('aboutPage.unitedStates')}</span>
+										<div class="toggle-icon">
+											<img src="/images/icons/arrow2.svg" alt="Toggle" class="arrow-icon">
+										</div>
+									</button>
+									<div class="accordion-content">
+										<div class="content-inner">
+											<div class="info-group">
+												<div class="info-row">
+													<img src="/images/icons/location.svg" alt="Location" class="info-icon">
+													<span>1221 Connecticut Ave NW, Washington, DC</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/phone.svg" alt="Phone" class="info-icon">
+													<span>+1 833 800 3326</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/mail.svg" alt="Email" class="info-icon">
+													<a href="mailto:info@artdecooutdoor.com">info@artdecooutdoor.com</a>
+												</div>
+											</div>
+											<a href="https://maps.app.goo.gl/ZtbQcxLWfx7ca4eM8" target="_blank" class="btn-map">
+												<span>{t('aboutPage.unitedStatesMap')}</span>
+												<svg viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+											</a>
+										</div>
+									</div>
+								</div>
+
+								<!-- CANADA -->
+								<div class="accordion-item" id="list-canada">
+									<button class="accordion-header" onclick="toggleCountry(event, 'canada')">
+										<span class="country-name">{t('aboutPage.canada')}</span>
+										<div class="toggle-icon">
+											<img src="/images/icons/arrow2.svg" alt="Toggle" class="arrow-icon">
+										</div>
+									</button>
+									<div class="accordion-content">
+										<div class="content-inner">
+											<div class="info-group">
+												<div class="info-row">
+													<img src="/images/icons/location.svg" alt="Location" class="info-icon">
+													<span>100 King St W, Toronto, ON M5X 1A9</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/phone.svg" alt="Phone" class="info-icon">
+													<span>+1 416 555 0198</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/mail.svg" alt="Email" class="info-icon">
+													<a href="mailto:canada@artdeco.com">canada@artdeco.com</a>
+												</div>
+											</div>
+											<a href="https://maps.app.goo.gl/ik8U6RYuyhKPB87WA" target="_blank" class="btn-map">
+												<span>{t('aboutPage.canadaMap')}</span>
+												<svg viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+											</a>
+										</div>
+									</div>
+								</div>
+
+								<!-- AZERBAIJAN -->
+								<div class="accordion-item" id="list-azerbaijan">
+									<button class="accordion-header" onclick="toggleCountry(event, 'azerbaijan')">
+										<span class="country-name">{t('aboutPage.azerbaijan')}</span>
+										<div class="toggle-icon">
+											<img src="/images/icons/arrow2.svg" alt="Toggle" class="arrow-icon">
+										</div>
+									</button>
+									<div class="accordion-content">
+										<div class="content-inner">
+											<div class="info-group">
+												<div class="info-row">
+													<img src="/images/icons/location.svg" alt="Location" class="info-icon">
+													<span>Port Baku Towers, 153 Neftchilar Ave, Baku</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/phone.svg" alt="Phone" class="info-icon">
+													<span>+994 12 404 00 00</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/mail.svg" alt="Email" class="info-icon">
+													<a href="mailto:baku@artdeco.com">baku@artdeco.com</a>
+												</div>
+											</div>
+											<a href="https://maps.app.goo.gl/WXkvf6kffKYShjML7" target="_blank" class="btn-map">
+												<span>{t('aboutPage.azerbaijanMap')}</span>
+												<svg viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+											</a>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							
+							<!-- Column 2 -->
+							<div class="accordion-col reveal-stagger" style="--delay: 0.2s;">
+								
+								<!-- TURKEY -->
+								<div class="accordion-item" id="list-turkey">
+									<button class="accordion-header" onclick="toggleCountry(event, 'turkey')">
+										<span class="country-name">{t('aboutPage.turkey')}</span>
+										<div class="toggle-icon">
+											<img src="/images/icons/arrow2.svg" alt="Toggle" class="arrow-icon">
+										</div>
+									</button>
+									<div class="accordion-content">
+										<div class="content-inner">
+											<div class="info-group">
+												<div class="info-row">
+													<img src="/images/icons/location.svg" alt="Location" class="info-icon">
+													<span>Levent, Büyükdere Cd. No:185, Istanbul</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/phone.svg" alt="Phone" class="info-icon">
+													<span>+90 212 555 1234</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/mail.svg" alt="Email" class="info-icon">
+													<a href="mailto:istanbul@artdeco.com">istanbul@artdeco.com</a>
+												</div>
+											</div>
+											<a href="https://maps.app.goo.gl/ptLJjYp1WsbereW19" target="_blank" class="btn-map">
+												<span>{t('aboutPage.turkeyMap')}</span>
+												<svg viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+											</a>
+										</div>
+									</div>
+								</div>
+
+								<!-- GEORGIA -->
+								<div class="accordion-item" id="list-georgia">
+									<button class="accordion-header" onclick="toggleCountry(event, 'georgia')">
+										<span class="country-name">{t('aboutPage.georgia')}</span>
+										<div class="toggle-icon">
+											<img src="/images/icons/arrow2.svg" alt="Toggle" class="arrow-icon">
+										</div>
+									</button>
+									<div class="accordion-content">
+										<div class="content-inner">
+											<div class="info-group">
+												<div class="info-row">
+													<img src="/images/icons/location.svg" alt="Location" class="info-icon">
+													<span>37 Ilia Chavchavadze Avenue, Tbilisi 0179</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/phone.svg" alt="Phone" class="info-icon">
+													<span>+995 32 2 555 555</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/mail.svg" alt="Email" class="info-icon">
+													<a href="mailto:tbilisi@artdeco.com">tbilisi@artdeco.com</a>
+												</div>
+											</div>
+											<a href="https://maps.app.goo.gl/JfTjS6GC2caQZCd49" target="_blank" class="btn-map">
+												<span>{t('aboutPage.georgiaMap')}</span>
+												<svg viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+											</a>
+										</div>
+									</div>
+								</div>
+
+								<!-- RUSSIA -->
+								<div class="accordion-item" id="list-russia">
+									<button class="accordion-header" onclick="toggleCountry(event, 'russia')">
+										<span class="country-name">{t('aboutPage.russia')}</span>
+										<div class="toggle-icon">
+											<img src="/images/icons/arrow2.svg" alt="Toggle" class="arrow-icon">
+										</div>
+									</button>
+									<div class="accordion-content">
+										<div class="content-inner">
+											<div class="info-group">
+												<div class="info-row">
+													<img src="/images/icons/location.svg" alt="Location" class="info-icon">
+													<span>Presnenskaya Naberezhnaya, 12, Moscow</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/phone.svg" alt="Phone" class="info-icon">
+													<span>+7 495 555 01 23</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/mail.svg" alt="Email" class="info-icon">
+													<a href="mailto:moscow@artdeco.com">moscow@artdeco.com</a>
+												</div>
+											</div>
+											<a href="https://maps.app.goo.gl/D7kt2vhripPwGsNw9" target="_blank" class="btn-map">
+												<span>{t('aboutPage.russiaMap')}</span>
+												<svg viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+											</a>
+										</div>
+									</div>
+								</div>
+
+								<!-- KAZAKHSTAN -->
+								<div class="accordion-item" id="list-kazakhstan">
+									<button class="accordion-header" onclick="toggleCountry(event, 'kazakhstan')">
+										<span class="country-name">{t('aboutPage.kazakhstan')}</span>
+										<div class="toggle-icon">
+											<img src="/images/icons/arrow2.svg" alt="Toggle" class="arrow-icon">
+										</div>
+									</button>
+									<div class="accordion-content">
+										<div class="content-inner">
+											<div class="info-group">
+												<div class="info-row">
+													<img src="/images/icons/location.svg" alt="Location" class="info-icon">
+													<span>Dostyk Ave 180, Almaty 050000</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/phone.svg" alt="Phone" class="info-icon">
+													<span>+7 727 555 12 34</span>
+												</div>
+												<div class="info-row">
+													<img src="/images/icons/mail.svg" alt="Email" class="info-icon">
+													<a href="mailto:almaty@artdeco.com">almaty@artdeco.com</a>
+												</div>
+											</div>
+											<a href="https://maps.app.goo.gl/bDwGdp3mDBmg5Tcv5" target="_blank" class="btn-map">
+												<span>{t('aboutPage.kazakhstanMap')}</span>
+												<svg viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+											</a>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+
+					<!-- RIGHT COLUMN: Map -->
+					<div class="map-column reveal-scale">
+						<div class="map-container">
+							<!-- SVG World Map -->
+							<object data="/images/icons/map.svg" type="image/svg+xml" class="world-svg"></object>
+
+							<!-- PINS -->
+							<div id="pin-uk" class="map-pin" style="left: 47%; top: 34.5%; animation-delay: 0.1s;" onclick="toggleCountry(event, 'uk')">
+								<div class="pulse-ring"></div>
+								<div class="pin-core"></div>
+							</div>
+							<div id="pin-usa" class="map-pin" style="left: 23%; top: 33%; animation-delay: 0.2s;" onclick="toggleCountry(event, 'usa')">
+								<div class="pulse-ring"></div>
+								<div class="pin-core"></div>
+							</div>
+							<div id="pin-canada" class="map-pin" style="left: 20%; top: 20%; animation-delay: 0.3s;" onclick="toggleCountry(event, 'canada')">
+								<div class="pulse-ring"></div>
+								<div class="pin-core"></div>
+							</div>
+							<div id="pin-azerbaijan" class="map-pin" style="left: 60%; top: 39%; animation-delay: 0.4s;" onclick="toggleCountry(event, 'azerbaijan')">
+								<div class="pulse-ring"></div>
+								<div class="pin-core"></div>
+							</div>
+							<div id="pin-turkey" class="map-pin" style="left: 56.5%; top: 41%; animation-delay: 0.5s;" onclick="toggleCountry(event, 'turkey')">
+								<div class="pulse-ring"></div>
+								<div class="pin-core"></div>
+							</div>
+							<div id="pin-georgia" class="map-pin" style="left: 59%; top: 36.5%; animation-delay: 0.6s;" onclick="toggleCountry(event, 'georgia')">
+								<div class="pulse-ring"></div>
+								<div class="pin-core"></div>
+							</div>
+							<div id="pin-russia" class="map-pin" style="left: 70%; top: 20%; animation-delay: 0.7s;" onclick="toggleCountry(event, 'russia')">
+								<div class="pulse-ring"></div>
+								<div class="pin-core"></div>
+							</div>
+							<div id="pin-kazakhstan" class="map-pin" style="left: 66%; top: 32%; animation-delay: 0.8s;" onclick="toggleCountry(event, 'kazakhstan')">
+								<div class="pulse-ring"></div>
+								<div class="pin-core"></div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+		<!-- Newsletter Section -->
+		<Newsletter locale={lang} />
+	</main>
+</Layout>
+
+<script is:inline>
+	function toggleCountry(event, countryId) {
+		event.preventDefault();
+		const listId = 'list-' + countryId;
+		const pinId = 'pin-' + countryId;
+		const allListItems = document.querySelectorAll('.offices-section .accordion-item');
+		const allPins = document.querySelectorAll('.offices-section .map-pin');
+		const targetList = document.getElementById(listId);
+		const targetPin = document.getElementById(pinId);
+
+		if (!targetList) return;
+		const isActive = targetList.classList.contains('active');
+
+		allListItems.forEach(item => item.classList.remove('active'));
+		allPins.forEach(pin => pin.classList.remove('active'));
+
+		if (!isActive) {
+			targetList.classList.add('active');
+			if (targetPin) targetPin.classList.add('active');
+			if (window.innerWidth < 1024) {
+				setTimeout(() => { targetList.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 300);
+			}
+		}
+	}
+
+	document.addEventListener('DOMContentLoaded', () => {
+		const section = document.querySelector('.offices-section');
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) entry.target.classList.add('active');
+			});
+		}, { threshold: 0.1 });
+		if (section) observer.observe(section);
+	});
+</script>

@@ -1,0 +1,562 @@
+---
+import Layout from '../../../layouts/layout.astro';
+import { getLangFromUrl, useTranslations } from '../../../i18n/index';
+import Hero from '../../../components/hero.astro';
+import Button from '../../../components/button.astro';
+import ColorOptions from '../../../components/coloroptions.astro';
+import Somfy from '../../../components/somfy.astro';
+import '../../../styles/pages/products/retractable-louvered-roof.css';
+
+// @ts-ignore
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'ru' } },
+    { params: { lang: 'az' } },
+  ];
+}
+
+// @ts-ignore
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t('retractableLouveredRoof.title')}>
+	<main>
+				<!-- HERO SECTION -->
+		<Hero 
+			title={t('retractableLouveredRoof.heroTitle')}
+			description={[
+				t('retractableLouveredRoof.heroDesc1'),
+				t('retractableLouveredRoof.heroDesc2')
+			]}
+			image="/images/products/retractable-louvered-roof.webp"
+			imageAlt="Retractable Louvered Roof System"
+			buttonText={t('retractableLouveredRoof.orderNow')}
+			buttonHref={`/${lang}/contact`}
+			buttonVariant="premium"
+		/>
+
+		<section class="section">
+			<div class="wrapper">
+				
+				<!-- HEADER -->
+				<header class="header reveal">
+					<span class="header__badge">{t('retractableLouveredRoof.systemFeatures')}</span>
+					<h1 class="header__title" set:html={t('retractableLouveredRoof.engineeredTitle')}></h1>
+					<p class="header__desc">
+						{t('retractableLouveredRoof.engineeredDesc')}
+					</p>
+				</header>
+
+
+				<!-- BENTO GRID -->
+				<div class="bento-grid">
+					
+					<!-- Card 1: Rain (Wide) -->
+					<article class="tech-card bento-grid__item--wide reveal delay-100">
+						<div class="tech-card__content">
+							<div class="tech-card__header">
+								<svg class="tech-card__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+								</svg>
+								<h3 class="tech-card__title">{t('retractableLouveredRoof.rainTitle')}</h3>
+							</div>
+							<p class="tech-card__text">
+								{t('retractableLouveredRoof.rainText')}
+							</p>
+						</div>
+						<div class="tech-card__visual">
+							<img src="/images/products/protection-from-rain.webp" alt="Rain Protection" class="tech-card__image">
+						</div>
+					</article>
+
+					<!-- Card 2: Solar (Narrow) -->
+					<article class="tech-card bento-grid__item--narrow reveal delay-200">
+						<div class="tech-card__content">
+							<div class="tech-card__header">
+								<svg class="tech-card__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+								</svg>
+								<h3 class="tech-card__title">{t('retractableLouveredRoof.solarTitle')}</h3>
+							</div>
+							<p class="tech-card__text">
+								{t('retractableLouveredRoof.solarText')}
+							</p>
+						</div>
+						<div class="tech-card__visual">
+							<img src="/images/products/solar-protection.webp" alt="Solar Control" class="tech-card__image">
+						</div>
+					</article>
+
+					<!-- Card 3: Ventilation (Narrow) -->
+					<article class="tech-card bento-grid__item--narrow reveal delay-300">
+						<div class="tech-card__content">
+							<div class="tech-card__header">
+								<svg class="tech-card__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+								</svg>
+								<h3 class="tech-card__title">{t('retractableLouveredRoof.ventilationTitle')}</h3>
+							</div>
+							<p class="tech-card__text">
+								{t('retractableLouveredRoof.ventilationText')}
+							</p>
+						</div>
+						<div class="tech-card__visual">
+							<img src="/images/products/ventilation.webp" alt="Natural Ventilation" class="tech-card__image">
+						</div>
+					</article>
+
+					<!-- Card 4: Drainage (Wide) -->
+					<article class="tech-card bento-grid__item--wide reveal delay-400">
+						<div class="tech-card__content">
+							<div class="tech-card__header">
+								<svg class="tech-card__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+								</svg>
+								<h3 class="tech-card__title">{t('retractableLouveredRoof.drainageTitle')}</h3>
+							</div>
+							<p class="tech-card__text">
+								{t('retractableLouveredRoof.drainageText')}
+							</p>
+						</div>
+						<div class="tech-card__visual">
+							<img src="/images/products/water-drainage.webp" alt="Water Drainage" class="tech-card__image">
+						</div>
+					</article>
+
+				</div>
+
+				<!-- INSTALLATION PANEL -->
+				<div class="install-panel reveal delay-100">
+					<div class="install-panel__header">
+						<h2 class="install-panel__title">{t('retractableLouveredRoof.installationTitle')}</h2>
+					</div>
+
+					<div class="install-grid">
+						
+						<!-- Wall -->
+						<div class="install-card">
+							<div class="install-card__image-wrapper">
+								<img src="/images/products/wall-mounted.webp" alt={t('retractableLouveredRoof.wallMounted')} class="install-card__image">
+							</div>
+							<span class="install-card__label">{t('retractableLouveredRoof.wallMounted')}</span>
+						</div>
+
+						<!-- Suspended -->
+						<div class="install-card">
+							<div class="install-card__image-wrapper">
+								<img src="/images/products/suspended.webp" alt={t('retractableLouveredRoof.suspended')} class="install-card__image">
+							</div>
+							<span class="install-card__label">{t('retractableLouveredRoof.suspended')}</span>
+						</div>
+
+						<!-- Detached -->
+						<div class="install-card">
+							<div class="install-card__image-wrapper">
+								<img src="/images/products/detached.webp" alt={t('retractableLouveredRoof.detached')} class="install-card__image">
+							</div>
+							<span class="install-card__label">{t('retractableLouveredRoof.detached')}</span>
+						</div>
+
+						<!-- Integrated -->
+						<div class="install-card">
+							<div class="install-card__image-wrapper">
+								<img src="/images/products/integrated.webp" alt={t('retractableLouveredRoof.integrated')} class="install-card__image">
+							</div>
+							<span class="install-card__label">{t('retractableLouveredRoof.integrated')}</span>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</section>
+
+		<section class="section-structural">
+			<div class="section-wrap">
+				<div class="layout">
+					<!-- Cards Grid -->
+					<div class="grid-cards" id="cardList">
+						<!-- Generated by JS -->
+					</div>
+
+					<!-- Visualizer -->
+					<div class="vis-container" id="visRef">
+						<div class="vis-frame">
+							<img src="/images/products/pergola-details/material-pergola.webp" alt="Modern Retractable Louvered Roof">
+							<div id="markerLayer" class="marker-layer">
+								<!-- Generated by JS -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- BIOCLIMATIC EFFECT SECTION -->
+		<section class="bio-section">
+			<div class="bio-grid">
+
+				<!-- CARD 1 -->
+				<div class="bio-card">
+					<div class="bio-content-top">
+						<h2 class="bio-title-large" set:html={t('retractableLouveredRoof.bioclimaticEffect')}></h2>
+					</div>
+					
+					<div class="bio-img-container">
+						<img src="/images/products/pergola-details/0.svg" alt={t('retractableLouveredRoof.closed')} class="bio-img">
+					</div>
+
+					<div class="bio-footer">
+						<div class="bio-degree">0°</div>
+						<div class="bio-footer-desc">
+							{t('retractableLouveredRoof.closedDesc')}
+						</div>
+					</div>
+				</div>
+
+				<!-- CARD 2 -->
+				<div class="bio-card">
+					<div class="bio-content-top">
+						<p class="bio-text-p">{t('retractableLouveredRoof.bioclimaticText1')}</p>
+						<p class="bio-text-p">{t('retractableLouveredRoof.bioclimaticText2')}</p>
+						<p class="bio-text-p">{t('retractableLouveredRoof.bioclimaticText3')}</p>
+					</div>
+
+					<div class="bio-img-container">
+						<img src="/images/products/pergola-details/5.svg" alt={t('retractableLouveredRoof.slightlyOpen')} class="bio-img">
+					</div>
+
+					<div class="bio-footer">
+						<div class="bio-degree">5°</div>
+						<div class="bio-footer-desc">
+							{t('retractableLouveredRoof.slightlyOpenDesc')}
+						</div>
+					</div>
+				</div>
+
+				<!-- CARD 3 -->
+				<div class="bio-card">
+					<div class="bio-content-top">
+						<p class="bio-text-p">{t('retractableLouveredRoof.bioclimaticText4')}</p>
+						<p class="bio-text-p">{t('retractableLouveredRoof.bioclimaticText5')}</p>
+					</div>
+
+					<div class="bio-img-container">
+						<img src="/images/products/pergola-details/45.svg" alt={t('retractableLouveredRoof.middleOpen')} class="bio-img">
+					</div>
+
+					<div class="bio-footer">
+						<div class="bio-degree">{t('retractableLouveredRoof.middleOpen')}</div>
+						<div class="bio-footer-desc">
+							{t('retractableLouveredRoof.middleOpenDesc')}
+						</div>
+					</div>
+				</div>
+
+				<!-- CARD 4 -->
+				<div class="bio-card">
+					<div class="bio-content-top">
+						<p class="bio-text-p">{t('retractableLouveredRoof.bioclimaticText6')}</p>
+						<p class="bio-text-p">{t('retractableLouveredRoof.bioclimaticText7')}</p>
+					</div>
+
+					<div class="bio-img-container">
+						<img src="/images/products/pergola-details/full-open.svg" alt={t('retractableLouveredRoof.fullyOpen')} class="bio-img">
+					</div>
+
+					<div class="bio-footer">
+					<div class="bio-label-bold" set:html={t('retractableLouveredRoof.fullyOpen')}></div>
+						<div class="bio-footer-desc">
+							{t('retractableLouveredRoof.fullyOpenDesc')}
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</section>
+
+		<!-- SECTION 1: MECHANICAL DATA -->
+		<section class="pergola-section mechanical-section">
+			<div class="col col-image">
+				<img 
+					src="/images/products/pergola-details/p150.svg" 
+					alt="Mechanical Detail" 
+					class="bg-image anim-fade-in"
+				/>
+			</div>
+
+			<div class="col col-text padding-right">
+				<div class="content-wrapper">
+						<h1 class="main-title anim-fade-up" set:html={t('retractableLouveredRoof.mechanicalDataTitle')}></h1>
+						<h3 class="item-title">{t('retractableLouveredRoof.ledLightingTitle')}</h3>
+						<p class="item-text">
+							{t('retractableLouveredRoof.ledLightingText')}
+						</p>
+					</div>
+
+					<div class="item-block anim-fade-up delay-200">
+					<h3 class="item-title" set:html={t('retractableLouveredRoof.soundAbsorption')}></h3>
+							{t('retractableLouveredRoof.soundAbsorptionDesc')}
+						</p>
+					</div>
+
+					<div class="item-block anim-fade-up delay-300">
+						<h3 class="item-title">{t('retractableLouveredRoof.slatTitle')}</h3>
+						<p class="item-text">
+							{t('retractableLouveredRoof.slatText1')}
+						</p>
+						<p class="item-text mt-1">
+							{t('retractableLouveredRoof.slatText2')}
+						</p>
+					</div>
+					<Button 
+						variant="cta" 
+						text={t('retractableLouveredRoof.orderNow')} 
+						href="#" 
+						onclick="event.preventDefault(); document.querySelector('footer').scrollIntoView({behavior: 'smooth', block: 'start'});"
+					/>
+				</div>
+			</div>
+		</section>
+
+		<!-- SECTION 2: SOMFY -->
+		<Somfy />
+
+		<!-- COLOR OPTIONS SECTION -->
+		<ColorOptions 
+			images={{
+				'9016': '/images/products/retractable-louvered-roof/RAL9016.webp',
+				'1013': '/images/products/retractable-louvered-roof/RAL1013.webp',
+				'8014': '/images/products/retractable-louvered-roof/RAL8014.webp',
+				'8019': '/images/products/retractable-louvered-roof/RAL8019.webp',
+				'9005': '/images/products/retractable-louvered-roof/RAL9005.webp',
+				'7016': '/images/products/retractable-louvered-roof/RAL7016.webp'
+			}}
+		/>
+
+		<section class="section-ideas">
+			<div class="container-ideas">
+				<div class="grid-layout">
+					
+					<!-- LEFT: TEXT CONTENT -->
+					<div class="content-side">
+<h1 class="main-title" set:html={t('retractableLouveredRoof.ideasTitle')}></h1>
+						
+						<div class="feature-list">
+							
+							<!-- Item 1 -->
+							<div class="feature-item">
+								<div class="item-number-box">1</div>
+								<div class="item-content">
+									<p class="item-desc">{t('retractableLouveredRoof.feature1')}</p>
+								</div>
+							</div>
+
+							<!-- Item 2 -->
+							<div class="feature-item">
+								<div class="item-number-box">2</div>
+								<div class="item-content">
+									<p class="item-desc">{t('retractableLouveredRoof.feature2')}</p>
+								</div>
+							</div>
+
+							<!-- Item 3 -->
+							<div class="feature-item">
+								<div class="item-number-box">3</div>
+								<div class="item-content">
+									<p class="item-desc">{t('retractableLouveredRoof.feature3')}</p>
+								</div>
+							</div>
+
+							<!-- Item 4 -->
+							<div class="feature-item">
+								<div class="item-number-box">4</div>
+								<div class="item-content">
+									<p class="item-desc">{t('retractableLouveredRoof.feature4')}</p>
+								</div>
+							</div>
+
+						</div>
+
+						<Button 
+							variant="ideas" 
+							text={t('retractableLouveredRoof.orderNow')} 
+							href="#"
+							onclick="event.preventDefault(); document.querySelector('footer').scrollIntoView({behavior: 'smooth', block: 'start'});"
+						/>
+					</div>
+
+					<!-- RIGHT: 3D CONTAINER -->
+					<div class="visual-side" id="spline-container">
+						<span class="spline-placeholder">Spline 3D Scene Here</span>
+					</div>
+
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>
+
+<script>
+	// @ts-nocheck
+	declare const document: Document & { querySelectorAll: (s: string) => NodeListOf<Element>; getElementById: (s: string) => HTMLElement | null; addEventListener: (e: string, cb: Function) => void; createElement: (tag: string) => HTMLElement; createDocumentFragment: () => DocumentFragment };
+
+	const CONFIG = {
+		items: [
+			{ id: 1,  title: "Cross Beam",    x: 75, y: 35, image: "/images/products/pergola-details/cross-beam.webp" },
+			{ id: 2,  title: "Support Post", x: 66, y: 35, image: "/images/products/pergola-details/support-post.webp" },
+			{ id: 3,  title: "Main Rafter",  x: 35, y: 36, image: "/images/products/pergola-details/main-rafter.webp" },
+			{ id: 4,  title: "Guide Rail",x: 31, y: 35, image: "/images/products/pergola-details/guide-rail.webp" },
+			{ id: 5,  title: "Louver Blade",   x: 18.8, y: 65, image: "/images/products/pergola-details/louver-blade.webp" },
+			{ id: 6,  title: "Louver Trim",   x: 45, y: 40, image: "/images/products/pergola-details/louver-side-trim.webp" },
+			{ id: 7,  title: "Rafter Tail",    x: 32, y: 44, image: "/images/products/pergola-details/rafter-tail.webp" },
+			{ id: 8,  title: "Rotating Louver",   x: 80, y: 42, image: "/images/products/pergola-details/rotating-louver.webp" },
+			{ id: 9,  title: "Drainage Beam",   x: 20, y: 40.6, image: "/images/products/pergola-details/drainage-beam.webp" },
+			{ id: 10, title: "Ledger Board",  x: 51.2, y: 55, image: "/images/products/pergola-details/ledger-board.webp" }
+		],
+		delayStep: 0.05
+	};
+
+	/**
+	 * Generic IntersectionObserver factory
+	 * Handles lazy animations for elements with staggered delays
+	 */
+	function createStaggerObserver(selector, onIntersect, options = {}) {
+		const defaultOptions = { threshold: 0.1, ...options };
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry, index) => {
+				if (entry.isIntersecting) {
+					onIntersect(entry, index);
+					observer.unobserve(entry.target);
+				}
+			});
+		}, defaultOptions);
+
+		document.querySelectorAll(selector).forEach(el => observer.observe(el));
+	}
+
+	/**
+	 * Toggle element class on all related elements by data-id
+	 */
+	function toggleElementsById(rootElement, id, className, isActive) {
+		const elements = rootElement.querySelectorAll(`[data-id="${id}"]`);
+		elements.forEach(el => el.classList.toggle(className, isActive));
+	}
+
+	// ===== STRUCTURAL SECTION =====
+
+	function initStructuralSection() {
+		const cardList = document.getElementById('cardList');
+		const markerLayer = document.getElementById('markerLayer');
+		
+		if (!cardList || !markerLayer) return;
+		
+		const cardsFrag = document.createDocumentFragment();
+		const markersFrag = document.createDocumentFragment();
+
+		CONFIG.items.forEach((item, index) => {
+			// Create Card
+			const card = document.createElement('div');
+			card.className = 'card';
+			card.dataset.id = item.id;
+			card.style.transitionDelay = `${(index * CONFIG.delayStep).toFixed(2)}s`;
+			card.innerHTML = `
+				<div class="card-meta">
+					<div class="card-id">${item.id}</div>
+					<div class="card-name">${item.title}</div>
+				</div>
+				<div class="card-img" aria-hidden="true">
+					<img src="${item.image}" alt="${item.title}" class="card-img-src" width="250" height="165" loading="lazy">
+				</div>
+			`;
+			cardsFrag.appendChild(card);
+
+			// Create Marker
+			const marker = document.createElement('div');
+			marker.className = 'marker';
+			marker.dataset.id = item.id;
+			marker.style.left = `${item.x}%`;
+			marker.style.top = `${item.y}%`;
+			marker.innerHTML = `<div class="tooltip">${item.title}</div>`;
+			markersFrag.appendChild(marker);
+		});
+
+		cardList.appendChild(cardsFrag);
+		markerLayer.appendChild(markersFrag);
+
+		observeStructuralElements();
+		setupStructuralInteractions();
+	}
+
+	function observeStructuralElements() {
+		createStaggerObserver('.card', (entry) => {
+			entry.target.classList.add('in-view');
+		}, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+
+		const visRef = document.getElementById('visRef');
+		if (visRef) {
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('in-view');
+						observer.unobserve(entry.target);
+					}
+				});
+			}, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+			observer.observe(visRef);
+		}
+	}
+
+	function setupStructuralInteractions() {
+		const appRoot = document.querySelector('.section-structural');
+		let activeId = null;
+
+		appRoot.addEventListener('mouseover', (e) => {
+			const target = e.target.closest('[data-id]');
+			const newId = target ? target.dataset.id : null;
+
+			if (activeId !== newId) {
+				if (activeId) toggleElementsById(appRoot, activeId, 'active', false);
+				activeId = newId;
+				if (activeId) toggleElementsById(appRoot, activeId, 'active', true);
+			}
+		});
+
+		appRoot.addEventListener('mouseout', (e) => {
+			if (!e.relatedTarget || !appRoot.contains(e.relatedTarget)) {
+				if (activeId) {
+					toggleElementsById(appRoot, activeId, 'active', false);
+					activeId = null;
+				}
+			}
+		});
+	}
+
+	// ===== INITIALIZATION =====
+
+	document.addEventListener('DOMContentLoaded', () => {
+		// Structural section
+		initStructuralSection();
+
+		// Reveal animations (header, cards, install panel)
+		createStaggerObserver('.reveal', (entry) => {
+			entry.target.classList.add('is-visible');
+		});
+
+		// Bioclimatic cards with stagger effect
+		const bioCards = document.querySelectorAll('.bio-card');
+		const bioObserver = new IntersectionObserver((entries) => {
+			entries.forEach((entry, index) => {
+				if (entry.isIntersecting) {
+					entry.target.style.transitionDelay = `${index * 0.15}s`;
+					entry.target.classList.add('visible');
+					bioObserver.unobserve(entry.target);
+				}
+			});
+		}, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+		
+		bioCards.forEach(card => bioObserver.observe(card));
+	});
+</script>

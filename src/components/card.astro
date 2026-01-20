@@ -1,0 +1,165 @@
+---
+/**
+ * Universal Card Component
+ * Supports: tech-card, bioclimatic-card, install-card, product-card, structural card
+ * Maintains all existing CSS classes and styling
+ */
+
+interface Props {
+  variant?: 'tech' | 'bioclimatic' | 'install' | 'product' | 'structural';
+  title?: string;
+  description?: string;
+  image?: string;
+  href?: string;
+  category?: string;
+  class?: string;
+  imageHeight?: string;
+  cardIndex?: number;
+  dataId?: string;
+}
+
+const {
+  variant = 'product',
+  title,
+  description,
+  image,
+  href = '#',
+  category,
+  class: className = '',
+  imageHeight,
+  cardIndex,
+  dataId,
+} = Astro.props;
+
+// Map variants to CSS classes
+const variantClassMap = {
+  tech: 'tech-card',
+  bioclimatic: 'bioclimatic-card',
+  install: 'install-card',
+  product: 'card',
+  structural: 'card',
+};
+
+const baseClass = variantClassMap[variant];
+const cardClasses = `${baseClass} ${className}`;
+---
+
+<div class={cardClasses} data-id={dataId}>
+  {image && (
+    <div class={variant === 'bioclimatic' ? 'bioclimatic-img-container' : variant === 'install' ? 'install-card__image-wrapper' : variant === 'tech' ? 'tech-card__visual' : 'card-image'} style={imageHeight ? `height: ${imageHeight}` : undefined}>
+      <img
+        src={image}
+        alt={title || 'Card image'}
+        class={variant === 'bioclimatic' ? 'bioclimatic-img' : variant === 'install' ? 'install-card__image' : variant === 'tech' ? 'tech-card__image' : 'card-image img'}
+        loading="lazy"
+      />
+    </div>
+  )}
+
+  <div class={variant === 'tech' ? 'tech-card__content' : variant === 'bioclimatic' ? 'bioclimatic-content' : variant === 'install' ? 'install-card__content' : 'card-content'}>
+    {title && (
+      <h3 class={variant === 'tech' ? 'tech-card__title' : variant === 'bioclimatic' ? 'bioclimatic-title' : variant === 'install' ? 'install-card__title' : 'card-title'}>
+        {title}
+      </h3>
+    )}
+    
+    {description && (
+      <p class={variant === 'tech' ? 'tech-card__text' : variant === 'bioclimatic' ? 'bioclimatic-text' : variant === 'install' ? 'install-card__description' : 'card-description'}>
+        {description}
+      </p>
+    )}
+    
+    {category && (
+      <span class="card-category">{category}</span>
+    )}
+    
+    <slot />
+  </div>
+</div>
+
+<style>
+  .card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .card-image {
+    position: relative;
+    width: 100%;
+    padding-top: 66.67%; /* 3:2 aspect ratio */
+    overflow: hidden;
+    background: var(--green-300);
+  }
+
+  .card-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .card:hover .card-image img {
+    transform: scale(1.05);
+  }
+
+  .card-category {
+    position: absolute;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--green-700);
+    color: var(--white);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-medium);
+  }
+
+  .card-content {
+    padding: var(--spacing-xl);
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--green-700);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .card-description {
+    color: var(--black);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.6;
+    opacity: 0.8;
+  }
+
+  .card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--green-500);
+    font-weight: var(--font-weight-medium);
+    transition: gap var(--transition-fast);
+  }
+
+  .card:hover .card-cta {
+    gap: var(--spacing-md);
+  }
+</style>
+

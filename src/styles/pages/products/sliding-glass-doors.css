@@ -1,0 +1,239 @@
+/* Sliding Glass Doors Product Page Styles */
+
+:root {
+    --bg-color: #E8F0E6;
+    --accent-green: #2F4F2F;
+    --text-main: #3A403A;
+    --white: #ffffff;
+    --font-main: 'Montserrat', sans-serif;
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    --section-text-muted: #E8EDE8;
+    --section-accent: #FDB94E;
+    --duration-slow: 0.8s;
+    --duration-slower: 1.2s;
+    --duration-slowest: 2s;
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --fw-light: 300;
+    --fw-bold: 600;
+    --fw-extra-bold: 700;
+}
+
+/* Mechanical section styles removed — not used on this page */
+
+/* ===== MECHANICAL SECTION SPECIFIC STYLES ===== */
+.mechanical-section {
+    padding: 250px 0;
+    background-color: #1f2d14;
+    background-image: 
+    radial-gradient(at 0% 100%, #7E9854 0px, transparent 65%),
+    radial-gradient(at 100% 0%, #7E9854 0px, transparent 65%);
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;}
+
+.mechanical-container {
+    max-width: 1400px;
+    padding: 0 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.mechanical-section .col-image {
+    padding: 0;
+    min-height: auto;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mechanical-section .col-image .image-frame {
+    position: relative;
+    width: 90%;
+    max-width: 700px;
+    aspect-ratio: 1 / 1;
+    background: #c4d5a5;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: transform var(--duration-slow) var(--ease-smooth), 
+                box-shadow var(--duration-slow) var(--ease-smooth);
+}
+
+.mechanical-section .col-image .image-frame:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 60px 100px rgba(0, 0, 0, 0.4);
+}
+
+.mechanical-section .col-image .image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--duration-slowest) var(--ease-out-expo);
+}
+
+.mechanical-section .col-text {
+    padding: 0;
+    z-index: 2;
+    background: none;
+    color: var(--white);
+}
+
+.mechanical-section .content-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.mechanical-section .main-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 2.5rem;
+    text-align: left;
+}
+
+.mechanical-section .item-block {
+    margin-bottom: 1rem;
+}
+
+.mechanical-section .item-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--white) !important;
+    margin-bottom: 0.75rem;
+    text-transform: none;
+}
+
+.mechanical-section .item-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--section-text-muted) !important;
+    font-weight: 400;
+}
+
+/* Tablet responsiveness */
+@media (max-width: 1024px) {
+    .mechanical-container {
+        grid-template-columns: 1fr;
+        gap: 100px;
+        padding: 0 2rem;
+    }
+
+    .mechanical-section .col-text {
+        text-align: center;
+    }
+
+    .mechanical-section .content-wrapper {
+        align-items: center;
+    }
+
+    .mechanical-section .main-title {
+        font-size: 2.5rem;
+        text-align: center;
+    }
+
+    .mechanical-section .item-title {
+        text-align: center;
+    }
+
+    .mechanical-section .item-text {
+        text-align: center;
+    }
+
+    .mechanical-section .content-wrapper > [class*="btn"],
+    .mechanical-section .content-wrapper > a {
+        align-self: center;
+    }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .mechanical-section {
+        padding: 60px 0;
+    }
+
+    .mechanical-container {
+        padding: 0 2rem;
+        gap: 60px;
+    }
+
+    .mechanical-section .col-image {
+        order: 1;
+    }
+
+    .mechanical-section .col-text {
+        order: 2;
+        text-align: center;
+    }
+
+    .mechanical-section .content-wrapper {
+        align-items: center;
+    }
+
+    .mechanical-section .main-title {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .mechanical-section .item-title {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+
+    .mechanical-section .item-text {
+        font-size: 0.95rem;
+        text-align: center;
+    }
+
+    .mechanical-section .item-block {
+        margin-bottom: 1.5rem;
+    }
+
+    .mechanical-section .content-wrapper > [class*="btn"],
+    .mechanical-section .content-wrapper > a {
+        align-self: center;
+    }
+}
+
+/* Small mobile responsiveness */
+@media (max-width: 480px) {
+    .mechanical-section {
+        padding: 40px 0;
+    }
+
+    .mechanical-container {
+        padding: 0 2rem;
+        gap: 40px;
+    }
+
+    .mechanical-section .main-title {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .mechanical-section .item-title {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .mechanical-section .item-text {
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    .mechanical-section .item-block {
+        margin-bottom: 1.5rem;
+    }
+
+    .mechanical-section .content-wrapper > [class*="btn"],
+    .mechanical-section .content-wrapper > a {
+        align-self: center;
+    }
+}

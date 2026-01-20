@@ -1,0 +1,205 @@
+---
+import '../styles/components/footer.css';
+import { useTranslations } from '../i18n';
+import type { Locale } from '../types';
+
+interface Props {
+  locale?: string;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale as Locale);
+---
+
+<footer class="footer">
+    <div class="footer__container">
+        
+        <!-- LEFT: INFO & BRAND -->
+        <div class="footer__left">
+            <h2 class="footer__headline" set:html={t('footer.headline')}></h2>
+
+            <div class="contact-details">
+                <!-- Phone -->
+                <div class="contact-row">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    </div>
+                    <div class="contact-text">
+                        <span class="contact-label">{t('footer.callUs')}</span>
+                        <a href="tel:+18338003326" class="contact-value">+1 833 800 3326</a>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="contact-row">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </div>
+                    <div class="contact-text">
+                        <span class="contact-label">{t('footer.emailUs')}</span>
+                        <a href="mailto:INFO@ARTDECOOUTDOOR.COM" class="contact-value">info@artdecooutdoor.com</a>
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div class="contact-row">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <div class="contact-text">
+                        <span class="contact-label">{t('footer.visitUs')}</span>
+                        <span class="contact-value" set:html={t('footer.address')}></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer__brand-area">
+                <div class="logo-wrap">
+                    <img src="/images/logos/artdeco-logo-light.svg" alt="ARTDECO" class="footer-logo-img">
+                </div>
+                
+                <div class="socials">
+                    <a href="#" class="social-btn" aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.0286 0C12.1536 0.003 12.7246 0.009 13.2176 0.023L13.4116 0.03C13.6356 0.038 13.8566 0.0479999 14.1236 0.0599999C15.1876 0.11 15.9136 0.278 16.5506 0.525C17.2106 0.779 17.7666 1.123 18.3226 1.678C18.8313 2.17773 19.2248 2.78247 19.4756 3.45C19.7226 4.087 19.8906 4.813 19.9406 5.878C19.9526 6.144 19.9626 6.365 19.9706 6.59L19.9766 6.784C19.9916 7.276 19.9976 7.847 19.9996 8.972L20.0006 9.718V11.028C20.003 11.7574 19.9953 12.4868 19.9776 13.216L19.9716 13.41C19.9636 13.635 19.9536 13.856 19.9416 14.122C19.8916 15.187 19.7216 15.912 19.4756 16.55C19.2248 17.2175 18.8313 17.8223 18.3226 18.322C17.8228 18.8307 17.2181 19.2242 16.5506 19.475C15.9136 19.722 15.1876 19.89 14.1236 19.94L13.4116 19.97L13.2176 19.976C12.7246 19.99 12.1536 19.997 11.0286 19.999L10.2826 20H8.97357C8.24383 20.0026 7.51409 19.9949 6.78457 19.977L6.59057 19.971C6.35318 19.962 6.11584 19.9517 5.87857 19.94C4.81457 19.89 4.08857 19.722 3.45057 19.475C2.7834 19.2241 2.17901 18.8306 1.67957 18.322C1.17051 17.8224 0.776678 17.2176 0.525569 16.55C0.278569 15.913 0.110569 15.187 0.0605687 14.122L0.0305688 13.41L0.0255689 13.216C0.00713493 12.4868 -0.00119929 11.7574 0.000568797 11.028V8.972C-0.0021991 8.2426 0.00513501 7.5132 0.0225689 6.784L0.0295688 6.59C0.0375688 6.365 0.0475688 6.144 0.0595688 5.878C0.109569 4.813 0.277569 4.088 0.524569 3.45C0.776263 2.7822 1.17079 2.17744 1.68057 1.678C2.17972 1.16955 2.78376 0.776074 3.45057 0.525C4.08857 0.278 4.81357 0.11 5.87857 0.0599999C6.14457 0.0479999 6.36657 0.038 6.59057 0.03L6.78457 0.0239999C7.51376 0.00623271 8.24316 -0.0014347 8.97257 0.000999928L11.0286 0ZM10.0006 5C8.67449 5 7.40272 5.52678 6.46503 6.46447C5.52735 7.40215 5.00057 8.67392 5.00057 10C5.00057 11.3261 5.52735 12.5979 6.46503 13.5355C7.40272 14.4732 8.67449 15 10.0006 15C11.3267 15 12.5984 14.4732 13.5361 13.5355C14.4738 12.5979 15.0006 11.3261 15.0006 10C15.0006 8.67392 14.4738 7.40215 13.5361 6.46447C12.5984 5.52678 11.3267 5 10.0006 5ZM10.0006 7C10.3945 6.99993 10.7847 7.07747 11.1487 7.22817C11.5127 7.37887 11.8434 7.5998 12.122 7.87833C12.4007 8.15686 12.6217 8.48754 12.7725 8.85149C12.9233 9.21544 13.001 9.60553 13.0011 9.9995C13.0011 10.3935 12.9236 10.7836 12.7729 11.1476C12.6222 11.5116 12.4013 11.8423 12.1227 12.121C11.8442 12.3996 11.5135 12.6206 11.1496 12.7714C10.7856 12.9223 10.3955 12.9999 10.0016 13C9.20592 13 8.44286 12.6839 7.88025 12.1213C7.31764 11.5587 7.00157 10.7956 7.00157 10C7.00157 9.20435 7.31764 8.44129 7.88025 7.87868C8.44286 7.31607 9.20592 7 10.0016 7M15.2516 3.5C14.92 3.5 14.6021 3.6317 14.3677 3.86612C14.1333 4.10054 14.0016 4.41848 14.0016 4.75C14.0016 5.08152 14.1333 5.39946 14.3677 5.63388C14.6021 5.8683 14.92 6 15.2516 6C15.5831 6 15.901 5.8683 16.1355 5.63388C16.3699 5.39946 16.5016 5.08152 16.5016 4.75C16.5016 4.41848 16.3699 4.10054 16.1355 3.86612C15.901 3.6317 15.5831 3.5 15.2516 3.5Z" fill="currentColor"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-btn" aria-label="Facebook">
+                        <svg width="11" height="19" viewBox="0 0 11 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.325 0C6.09837 0 4.92199 0.487275 4.05463 1.35463C3.18728 2.22199 2.7 3.39837 2.7 4.625V7.2H0.225C0.101 7.2 0 7.3 0 7.425V10.825C0 10.949 0.0999999 11.05 0.225 11.05H2.7V18.025C2.7 18.149 2.8 18.25 2.925 18.25H6.325C6.449 18.25 6.55 18.15 6.55 18.025V11.05H9.047C9.15 11.05 9.24 10.98 9.265 10.88L10.115 7.48C10.1234 7.44682 10.1241 7.41217 10.117 7.37869C10.11 7.34521 10.0954 7.31377 10.0744 7.28678C10.0533 7.25978 10.0264 7.23793 9.99571 7.22289C9.96497 7.20786 9.93121 7.20003 9.897 7.2H6.55V4.625C6.55 4.52323 6.57005 4.42245 6.60899 4.32842C6.64794 4.23439 6.70503 4.14896 6.77699 4.07699C6.84896 4.00503 6.93439 3.94794 7.02842 3.90899C7.12245 3.87005 7.22323 3.85 7.325 3.85H9.925C10.049 3.85 10.15 3.75 10.15 3.625V0.225C10.15 0.101 10.05 0 9.925 0H7.325Z" fill="currentColor"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-btn" aria-label="Twitter">
+                        <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" fill="currentColor"></path></svg>
+                    </a>
+                    <a href="#" class="social-btn" aria-label="YouTube">
+                        <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.75 0C9.559 0 8.17 0.028 6.816 0.066L6.761 0.0679998C5.383 0.107 4.271 0.138 3.395 0.283C2.482 0.434 1.724 0.723 1.118 1.346C0.51 1.971 0.245 2.744 0.12 3.669C7.45058e-09 4.559 0 5.687 0 7.089V8.613C0 10.013 7.45058e-09 11.141 0.12 12.032C0.244 12.957 0.51 13.73 1.118 14.355C1.724 14.979 2.482 15.267 3.395 15.418C4.271 15.563 5.383 15.594 6.761 15.633L6.816 15.635C8.171 15.673 9.559 15.701 10.75 15.701C11.941 15.701 13.33 15.673 14.684 15.635L14.739 15.633C16.117 15.594 17.229 15.563 18.105 15.418C19.018 15.267 19.776 14.978 20.382 14.355C20.99 13.73 21.256 12.957 21.38 12.032C21.5 11.142 21.5 10.014 21.5 8.612V7.088C21.5 5.687 21.5 4.559 21.38 3.669C21.256 2.744 20.99 1.971 20.382 1.346C19.776 0.722 19.018 0.434 18.105 0.283C17.229 0.138 16.117 0.107 14.738 0.0679998L14.684 0.066C13.373 0.0262088 12.0616 0.00420675 10.75 0ZM9.622 10.501C9.50796 10.5661 9.3788 10.6002 9.24747 10.5998C9.11613 10.5993 8.98721 10.5644 8.87361 10.4985C8.76001 10.4326 8.66571 10.338 8.60014 10.2242C8.53457 10.1104 8.50004 9.98134 8.5 9.85V5.85C8.50004 5.71866 8.53457 5.58964 8.60014 5.47583C8.66571 5.36203 8.76001 5.26744 8.87361 5.20153C8.98721 5.13562 9.11613 5.10069 9.24747 5.10025C9.3788 5.0998 9.50796 5.13386 9.622 5.199L13.122 7.199C13.2367 7.26462 13.332 7.35939 13.3984 7.47371C13.4647 7.58803 13.4996 7.71784 13.4996 7.85C13.4996 7.98216 13.4647 8.11197 13.3984 8.22629C13.332 8.34061 13.2367 8.43538 13.122 8.501L9.622 10.501Z" fill="currentColor"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: BRIGHT SMOOTH FORM -->
+        <div class="footer__right">
+            <form id="footerForm" class="form-container">
+                <h3 class="form-title">{t('footer.formTitle')}</h3>
+                
+                <div class="form-grid">
+                    <div class="input-group">
+                        <input type="text" name="firstName" class="input-smooth" placeholder={t('footer.firstName')} required>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" name="lastName" class="input-smooth" placeholder={t('footer.lastName')} required>
+                    </div>
+                </div>
+                
+                <div class="input-group" style="margin-bottom: 24px;">
+                    <input type="tel" name="phone" class="input-smooth" placeholder={t('footer.phoneNumber')} required>
+                </div>
+                
+                <div class="input-group" style="margin-bottom: 24px;">
+                    <input type="email" name="email" class="input-smooth" placeholder={t('footer.email')} required>
+                </div>
+                
+                <div class="input-group">
+                    <textarea name="message" class="input-smooth" placeholder={t('footer.projectDescription')} rows="5"></textarea>
+                </div>
+                
+                <div class="submit-wrap">
+                    <button type="submit" class="btn-smooth">{t('footer.sendRequest')}</button>
+                </div>
+
+                <!-- Success overlay for footer form -->
+                <div class="footer__success-overlay" id="footerSuccess" role="status" aria-live="polite" aria-hidden="true">
+                    <div class="footer__success-icon" aria-hidden="true">✓</div>
+                    <h3 class="footer__success-title">{t('footer.thankYouTitle')}</h3>
+                    <p class="footer__success-msg">{t('footer.thankYouMessage')}</p>
+                    <button type="button" class="footer__success-close" id="footerSuccessClose">{t('common.close')}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="copyright">
+        <p set:html={t('footer.copyrightFull')}></p>
+    </div>
+</footer>
+
+<script>
+// @ts-nocheck
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('footerForm');
+  const overlay = document.getElementById('footerSuccess');
+  const closeBtn = document.getElementById('footerSuccessClose');
+  let autoDismiss = null;
+
+  function hide() {
+    if (overlay) {
+      overlay.classList.remove('active');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+    if (form) {
+      form.classList.remove('is-submitted');
+      form.reset();
+    }
+    if (autoDismiss) {
+      clearTimeout(autoDismiss);
+      autoDismiss = null;
+    }
+  }
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const firstName = formData.get('firstName') as string;
+      const lastName = formData.get('lastName') as string;
+      const phone = formData.get('phone') as string;
+      const email = formData.get('email') as string;
+      const message = formData.get('message') as string;
+
+      try {
+        const response = await fetch('/api/sendemail.json', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            type: 'contact', 
+            firstName, 
+            lastName, 
+            phone, 
+            email, 
+            message 
+          }),
+        });
+
+        const data = await response.json();
+        
+        if (response.ok) {
+          form.classList.add('is-submitted');
+          setTimeout(() => {
+            if (overlay) {
+              overlay.setAttribute('aria-hidden', 'false');
+              overlay.classList.add('active');
+              if (closeBtn) closeBtn.focus();
+            }
+          }, 250);
+
+          autoDismiss = setTimeout(() => hide(), 3500);
+        } else {
+          console.error('Error:', data.error);
+          alert('Failed to submit form');
+        }
+      } catch (error) {
+        console.error('Submission error:', error);
+        alert('Failed to submit form');
+      }
+    });
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', hide);
+});
+</script>
+

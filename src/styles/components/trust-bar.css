@@ -1,0 +1,228 @@
+/* 
+ * GLOBAL STYLES 
+ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-color: #FBFFF4;
+}
+
+/* 
+ * STATS SECTION COMPONENT 
+ */
+.stats-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    
+    /* 
+     * Background matches the gradient image provided:
+     * A soft radial gradient from a lighter moss green to a deep forest green 
+     */
+    background: radial-gradient(circle at 40% 40%, #688556 0%, #466036 60%, #354a28 100%);
+    background-size: cover;
+    background-position: center;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    color: #ffffff;
+}
+
+.stats-section .container {
+    /* Exact width requested */
+    max-width: 1440px; 
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Added padding to ensure text doesn't touch edges if screen is exactly 1440px */
+    padding: 0 20px; 
+}
+
+/* --- LEFT COLUMN (STATS) --- */
+.stats-section .stats-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Tighter vertical spacing like the image */
+}
+
+/* 5000+ PROJECTS */
+.stats-section .stat-block-stacked {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.9;
+    margin-bottom: 2.5rem; /* Space after first block */
+}
+
+.stats-section .stat-number-xl {
+    font-size: 7rem; /* Huge size */
+    font-weight: 800; /* ExtraBold */
+    letter-spacing: -0.02em;
+}
+
+.stats-section .stat-label-spaced {
+    font-size: 2.25rem;
+    font-weight: 500;
+    letter-spacing: 0.12em; /* Wide spacing */
+    text-transform: uppercase;
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+/* 15+ EXPERIENCE & 8 OFFICES */
+.stats-section .stat-block-inline {
+    display: flex;
+    align-items: center; /* Aligns number and text */
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+
+.stats-section .stat-number-l {
+    font-size: 6.5rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.stats-section .stat-text-wrapper {
+    display: flex;
+    align-items: baseline;
+    margin-left: 0.5rem;
+}
+
+.stats-section .stat-label-bold {
+    font-size: 2.25rem;
+    font-weight: 700; /* Bold */
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.stats-section .plus-sign-inline {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-right: 0.2em;
+}
+
+/* BUTTON DESIGN - "Make better" */
+.stats-section .quote-btn {
+    display: inline-block;
+    margin-top: 3.5rem;
+    
+    /* Glassmorphism Effect */
+    background: linear-gradient(135deg, #d0ff9de0 0%, rgba(134, 158, 105, 0.3) 100%);
+    
+    color: #1a2e15; /* Deep Green Text */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800; /* Extra Bold text */
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    border: none;
+    padding: 1.2rem 3rem;
+    border-radius: 100px; /* Pill shape */
+    cursor: pointer;
+    text-transform: uppercase;
+    width: fit-content;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.stats-section .quote-btn:hover {
+    background: #d0ff9de0;
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* --- RIGHT COLUMN (TEXT) --- */
+.stats-section .stats-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Right align everything */
+    text-align: right;
+    max-width: 600px; /* Constrain text width */
+}
+
+.stats-section .heading-right {
+    font-size: 4.5rem; /* Matched to image scale */
+    font-weight: 800; /* ExtraBold */
+    text-transform: uppercase;
+    line-height: 0.95;
+    margin-bottom: 2rem;
+    letter-spacing: -0.01em;
+    color: #ffffff !important;
+}
+
+.stats-section .dots-wrapper {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 2.5rem;
+}
+
+.stats-section .dot {
+    width: 16px;
+    height: 16px;
+    background-color: #ffffff;
+    border-radius: 50%;
+}
+
+.stats-section .description {
+    font-size: 1.25rem; /* Larger body text */
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    font-weight: 500; /* Medium weight matches image */
+    opacity: 0.95;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1200px) {
+    .stats-section .container {
+        flex-direction: column;
+        align-items: center; /* Center everything on smaller desktop */
+        text-align: center;
+        gap: 5rem;
+    }
+    
+    .stats-section .stats-right {
+        align-items: center;
+        text-align: center;
+    }
+    
+    .stats-section .stats-left {
+        align-items: center;
+    }
+    
+    .stats-section .stat-block-stacked, .stats-section .stat-block-inline {
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-section .stat-number-xl { font-size: 5rem; }
+    .stats-section .stat-number-l { font-size: 4.5rem; }
+    .stats-section .heading-right { font-size: 3rem; }
+    .stats-section .stat-label-spaced, .stats-section .stat-label-bold { font-size: 1.5rem; }
+}
+
+/* SCROLL ANIMATION STYLES */
+.stats-section .reveal-item {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.stats-section .reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger Delays */
+.stats-section .delay-100 { transition-delay: 0.1s; }
+.stats-section .delay-200 { transition-delay: 0.2s; }
+.stats-section .delay-300 { transition-delay: 0.3s; }
+.stats-section .delay-400 { transition-delay: 0.4s; }

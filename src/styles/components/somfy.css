@@ -1,0 +1,429 @@
+/* Somfy Component Styles */
+
+:root {
+    --bg-color: #E8F0E6;
+    --accent-green: #2F4F2F;
+    --text-dark: #2F4F24;
+    --white: #ffffff;
+    --bg-card: #EFF7EE;
+    --bg-card-hover: #F5F9F5;
+    --section-text-muted: #E8EDE8;
+    --card-badge-sage: #C8DBC4;
+    --fw-light: 300;
+    --fw-bold: 700;
+    --fw-extra-bold: 800;
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    --ease-smooth: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --duration-fast: 0.3s;
+    --duration-slow: 0.8s;
+    --duration-slower: 1s;
+    --duration-slowest: 1.5s;
+    --radius-medium: 12px;
+    --radius-large: 20px;
+}
+
+/* --- LAYOUT UTILITIES --- */
+.pergola-section {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.pergola-section.somfy-section {
+    background-color: #1f2d14;
+    background-image: 
+    radial-gradient(at 0% 100%, #7E9854 0px, transparent 65%),
+    radial-gradient(at 100% 0%, #7E9854 0px, transparent 65%);
+    background-attachment: fixed;
+}
+
+.pergola-section .col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    position: relative;
+}
+
+.pergola-section .col-text {
+    padding: 6rem 4rem;
+    z-index: 2;
+    background: none;
+    color: var(--white);
+}
+
+.pergola-section .col-image {
+    position: relative;
+    background: none;
+    min-height: 50vh;
+    overflow: hidden;
+}
+
+.pergola-section .bg-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    transition: transform var(--duration-slowest) ease-out;
+}
+
+.pergola-section .col-text.padding-left {
+    padding-right: max(2rem, calc((100% - 1440px) / 2));
+    padding-left: max(2rem, calc((100% - 1440px) / 2));
+    display: block;
+}
+
+.pergola-section .col-text.padding-right {
+    padding-right: max(2rem, calc((100% - 1440px) / 2));
+    padding-left: max(2rem, calc((100% - 1440px) / 2));
+    display: block;
+}
+
+/* --- LOGO --- */
+.pergola-section .logo-products {
+    max-height: 150px;
+    display: inline;
+    align-items: center;
+    padding-bottom: 40px;
+    user-select: none;
+    cursor: pointer;
+    transition: transform 0.3s var(--ease-elastic);
+    text-decoration: none;
+    flex-shrink: 0;
+    min-width: fit-content;
+}
+
+.pergola-section .logo-products:hover { 
+    transform: scale(1.05); 
+}
+
+.pergola-section .logo-products img {
+    width: auto;
+}
+
+/* --- TYPOGRAPHY STYLES --- */
+.pergola-section h4.sub-header {
+    font-size: 1.1rem;
+    font-weight: var(--fw-bold);
+    margin-bottom: 1rem;
+    margin-top: 0;
+    color: var(--white);
+}
+
+.pergola-section .somfy-intro {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--section-text-muted);
+    margin-bottom: 2rem;
+    font-weight: var(--fw-light);
+}
+
+.pergola-section p.item-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--section-text-muted);
+    margin: 0;
+    font-weight: var(--fw-light);
+}
+
+/* --- LIST --- */
+.pergola-section .list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    list-style: none;
+    margin-bottom: 2rem;
+    padding: 0;
+}
+
+.pergola-section .list-item {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+}
+
+.pergola-section .list-num {
+    font-weight: var(--fw-bold);
+    min-width: 20px;
+    color: var(--white);
+}
+
+.pergola-section .list-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--section-text-muted);
+    margin: 0;
+}
+
+/* --- CARD COMPONENT --- */
+.pergola-section .cards-wrapper {
+    position: absolute;
+    bottom: 4rem;
+    left: 4rem;
+    display: flex;
+    gap: 2rem;
+    z-index: 10;
+}
+
+.pergola-section .sensor-card {
+    width: auto;
+    height: 120px;
+    background-color: var(--bg-color);
+    border-radius: var(--radius-large);
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    transition: transform var(--duration-fast) var(--ease-smooth), box-shadow var(--duration-fast) var(--ease-smooth), background-color var(--duration-fast);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.pergola-section .sensor-card:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+    background-color: var(--bg-card-hover);
+}
+
+.pergola-section .card-left {
+    flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4px;
+    min-width: 0;
+}
+
+.pergola-section .card-badge {
+    width: 28px;
+    height: 28px;
+    background-color: var(--card-badge-sage);
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    font-weight: var(--fw-extra-bold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.pergola-section .card-label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.pergola-section .card-label-text {
+    font-size: 0.85rem;
+    font-weight: var(--fw-extra-bold);
+    color: var(--text-dark);
+    text-transform: uppercase;
+    line-height: 1.1;
+    word-break: break-word;
+}
+
+.pergola-section .card-image-box {
+    width: 85px;
+    flex-shrink: 0;
+    background-color: var(--white);
+    border-radius: var(--radius-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+
+.pergola-section .card-icon {
+    width: 100%;
+    height: auto;
+    max-height: 90px;
+    object-fit: contain;
+}
+
+/* --- ANIMATIONS & KEYFRAMES --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Utility Animation Classes */
+.pergola-section .anim-fade-up {
+    opacity: 0;
+    animation: fadeInUp var(--duration-slow) var(--ease-smooth) forwards;
+}
+
+.pergola-section .anim-fade-in {
+    opacity: 0;
+    animation: fadeIn var(--duration-slower) var(--ease-out-expo) forwards;
+}
+
+.pergola-section .anim-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Stagger Delays */
+.pergola-section .delay-100 { animation-delay: 0.1s; }
+.pergola-section .delay-200 { animation-delay: 0.2s; }
+.pergola-section .delay-300 { animation-delay: 0.3s; }
+.pergola-section .delay-400 { animation-delay: 0.4s; }
+
+.pergola-section .delay-card-1 { animation-delay: 0s; }
+.pergola-section .delay-card-2 { animation-delay: 1.5s; }
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+@media (max-width: 992px) {
+    .pergola-section {
+        flex-direction: column;
+        height: auto;
+        min-height: auto;
+    }
+
+    .pergola-section.reverse-mobile {
+        flex-direction: column-reverse;
+    }
+
+    .pergola-section .col-image {
+        min-height: 400px;
+        width: 100%;
+    }
+
+    .pergola-section .col-text {
+        padding: 4rem 2rem;
+        text-align: center;
+    }
+
+    .pergola-section .cards-wrapper {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: -50px;
+        margin-bottom: 2rem;
+        padding: 0 1rem;
+        gap: 1.2rem;
+    }
+
+    .pergola-section .sensor-card {
+        width: 180px;
+        height: 110px;
+    }
+}
+
+@media (max-width: 768px) {
+    
+    .pergola-section .col-text {
+        text-align: center;
+    }
+
+    .pergola-section .cards-wrapper {
+        gap: 0.8rem;
+    }
+
+    .pergola-section .sensor-card {
+        width: 160px;
+        height: 100px;
+        padding: 8px;
+    }
+
+    .pergola-section .card-left {
+        padding: 3px 3px;
+    }
+
+    .pergola-section .card-badge {
+        width: 24px;
+        height: 24px;
+        font-size: 0.8rem;
+    }
+
+    .pergola-section .card-label-text {
+        font-size: 0.75rem;
+    }
+
+    .pergola-section .card-image-box {
+        width: 70px;
+        padding: 6px;
+    }
+
+    .pergola-section .card-icon {
+        max-height: 55px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pergola-section .col-text {
+        padding: 2.5rem 1rem;
+        text-align: center;
+    }
+
+    .pergola-section .logo-products {
+        margin: 0 auto;
+    }
+
+    .pergola-section .cards-wrapper {
+        gap: 0.6rem;
+        margin-top: -35px;
+        margin-bottom: 1rem;
+        padding: 0 1.5rem;
+    }
+
+    .pergola-section .sensor-card {
+        width: auto;
+        height: 95px;
+        padding: 7px;
+        border-radius: 10px;
+        gap: 6px;
+    }
+
+    .pergola-section .card-left {
+        padding: 2px;
+        gap: 1px;
+    }
+
+    .pergola-section .card-badge {
+        width: 22px;
+        height: 22px;
+        font-size: 0.7rem;
+        border-radius: 5px;
+    }
+
+    .pergola-section .card-label-text {
+        font-size: 0.7rem;
+        line-height: 1;
+    }
+
+    .pergola-section .card-image-box {
+        width: 60px;
+        border-radius: 7px;
+        padding: 5px;
+    }
+
+    .pergola-section .card-icon {
+        max-height: 50px;
+    }
+}

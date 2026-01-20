@@ -1,0 +1,36 @@
+---
+/**
+ * Grid Layout Component
+ * Supports: bento-grid, install-grid, bioclimatic-grid, grid-cards, grid-layout
+ * Responsive grid system with maintained CSS classes
+ */
+
+interface Props {
+  variant?: 'bento' | 'install' | 'bioclimatic' | 'cards' | 'layout';
+  class?: string;
+  gap?: string;
+}
+
+const {
+  variant = 'cards',
+  class: customClass = '',
+  gap = '1.5rem',
+} = Astro.props;
+
+// Map variants to CSS classes
+const variantClassMap = {
+  bento: 'bento-grid',
+  install: 'install-grid',
+  bioclimatic: 'bioclimatic-grid',
+  cards: 'grid-cards',
+  layout: 'grid-layout',
+};
+
+const gridClass = variantClassMap[variant];
+const finalClass = `${gridClass} ${customClass}`;
+const gridStyle = gap ? `--grid-gap: ${gap};` : '';
+---
+
+<div class={finalClass} style={gridStyle}>
+  <slot />
+</div>

@@ -1,0 +1,286 @@
+---
+// @ts-nocheck
+import Layout from "../../layouts/layout.astro";
+import SplineHero from "../../components/splinehero.jsx";
+import Loader from "../../components/loader.jsx";
+import Button from "../../components/button.astro";
+import TrustBar from "../../components/trustbar.astro";
+import OurProducts from "../../components/ourproducts.astro";
+import FAQ from "../../components/faq.astro";
+import Newsletter from "../../components/newsletter.astro";
+import { getLangFromUrl, useTranslations, getLocalizedPath } from "../../i18n";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+	return [
+		{ params: { lang: "en" } },
+		{ params: { lang: "ru" } },
+		{ params: { lang: "az" } },
+	];
+}
+
+const locale = getLangFromUrl(Astro.url);
+const t = useTranslations(locale);
+---
+
+<Layout title={t("hero.title")} description={t("hero.subtitle")}>
+	<!-- Loader Screen -->
+	<Loader client:load />
+
+	<!-- Desktop: Spline 3D Animation (hide on mobile) -->
+	<div class="desktop-hero">
+		<SplineHero client:idle />
+	</div>
+
+	<!-- Mobile: Text + Button + Video (hide on desktop) -->
+	<section class="mobile-hero">
+		<div class="mobile-hero-content">
+			<h1 class="hero-title">{t("hero.title")}</h1>
+			<p class="hero-subtitle">{t("hero.subtitle")}</p>
+			<Button
+				variant="premium"
+				href={getLocalizedPath("/products", locale)}
+				text={t("hero.cta")}
+				ariaLabel={t("hero.cta")}
+			/>
+		</div>
+		<div class="mobile-video">
+			<video
+				autoplay
+				muted
+				loop
+				playsinline
+				preload="metadata"
+				loading="lazy"
+			>
+				<source src="/media/video/pergola.webm" type="video/webm" />
+			</video>
+		</div>
+	</section>
+
+	<!-- Trust Bar Section -->
+	<TrustBar {locale} />
+
+	<!-- About Us Section -->
+	<section id="about-section">
+		<!-- Text Column -->
+		<div class="about-text">
+			<!-- Added reveal classes with delays for staggered effect -->
+			<h2 class="reveal-item">{t("home.about.title")}</h2>
+			<p class="reveal-item delay-100">
+				{t("home.about.description")}
+			</p>
+			<div class="reveal-item delay-200">
+				<a
+					href={getLocalizedPath("/about", locale)}
+					class="read-more-btn">{t("common.readMore")}</a
+				>
+			</div>
+		</div>
+
+		<!-- Image Column -->
+		<div class="about-image reveal-item delay-300">
+			<img
+				src="/images/products/sun-room-systems-medium.webp"
+				alt="Modern Glass Outdoor Structure"
+			/>
+		</div>
+	</section>
+
+	<!-- Products Section -->
+	<OurProducts {locale} />
+
+	<!-- FAQ Section -->
+	<FAQ {locale} />
+
+	<!-- Newsletter Section -->
+	<Newsletter {locale} />
+</Layout>
+
+<style>
+	/* Desktop: Show Spline and Mobile Hero Text */
+	.desktop-hero {
+		display: block;
+	}
+	.mobile-hero {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		background: transparent;
+		min-height: auto;
+		justify-items: center;
+		justify-content: center;
+		padding: 300px 80px;
+		z-index: 10;
+		pointer-events: none;
+	}
+
+	.mobile-hero-content {
+		pointer-events: auto;
+		padding-left: 50px;
+		grid-column: 1;
+	}
+
+	/* Mobile Hero Styles */
+	.mobile-hero-content {
+		max-width: 500px;
+		text-align: left;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		padding-right: 0px;
+	}
+
+	/* Mobile: Hide Spline, Show Mobile Hero */
+	@media (max-width: 1024px) {
+		.desktop-hero {
+			display: none !important;
+		}
+		.mobile-hero {
+			display: flex;
+			position: relative;
+			background-color: #d5f9b6;
+			min-height: 100vh;
+			padding: 4px 4px 4px;
+			z-index: auto;
+			flex-direction: column-reverse;
+		}
+		.mobile-hero-content {
+			text-align: center !important;
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+			align-items: center !important;
+			margin: 0 auto !important;
+			max-width: 100%;
+		}
+		.mobile-hero .btn-premium {
+			margin: 0 auto !important;
+			align-self: center !important;
+		}
+	}
+	@media (max-width: 1624px) {
+		.mobile-hero-content {
+			padding-left: 0px;
+		}
+	}
+
+	@media (max-width: 1220px) {
+		.mobile-hero-content {
+			padding-left: 60px;
+		}
+	}
+	.hero-title {
+		font-family: "Montserrat", sans-serif;
+		font-size: clamp(1.5rem, 6vw, 4rem);
+		font-weight: 800;
+		color: #2d5016;
+		line-height: 1.1;
+		margin-bottom: 24px;
+		letter-spacing: -0.02em;
+	}
+
+	.hero-subtitle {
+		font-family: "Montserrat", sans-serif;
+		font-size: clamp(0.8rem, 3.5vw, 1.5rem);
+		font-weight: 400;
+		color: #4a6b2e;
+		margin-bottom: 40px;
+		line-height: 1.4;
+	}
+
+	.hero-button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 16px;
+		padding: 15px 15px 15px 22px;
+		background-color: #2d5016;
+		color: #dbffbf;
+		font-family: "Montserrat", sans-serif;
+		font-size: 22px;
+		font-weight: 900;
+		text-transform: uppercase;
+		letter-spacing: 0.01em;
+		border-radius: 60px;
+		text-decoration: none;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		box-shadow: 0 10px 30px rgba(45, 80, 22, 0.3);
+	}
+
+	.hero-button svg {
+		width: 45px;
+		height: 45px;
+		background-color: #dbffbf;
+		color: #2d5016;
+		border-radius: 50%;
+		padding: 8px;
+		transition: transform 0.3s ease;
+	}
+
+	.hero-button:active {
+		transform: translateY(2px);
+	}
+
+	/* Mobile Video */
+	.mobile-video {
+		display: none;
+		max-width: 95%;
+		border-radius: 24px;
+		overflow: hidden;
+		align-self: center;
+	}
+
+	.mobile-video video {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	@media (max-width: 1024px) {
+		.mobile-video {
+			display: block;
+			padding-bottom: 50px;
+		}
+	}
+</style>
+
+<script>
+	// @ts-nocheck
+	// Optimized About Section Reveal
+	const initAboutReveal = () => {
+		const revealElements = document.querySelectorAll(".reveal-item");
+		if (revealElements.length === 0) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						requestAnimationFrame(() => {
+							entry.target.classList.add("reveal-active");
+						});
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{
+				root: null,
+				threshold: 0.15,
+				rootMargin: "0px 0px -50px 0px",
+			},
+		);
+
+		revealElements.forEach((el) => observer.observe(el));
+	};
+
+	// Run immediately or on DOMContentLoaded
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", initAboutReveal);
+	} else {
+		initAboutReveal();
+	}
+</script>

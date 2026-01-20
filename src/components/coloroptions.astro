@@ -1,0 +1,180 @@
+---
+// @ts-nocheck
+import Button from './button.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/index';
+import '../styles/components/coloroptions.css';
+
+type ImagesMap = Record<string, string>;
+
+interface Props {
+    images?: ImagesMap;
+}
+
+const { images = {} as ImagesMap } = Astro.props;
+
+// Get language and translations
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// RAL Configuration
+const ralColors = [
+    { code: '9016', hex: '#F7F9F9', text: '#3E464C', border: '#DCE0E0' },
+    { code: '1013', hex: '#EBE2CD', text: '#3E464C', border: '#D0C4A8' },
+    { code: '8014', hex: '#4F3D35', text: '#D1D9D1', border: '#5A483E' },
+    { code: '8019', hex: '#3E3230', text: '#D1D9D1', border: '#5D4B48' },
+    { code: '9005', hex: '#1C1C1C', text: '#D1D9D1', border: '#444444' },
+    { code: '7016', hex: '#31373D', text: '#D1D9D1', border: '#5D676E' }
+];
+
+// Validate images prop
+const requiredCodes = ['9016', '1013', '8014', '8019', '9005', '7016'];
+const imagesTyped = images as ImagesMap;
+const hasAllImages = requiredCodes.every((code: string) => imagesTyped[code]);
+
+if (!hasAllImages) {
+    console.warn('ColorOptions component: Missing image paths for some RAL codes. Expected keys:', requiredCodes);
+}
+
+// Default placeholder images
+const defaultImages: ImagesMap = {
+    '9016': '/images/products/retractable-louvered-roof/color-white.webp',
+    '1013': '/images/products/retractable-louvered-roof/color-beige.webp',
+    '8014': '/images/products/retractable-louvered-roof/color-brown.webp',
+    '8019': '/images/products/retractable-louvered-roof/color-dark-brown.webp',
+    '9005': '/images/products/retractable-louvered-roof/color-black.webp',
+    '7016': '/images/products/retractable-louvered-roof/color-gray.webp'
+};
+
+// Merge provided images with defaults
+const finalImages = { ...defaultImages, ...imagesTyped };
+---
+
+<!-- COMPONENT ROOT -->
+<section class="color-options-section" id="color-options-component">
+    
+    <!-- TITLE -->
+    <div class="co-title-wrapper">
+        <h2 class="co-title" set:html={t('colorOptions.title')}></h2>
+    </div>
+    
+    <!-- DESCRIPTION -->
+    <div class="co-desc-wrapper">
+        <p class="co-description">
+            {t('colorOptions.description')}
+        </p>
+    </div>
+
+    <!-- SWATCHES -->
+    <div class="co-swatches-wrapper">
+        <div id="swatch-list" class="co-swatches-container"></div>
+    </div>
+
+    <!-- BUTTON -->
+    <div class="co-btn-wrapper">
+        <Button variant="premium" text={t('colorOptions.buttonText')} href={`/${lang}/contact`} />
+    </div>
+
+    <!-- IMAGE -->
+    <div class="co-image-wrapper">
+        <div class="co-glow-container">
+            <img id="product-display" class="co-product-image" src="" alt="Pergola Visualization" />
+        </div>
+    </div>
+
+</section>
+
+<!-- @ts-ignore -->
+<script define:vars={{ ralColors, finalImages }}>
+    /**
+     * COLOR OPTIONS LOGIC
+     * Self-contained component with all interactivity
+     */
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const swatchContainer = document.getElementById('swatch-list');
+        const displayImage = document.getElementById('product-display');
+        
+        if (!swatchContainer || !displayImage) {
+            console.error('ColorOptions: Required DOM elements not found');
+            return;
+        }
+        
+        let currentRal = ralColors[0].code;
+
+        function init() {
+            swatchContainer.innerHTML = '';
+
+            ralColors.forEach((color, index) => {
+                // Button construction
+                const btn = document.createElement('button');
+                btn.className = 'co-swatch';
+                btn.setAttribute('data-ral', color.code);
+                btn.setAttribute('aria-label', `Select color RAL ${color.code}`);
+                
+                // Apply styles
+                btn.style.backgroundColor = color.hex;
+                btn.style.borderColor = color.border;
+                btn.style.color = color.text;
+
+                // Text Label
+                const label = document.createElement('span');
+                label.className = 'co-swatch-label';
+                label.textContent = `RAL ${color.code}`;
+                btn.appendChild(label);
+
+                // Event Listener
+                btn.addEventListener('click', () => selectColor(color.code, btn));
+
+                swatchContainer.appendChild(btn);
+
+                // Select first by default
+                if (index === 0) {
+                    btn.classList.add('selected');
+                    updateImage(color.code, true);
+                }
+            });
+        }
+
+        function selectColor(code, btn) {
+            if (currentRal === code) return;
+            currentRal = code;
+
+            document.querySelectorAll('.co-swatch').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+
+            updateImage(code, false);
+        }
+
+        function updateImage(code, immediate) {
+            const src = finalImages[code];
+            if (!src) {
+                console.warn(`ColorOptions: Image source not found for RAL ${code}`);
+                return;
+            }
+
+            if (immediate) {
+                displayImage.src = src;
+                displayImage.classList.add('loaded');
+            } else {
+                displayImage.style.opacity = '0';
+                displayImage.style.transform = 'scale(0.98)';
+                
+                setTimeout(() => {
+                    displayImage.src = src;
+                    displayImage.onload = () => {
+                        displayImage.style.opacity = '1';
+                        displayImage.style.transform = 'scale(1)';
+                        displayImage.classList.add('loaded');
+                    };
+                    if (displayImage.complete) {
+                        displayImage.style.opacity = '1';
+                        displayImage.style.transform = 'scale(1)';
+                        displayImage.classList.add('loaded');
+                    }
+                }, 300);
+            }
+        }
+
+        init();
+    });
+</script>

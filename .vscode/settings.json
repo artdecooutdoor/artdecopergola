@@ -1,0 +1,11 @@
+{
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": true,
+        "markdown": true,
+        "scminput": true,
+        "css": true
+    },
+    "chatgpt.openOnStartup": false
+}

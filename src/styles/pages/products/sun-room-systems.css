@@ -1,0 +1,183 @@
+/* Sun Room Systems Product Page Styles */
+
+:root {
+    --bg-color: #E8F0E6;
+    --accent-green: #2F4F2F;
+    --text-main: #3A403A;
+    --white: #ffffff;
+    --font-main: 'Montserrat', sans-serif;
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* 
+ * MODELS SECTION - IDEAS FOR YOUR SUN ROOM
+ */
+.section-models {
+    padding: 8rem 0;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1f2d14;
+    background-image: 
+    radial-gradient(at 0% 100%, #7E9854 0px, transparent 65%),
+    radial-gradient(at 100% 0%, #7E9854 0px, transparent 65%);
+    color: var(--white);
+}
+
+.section-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+    width: 100%;
+}
+
+.models-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: end;
+}
+
+/* LEFT CONTENT - MODELS INFO */
+.models-info {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.models-hero-title {
+    font-size: clamp(2rem, 3.5vw, 4.8rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 3.5rem;
+    line-height: 1;
+    letter-spacing: -1.5px;
+    font-family: var(--font-main);
+    color: var(--white);
+}
+
+.ideas-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.idea-item {
+    max-width: 480px;
+}
+
+.idea-item h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.2px;
+    font-family: var(--font-main);
+    color: var(--white);
+}
+
+.idea-item p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    line-height: 1.5;
+    font-weight: 400;
+    font-family: var(--font-main);
+    color: var(--white);
+}
+
+/* RIGHT VISUAL - MODELS IMAGE */
+.models-visual {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s, transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+}
+
+.visual-box {
+    background-color: transparent;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+}
+
+.visual-box img {
+    width: 100%;
+    height: auto;
+    transform: scale(1.25);
+    object-fit: contain;
+    display: block;
+}
+
+/* IN-VIEW ANIMATION STATE */
+.in-view {
+    opacity: 1 !important;
+    transform: translate(0, 0) !important;
+}
+
+/* MODELS RESPONSIVENESS */
+@media (max-width: 1024px) {
+    .section-models {
+        padding: 5rem 0;
+    }
+    .models-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        text-align: center;
+    }
+    .models-visual {
+        order: -1;
+        transform: translateY(30px);
+        display: flex;
+        justify-content: center;
+    }
+    .models-info {
+        transform: translateY(30px);
+        display: block;
+    }
+    .models-hero-title {
+        text-align: center;
+        margin-bottom: 2.5rem;
+        width: 100%;
+    }
+    .ideas-list {
+        align-items: center;
+        width: 100%;
+    }
+    .idea-item {
+        text-align: center;
+        margin: 0 auto;
+    }
+    .visual-box {
+        padding: 2.5rem;
+        aspect-ratio: 1.2 / 1;
+        width: 100%;
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 600px) {
+    .section-wrap {
+        padding: 0 1.5rem;
+    }
+    .models-info {
+        transform: translateY(30px);
+        display: block;
+
+    }
+    .models-hero-title {
+        font-size: 2.4rem;
+        letter-spacing: -0.5px;
+    }
+    .idea-item h3 {
+        font-size: 1.2rem;
+    }
+    .visual-box {
+        padding: 1.5rem;
+    }
+    .section-models {
+        padding: 3.5rem 0;
+    }
+}
+

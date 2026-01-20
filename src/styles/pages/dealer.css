@@ -1,0 +1,689 @@
+/* Dealer page styles */
+
+:root {
+  --bg-deep: #1f2d14;
+  --bg-gradient:radial-gradient(at 0% 100%, #7e98549b 0px, transparent 65%),
+    radial-gradient(at 100% 0%, #7e98549b 0px, transparent 65%);;
+  --frame-bg: #84a15990;
+  --frame-card: #c4d5a5;
+  --accent-btn: #C2D2B5;
+  --text-white: #FFFFFF;
+  --text-dark: #41502B;
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.dealer-section {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-deep);
+  background-image: var(--bg-gradient);
+  color: var(--text-white);
+  padding: 80px 20px;
+}
+
+.dealer-section .container {
+  max-width: 1440px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+}
+
+/* TEXT BLOCK (LEFT) */
+.dealer-section .content-side {
+  padding-right: 20px;
+}
+
+.dealer-section .dealer-title {
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 800;
+  color: var(--text-white);
+  line-height: 1.1;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  letter-spacing: -1px;
+}
+
+.dealer-section .dealer-description {
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 400;
+  margin-bottom: 40px;
+  max-width: 500px;
+}
+
+.dealer-section .dealer-description p {
+  margin-bottom: 25px;
+}
+
+.dealer-section .dealer-description .cta-line {
+  margin-top: 30px;
+  font-weight: 500;
+}
+
+/* IMAGE (RIGHT) */
+.dealer-section .image-side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* PHOTO FRAME */
+.dealer-section .photo-frame {
+  background-color: var(--frame-bg);
+  border-radius: 40px;
+  padding: 15px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  width: 100%;
+  max-width: 550px;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s var(--ease-out-expo);
+}
+
+.dealer-section .photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 32px;
+  transition: transform 0.8s ease-out;
+}
+
+.dealer-section .photo-frame:hover {
+  transform: scale(1.02);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+.dealer-section .photo-frame:hover img {
+  transform: scale(1.03);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .dealer-section .container {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .dealer-section .content-side {
+    padding-right: 0;
+  }
+
+  .dealer-section .image-side {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .dealer-section {
+    padding: 50px 20px;
+    min-height: auto;
+  }
+
+  .dealer-section .dealer-title {
+    font-size: 36px;
+    margin-bottom: 25px;
+  }
+
+  .dealer-section .dealer-description {
+    font-size: 16px;
+    margin-bottom: 35px;
+  }
+
+  .dealer-section .photo-frame {
+    max-width: 450px;
+    padding: 20px;
+    border-radius: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dealer-section {
+    padding: 60px 15px;
+    min-height: auto;
+    margin-top: 0;
+  }
+
+  .dealer-section .container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    flex-direction: column;
+    display: flex;
+    margin-top: 80px;
+  }
+
+  .dealer-section .content-side {
+    padding-right: 0;
+  }
+
+  .dealer-section .image-side {
+    order: -1;
+  }
+
+  .dealer-section .dealer-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .dealer-section .dealer-description {
+    font-size: 15px;
+    margin-bottom: 30px;
+  }
+
+  .dealer-section .photo-frame {
+    max-width: 100%;
+    height: auto;
+    padding: 15px;
+    border-radius: 25px;
+    aspect-ratio: 1 / 1;
+  }
+
+  .dealer-section .cta-button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* === SECTION: ADVANTAGES === */
+.advantages-section {
+  width: 100%;
+  padding: 100px 20px;
+  background-color: #FFFFFF;
+}
+
+.advantages-container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.advantages-title {
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 800;
+  text-align: center;
+  color: var(--text-dark);
+  margin-bottom: 70px;
+  letter-spacing: -0.5px;
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px;
+}
+
+/* ADVANTAGE CARD */
+.advantage-card {
+  background-color: var(--frame-bg);
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+}
+
+.advantage-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.advantage-card .card-header {
+  padding: 22px 20px;
+  text-align: center;
+}
+
+.advantage-card .card-header h3 {
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.advantage-card .card-body {
+  background-color: #FFFFFF;
+  margin: 0 12px 12px 12px;
+  padding: 35px;
+  border-radius: 15px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.advantage-card .card-body p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333333;
+  font-weight: 400;
+  text-align: left;
+}
+
+/* RESPONSIVE: ADVANTAGES */
+@media (max-width: 1024px) {
+  .advantages-grid {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .advantages-section {
+    padding: 80px 20px;
+  }
+
+  .advantages-title {
+    margin-bottom: 50px;
+  }
+
+  .advantages-grid {
+    gap: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .advantages-section {
+    padding: 60px 15px;
+  }
+
+  .advantages-title {
+    font-size: 26px;
+    margin-bottom: 40px;
+  }
+
+  .advantage-card .card-header h3 {
+    font-size: 18px;
+  }
+
+  .advantage-card .card-body {
+    padding: 25px;
+  }
+
+  .advantage-card .card-body p {
+    font-size: 15px;
+  }
+}
+
+/* === SECTION: PARTNERSHIP FORM === */
+.partnership-section {
+  width: 100%;
+  padding: 100px 20px;
+  background-color: var(--frame-card);
+}
+
+.partnership-wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.partnership-header {
+  text-align: center;
+  margin-bottom: 60px;
+  max-width: 800px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.pre-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  margin-bottom: 15px;
+  display: block;
+}
+
+.partnership-title {
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 900;
+  line-height: 1.1;
+  color: #2D3A1E;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.partnership-subtitle {
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--text-dark);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* FORM CARD */
+.form-card {
+  background: rgba(255, 255, 255, 0.85);
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 40px;
+  padding: 60px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  opacity: 0;
+  transform: translateY(40px);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.8s var(--ease-out-expo);
+}
+
+/* Success overlay */
+.success-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background: rgba(255,255,255,0.95);
+  color: var(--text-dark);
+  padding: 40px;
+  border-radius: 40px;
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+  pointer-events: none;
+  transition: all 0.6s var(--ease-out-expo);
+}
+
+.success-overlay.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.form-card.is-submitted {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.98);
+}
+
+.form-card.is-submitted .partnership-form {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.6s var(--ease-out-expo);
+}
+
+.success-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, rgba(142, 186, 116, 0.15), rgba(142, 186, 116, 0.06));
+  color: var(--text-dark);
+  border: 2px solid rgba(45,58,30,0.08);
+}
+
+.success-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.success-msg {
+  font-size: 15px;
+  color: #4b5a3d;
+  max-width: 560px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+  .success-overlay {
+    padding: 30px;
+    border-radius: 20px;
+  }
+
+  .success-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .success-title {
+    font-size: 18px;
+  }
+
+  .success-msg {
+    font-size: 14px;
+  }
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dark);
+  margin-bottom: 40px;
+  display: block;
+  border-bottom: 2px solid var(--text-dark);
+  padding-bottom: 10px;
+  width: fit-content;
+}
+
+.partnership-form {
+  width: 100%;
+}
+
+/* Scoped form grid to partnership form to avoid colliding with other site forms (e.g., footer) */
+.partnership-form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 30px 25px;
+  margin-bottom: 40px;
+}
+
+/* INPUTS (scoped to partnership form) */
+.partnership-form .input-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.partnership-form .col-3 { grid-column: span 3; }
+.partnership-form .col-2 { grid-column: span 2; }
+.partnership-form .col-6 { grid-column: span 6; }
+
+.partnership-form .floating-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid var(--frame-card);
+  padding: 18px 24px;
+  border-radius: 12px;
+  font-family: var(--font-main);
+  font-size: 15px;
+  font-weight: 500;
+  color: #2D3A1E;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.partnership-form .floating-input:focus {
+  border-color: var(--text-dark);
+  background: #FFFFFF;
+  box-shadow: 0 10px 30px rgba(90, 109, 65, 0.1);
+  transform: translateY(-2px);
+}
+
+.partnership-form .floating-input::placeholder {
+  color: transparent;
+}
+
+.partnership-form .input-label {
+  position: absolute;
+  left: 24px;
+  top: 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #999;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.partnership-form .floating-input:focus ~ .input-label,
+.partnership-form .floating-input:not(:placeholder-shown) ~ .input-label {
+  top: -24px;
+  left: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+/* FORM FOOTER */
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.legal-text {
+  font-size: 12px;
+  color: #999;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+.submit-button {
+  background: #2D3A1E;
+  color: #FFFFFF;
+  border: none;
+  padding: 20px 60px;
+  border-radius: 50px;
+  font-family: var(--font-main);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 14px;
+}
+
+.submit-button:hover {
+  background: var(--text-dark);
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(45, 58, 30, 0.2);
+}
+
+.submit-button svg {
+  width: 20px;
+  height: 20px;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover svg {
+  transform: translateX(5px);
+}
+
+/* RESPONSIVE: PARTNERSHIP */
+@media (max-width: 768px) {
+  .partnership-section {
+    padding: 80px 20px;
+  }
+
+  .partnership-header {
+    margin-bottom: 50px;
+  }
+
+  .form-card {
+    padding: 40px 25px;
+  }
+
+  .partnership-form .form-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .partnership-form .col-3,
+  .partnership-form .col-2,
+  .partnership-form .col-6 {
+    grid-column: span 1;
+  }
+
+  .form-footer {
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .legal-text {
+    max-width: 100%;
+  }
+
+  .submit-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .partnership-section {
+    padding: 60px 15px;
+  }
+
+  .partnership-title {
+    font-size: 32px;
+  }
+
+  .partnership-subtitle {
+    font-size: 16px;
+  }
+
+  .form-card {
+    padding: 30px 25px;
+    border-radius: 25px;
+  }
+
+  .section-label {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  .partnership-form .floating-input {
+    padding: 15px 18px;
+    font-size: 14px;
+  }
+
+  .partnership-form .input-label {
+    left: 18px;
+    top: 15px;
+  }
+
+  .partnership-form .floating-input:focus ~ .input-label,
+  .partnership-form .floating-input:not(:placeholder-shown) ~ .input-label {
+    left: 5px;
+    top: -20px;
+  }
+
+  .submit-button {
+    padding: 16px 40px;
+    font-size: 12px;
+  }
+
+  .legal-text {
+    font-size: 11px;
+  }
+}

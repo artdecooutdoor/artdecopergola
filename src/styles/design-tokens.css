@@ -1,0 +1,154 @@
+/* 
+ * DESIGN TOKENS & SHARED STYLES
+ * Centralized CSS variables and utility classes
+ * Used across all components and pages
+ */
+
+:root {
+  /* --- COLORS --- */
+  --accent-green: #2F4F2F;
+  --accent-green-light: #5D7553;
+  --accent-green-lighter: #90A988;
+  --accent-green-bg: #EFF7EE;
+  --accent-green-border: #DDE7D9;
+  
+  --text-dark: #1A2E1A;
+  --text-light: #3A4A3A;
+  --text-main: #1A2818;
+  
+  --bg-color: #FFFFFF;
+  --bg-light: #f9f9f9;
+  --bg-card: #EFF7EE;
+  --bg-bio-border: #DDE5DB;
+  
+  --white: #FFFFFF;
+  
+  /* --- TYPOGRAPHY --- */
+  --font-main: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --fw-light: 300;
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extra-bold: 800;
+  --fw-black: 900;
+  
+  /* --- SPACING --- */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 2.5rem;
+  --spacing-3xl: 3rem;
+  --spacing-4xl: 4rem;
+  
+  /* --- BORDER RADIUS --- */
+  --radius-small: 12px;
+  --radius-medium: 16px;
+  --radius-large: 20px;
+  --radius-xlarge: 28px;
+  --radius-round: 100px;
+  
+  /* --- ANIMATIONS --- */
+  --duration-fast: 0.3s;
+  --duration-normal: 0.6s;
+  --duration-slow: 0.8s;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* --- SHADOWS --- */
+  --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* --- ANIMATION CLASSES --- */
+
+/* Reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity var(--duration-slow) ease-out, transform var(--duration-slow) ease-out;
+}
+
+.reveal.is-visible,
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delay utilities */
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
+.delay-500 { transition-delay: 500ms; }
+
+/* In-view state */
+.in-view {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- UTILITY CLASSES --- */
+
+.container-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Image hover scale */
+.image-hover-scale {
+  transition: transform var(--duration-normal) ease;
+}
+
+.image-hover-scale:hover {
+  transform: scale(1.03);
+}
+
+/* Card hover lift */
+.card-hover-lift {
+  transition: transform var(--duration-normal) ease, box-shadow var(--duration-normal) ease;
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* --- RESPONSIVE UTILITIES --- */
+
+@media (max-width: 1366px) {
+  :root {
+    --spacing-3xl: 2.5rem;
+    --spacing-4xl: 3rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --spacing-xl: 1.5rem;
+    --spacing-2xl: 2rem;
+    --spacing-3xl: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --spacing-lg: 1rem;
+    --spacing-xl: 1.5rem;
+    --spacing-2xl: 1.5rem;
+  }
+}

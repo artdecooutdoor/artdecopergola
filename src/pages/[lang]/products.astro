@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/layout.astro';
+import OurProducts from '../../components/ourproducts.astro';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../../i18n';
+export const prerender = true;
+export async function getStaticPaths() {
+	return [
+		{ params: { lang: 'en' } },
+		{ params: { lang: 'ru' } },
+		{ params: { lang: 'az' } },
+	];
+}
+
+const locale = getLangFromUrl(Astro.url);
+const t = useTranslations(locale);
+---
+
+<Layout title={t('products.title')}>
+	<!-- Our Products Component -->
+	<OurProducts {locale} />
+</Layout>

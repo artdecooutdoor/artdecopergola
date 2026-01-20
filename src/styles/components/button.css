@@ -1,0 +1,122 @@
+/* Button component styles */
+
+/* Shared button styles for component variants used across pages */
+.btn-premium {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+
+    justify-content: space-between;
+    gap: 10px;
+
+    background: linear-gradient(90deg, #365c36 0%, #1f3d1f 100%);
+
+    color: #E8F0E6; /* Light greenish white text */
+    font-size: 1.05rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+
+    padding: 8px 8px 8px 32px;
+    border-radius: 65px;
+    text-decoration: none;
+
+    transition: all 0.5s var(--ease-out-expo);
+    align-self: flex-start;
+
+    box-shadow: 0 10px 20px rgba(47, 79, 47, 0.15);
+}
+
+.btn-premium:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(47, 79, 47, 0.3);
+    background: linear-gradient(90deg, #1f3d1f 0%, #365c36 100%);
+}
+
+/* The light green circle containing the icon */
+.btn-icon-circle {
+    background-color: #D1E6CC; /* Pale green circle */
+    color: #1a331a; /* Dark icon color */
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s var(--ease-out-expo), background-color 0.3s ease;
+}
+
+.btn-premium:hover .btn-icon-circle {
+    background-color: #ffffff; /* White circle on hover */
+    transform: rotate(45deg);
+    color: #000;
+}
+
+.btn-icon-circle svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* CTA Button */
+.cta-button {
+    align-self: flex-start;
+    background-color: #c4d5a5;
+    color: var(--accent-green);
+    padding: 1rem 2.5rem;
+    border-radius: 100px;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 10px 20px rgba(93, 117, 83, 0.3);
+    display: inline-block;
+}
+
+.cta-button:hover {
+    background-color: #d6e0c6;
+    transform: translateY(-3px);
+}
+
+/* Ideas section button variant (used in "Ideas for Your Pergola") */
+.btn-ideas {
+    align-self: flex-start;
+    background-color: var(--accent-green);
+    color: var(--bg-color);
+    padding: 1rem 2.5rem;
+    border-radius: 100px;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 10px 20px rgba(93, 117, 83, 0.3);
+    display: inline-block;
+}
+
+.btn-ideas:hover {
+    background-color: var(--artdeco-light-olive);
+    transform: translateY(-3px);
+    color: var(--bg-color);
+} 
+
+/* Basic reset for anchor button elements so variant classes render consistently */
+a.btn-premium, a.cta-button, a.btn-standard, a.hero-button, a.read-more-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* Mobile hero button centered on mobile */
+@media (max-width: 1024px) {
+    .mobile-hero .btn-premium {
+        align-self: center !important;
+    }
+}
+
+

@@ -1,0 +1,294 @@
+/* 
+ * COLOR OPTIONS COMPONENT STYLES
+ * Scoped styles for the Color Options interactive section
+ */
+
+:root {
+    /* Project Colors */
+    --bg-color: #E8F0E6;              /* Page Background */
+    --accent-green: #2F4F2F;          /* Deep Green (Text, Borders) */
+    --btn-gradient-start: #1a331a;    /* Button Gradient Dark */
+    --btn-gradient-end: #2F4F2F;      /* Button Gradient Light */
+    --artdeco-light-olive: #81a760;   /* Highlights, Glows, Active State */
+
+    /* Derived Colors */
+    --co-text-body: #5A665F;
+    
+    /* Dimensions */
+    --co-swatch-width: 60px;
+    --co-swatch-height: 150px;
+    
+    /* Animation */
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* --- COMPONENT LAYOUT (CSS GRID) --- */
+.color-options-section {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 14rem 4rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    
+    display: grid;
+    /* Desktop Layout: 2 Columns */
+    grid-template-columns: 1.15fr 1.2fr; 
+    grid-template-areas: 
+        "title image"
+        "desc image"
+        "swatches image"
+        "button image";
+    
+    gap: 1.5rem 4rem;
+    align-items: start;
+    align-content: center;
+
+    opacity: 0;
+    animation: co-fade-in 1s var(--ease-out-expo) forwards;
+}
+
+/* --- GRID AREAS --- */
+.co-title-wrapper { grid-area: title; }
+.co-desc-wrapper  { grid-area: desc; }
+.co-swatches-wrapper { grid-area: swatches; margin-bottom: 1rem; }
+.co-btn-wrapper { grid-area: button; }
+.co-image-wrapper { 
+    grid-area: image; 
+    align-self: center; 
+    width: 100%;
+}
+
+/* --- TYPOGRAPHY --- */
+.co-title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 0.95;
+    font-weight: 800;
+    color: var(--accent-green);
+    text-transform: uppercase;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.02em;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.co-title span {
+    display: block;
+}
+
+.co-description {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    font-weight: 400;
+    color: var(--co-text-body);
+    margin: 0;
+    max-width: 540px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* --- SWATCHES --- */
+.co-swatches-container {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.co-swatch {
+    position: relative;
+    width: var(--co-swatch-width);
+    height: var(--co-swatch-height);
+    border-radius: 20px;
+    border-width: 6px;
+    border-style: solid;
+    cursor: pointer;
+    transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    outline: none;
+    overflow: hidden;
+    flex-shrink: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.co-swatch:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px #cfd0cc;
+}
+
+.co-swatch.selected {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 5px 10px #a0a19e;
+}
+
+.co-swatch-label {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 2;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* --- IMAGE --- */
+.co-image-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Glow Effect Container */
+.co-glow-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    animation: co-float 6s ease-in-out infinite;
+}
+
+.co-product-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    transform: scale(1.3) !important;
+    object-fit: contain;
+    display: block;
+    transition: opacity 0.4s ease-in-out, transform 0.5s ease-out;
+    opacity: 0;
+    border-radius: 8px;
+}
+
+.co-product-image.loaded {
+    opacity: 1;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes co-fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes co-float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes co-pulse {
+    0% { opacity: 0.6; transform: scale(0.95); }
+    50% { opacity: 0.9; transform: scale(1.05); }
+    100% { opacity: 0.6; transform: scale(0.95); }
+}
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+
+/* Tablet & Mobile Layout (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .color-options-section {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "title"
+            "desc"
+            "image"
+            "swatches"
+            "button";
+        gap: 2.5rem;
+        padding: 4rem 2rem;
+        text-align: center;
+    }
+
+    .co-title {
+        font-size: 3rem;
+        margin: 0 auto 1rem auto;
+        color: var(--accent-green);
+        display: block;
+        width: 100%;
+    }
+    
+    .co-description {
+        max-width: 600px;
+        margin: 0 auto 1rem auto;
+    }
+
+    /* Image sizing for tablet */
+    .co-image-wrapper {
+        margin: 0 auto;
+        width: 60%;
+        max-width: 450px;
+    }
+
+    /* Center the swatches wrapper */
+    .co-swatches-wrapper {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .co-swatches-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+        overflow-x: visible;
+        padding: 10px;
+        mask-image: none;
+        -webkit-mask-image: none;
+        margin: 0 auto;
+    }
+    
+    .co-swatch {
+        flex: 0 0 auto;
+        width: 60px;
+        height: 150px;
+    }
+
+    /* Center Button */
+    .co-btn-wrapper {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 600px) {
+    .color-options-section {
+        padding: 3rem 1.5rem;
+        gap: 2rem;
+    }
+
+    .co-title {
+        font-size: 2.2rem;
+    }
+    
+    .co-image-wrapper {
+        width: 85%;
+    }
+
+    /* Grid layout for mobile: 6 columns */
+    .co-swatches-container {
+        display: grid;
+        grid-template-columns: repeat(6, 0.1fr);
+        gap: 8px;
+        justify-items: center;
+        width: 100%;
+        max-width: 360px;
+    }
+    
+    /* Reduced swatch size for mobile */
+    .co-swatch {
+        width: 48px;
+        height: 115px;
+        border-width: 4px;
+        border-radius: 16px;
+    }
+
+    .co-swatch-label {
+        font-size: 0.65rem;
+    }
+}

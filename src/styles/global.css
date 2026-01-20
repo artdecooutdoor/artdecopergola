@@ -1,0 +1,31 @@
+/* Global styles - Main stylesheet for Art Deco */
+
+/* All @import directives must be at the top without comments between them */
+@import "./variables.css";
+@import "./base.css";
+@import "./utilities.css";
+@import "./components/navigation.css";
+@import "./components/footer.css";
+@import "./components/button.css";
+@import "./components/trust-bar.css";
+@import "./pages/index.css";
+
+/* Hide Spline logo watermark - Aggressive approach */
+#logo,
+spline-viewer #logo,
+spline-viewer-wrapper #logo,
+#spline-logo,
+a[href*="spline"],
+a[href*="spline.design"],
+a[href*="spline.design"] > *,
+canvas + div,
+canvas ~ div[style*="position"],
+div[style*="bottom"][style*="right"][style*="position: absolute"],
+.spline-watermark {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}

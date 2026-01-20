@@ -1,0 +1,148 @@
+---
+import '../styles/components/newsletter.css';
+import { useTranslations } from '../i18n';
+import type { Locale } from '../types';
+
+interface Props {
+  locale?: string;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale as Locale);
+---
+
+<section class="newsletter-section" id="newsletterRef">
+	<div class="newsletter__container">
+		
+		<!-- Left Side: Pergola Image -->
+		<div class="newsletter__left-spacer">
+			<img src="/images/hero/pergola-white.webp" alt="Pergola" class="newsletter__pergola-image">
+		</div>
+
+		<!-- Right Side: Content Block -->
+		<div class="newsletter__content">
+			<h2 class="newsletter__title">{t('newsletter.title')}</h2>
+			<p class="newsletter__subtitle">
+				{t('newsletter.subtitle')}
+			</p>
+
+			<form id="newsletterForm" class="newsletter__form">
+				<div class="newsletter__input-wrapper">
+					<input 
+						id="newsletterEmail"
+						name="email"
+						type="email" 
+						class="newsletter__input" 
+						placeholder={t('newsletter.emailPlaceholder')} 
+						required 
+						aria-label={t('newsletter.emailLabel')}
+					>
+				</div>
+				<button type="submit" class="newsletter__btn">
+					<span>{t('newsletter.subscribe')}</span>
+				</button>
+			</form>
+
+			<!-- Success overlay (shown after submit) -->
+			<div class="newsletter__success-overlay" id="newsletterSuccess" role="status" aria-live="polite" aria-hidden="true">
+				<div class="newsletter__success-icon" aria-hidden="true">✓</div>
+				<h3 class="newsletter__success-title">{t('newsletter.thankYouTitle')}</h3>
+				<p class="newsletter__success-msg">{t('newsletter.thankYouMessage')}</p>
+				<button type="button" class="newsletter__success-close" id="newsletterSuccessClose">Close</button>
+			</div>
+		</div>
+
+	</div>
+</section>
+
+<script>
+// @ts-nocheck
+document.addEventListener('DOMContentLoaded', () => {
+	const newsletterSection = document.getElementById('newsletterRef');
+
+	const observer = new IntersectionObserver((entries) => {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				entry.target.classList.add('is-visible');
+				observer.unobserve(entry.target);
+			}
+		});
+	}, {
+		threshold: 0.2,
+		rootMargin: '0px'
+	});
+
+	if (newsletterSection) {
+		observer.observe(newsletterSection);
+	}
+
+	// Submit -> show success overlay
+	const form = document.getElementById('newsletterForm');
+	const input = document.getElementById('newsletterEmail');
+	const overlay = document.getElementById('newsletterSuccess');
+	const closeBtn = document.getElementById('newsletterSuccessClose');
+	let autoDismissTimer = null;
+
+	function hideOverlay() {
+		if (overlay) {
+			overlay.classList.remove('active');
+			overlay.setAttribute('aria-hidden', 'true');
+		}
+		if (form) {
+			form.classList.remove('is-submitted');
+			form.reset();
+			if (input) input.focus();
+		}
+		if (autoDismissTimer) {
+			clearTimeout(autoDismissTimer);
+			autoDismissTimer = null;
+		}
+	}
+
+	if (form) {
+		form.addEventListener('submit', async (e) => {
+			e.preventDefault();
+			
+			const formData = new FormData(form);
+			const email = formData.get('email') as string;
+			
+			try {
+				const response = await fetch('/api/sendemail.json', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ type: 'newsletter', email }),
+				});
+
+				const data = await response.json();
+				
+				if (response.ok) {
+					// sink the form and show overlay
+					form.classList.add('is-submitted');
+					setTimeout(() => {
+						if (overlay) {
+							overlay.setAttribute('aria-hidden', 'false');
+							overlay.classList.add('active');
+							if (closeBtn) closeBtn.focus();
+						}
+					}, 250);
+
+					// auto dismiss after 3.5s
+					autoDismissTimer = setTimeout(() => {
+						hideOverlay();
+					}, 3500);
+				} else {
+					console.error('Error:', data.error);
+					alert('Failed to subscribe');
+				}
+			} catch (error) {
+				console.error('Submission error:', error);
+				alert('Failed to subscribe');
+			}
+		});
+	}
+
+	if (closeBtn) {
+		closeBtn.addEventListener('click', hideOverlay);
+	}
+});
+</script>

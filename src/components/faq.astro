@@ -1,0 +1,190 @@
+---
+import '../styles/components/faq.css';
+import { useTranslations } from '../i18n';
+import type { Locale } from '../types';
+
+interface Props {
+  locale?: string;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale as Locale);
+---
+
+<section class="faq-section">
+	<div class="faq-section__container">
+		
+		<header class="faq-header u-reveal">
+			<h2 class="faq-header__title">{t('faq.title')}</h2>
+			<p class="faq-header__subtitle">{t('faq.subtitle')}</p>
+		</header>
+
+		<div class="faq-list">
+
+			<!-- Q1 -->
+			<div class="faq-item u-reveal u-delay-100">
+				<button class="faq-item__trigger" aria-expanded="false">
+					<span class="faq-item__question">{t('faq.q1.question')}</span>
+					<div class="faq-item__icon-wrapper">
+						<svg class="faq-item__icon" viewBox="0 0 24 24" fill="none">
+							<path d="M12 5V19M5 12H19" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</div>
+				</button>
+				<div class="faq-item__content-wrapper">
+					<div class="faq-item__content">
+						<div class="faq-item__text">
+							{t('faq.q1.answer')}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Q2 -->
+			<div class="faq-item u-reveal u-delay-200">
+				<button class="faq-item__trigger" aria-expanded="false">
+					<span class="faq-item__question">{t('faq.q2.question')}</span>
+					<div class="faq-item__icon-wrapper">
+						<svg class="faq-item__icon" viewBox="0 0 24 24" fill="none">
+							<path d="M12 5V19M5 12H19" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</div>
+				</button>
+				<div class="faq-item__content-wrapper">
+					<div class="faq-item__content">
+						<div class="faq-item__text" set:html={t('faq.q2.answer')}></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Q3 -->
+			<div class="faq-item u-reveal u-delay-300">
+				<button class="faq-item__trigger" aria-expanded="false">
+					<span class="faq-item__question">{t('faq.q3.question')}</span>
+					<div class="faq-item__icon-wrapper">
+						<svg class="faq-item__icon" viewBox="0 0 24 24" fill="none">
+							<path d="M12 5V19M5 12H19" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</div>
+				</button>
+				<div class="faq-item__content-wrapper">
+					<div class="faq-item__content">
+						<div class="faq-item__text">
+							{t('faq.q3.answer')}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Q4 -->
+			<div class="faq-item u-reveal u-delay-100">
+				<button class="faq-item__trigger" aria-expanded="false">
+					<span class="faq-item__question">{t('faq.q4.question')}</span>
+					<div class="faq-item__icon-wrapper">
+						<svg class="faq-item__icon" viewBox="0 0 24 24" fill="none">
+							<path d="M12 5V19M5 12H19" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</div>
+				</button>
+				<div class="faq-item__content-wrapper">
+					<div class="faq-item__content">
+						<div class="faq-item__text">
+							{t('faq.q4.answer')}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Q5 -->
+			<div class="faq-item u-reveal u-delay-200">
+				<button class="faq-item__trigger" aria-expanded="false">
+					<span class="faq-item__question">{t('faq.q5.question')}</span>
+					<div class="faq-item__icon-wrapper">
+						<svg class="faq-item__icon" viewBox="0 0 24 24" fill="none">
+							<path d="M12 5V19M5 12H19" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</div>
+				</button>
+				<div class="faq-item__content-wrapper">
+					<div class="faq-item__content">
+						<div class="faq-item__text">
+							{t('faq.q5.answer')}
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<script>
+	// @ts-nocheck
+	// Optimized FAQ Component Script
+	
+	// Use passive event listeners and event delegation for better performance
+	const initFAQ = () => {
+		const faqList = document.querySelector('.faq-list');
+		if (!faqList) return;
+
+		const faqItems = faqList.querySelectorAll('.faq-item');
+		
+		// Event delegation - single listener instead of multiple
+		faqList.addEventListener('click', (e) => {
+			const trigger = e.target.closest('.faq-item__trigger');
+			if (!trigger) return;
+			
+			const item = trigger.closest('.faq-item');
+			if (!item) return;
+			
+			const isOpen = item.classList.contains('is-open');
+			
+			// Close all other items (optimized with requestAnimationFrame)
+			requestAnimationFrame(() => {
+				faqItems.forEach((otherItem) => {
+					if (otherItem !== item && otherItem.classList.contains('is-open')) {
+						otherItem.classList.remove('is-open');
+						const otherTrigger = otherItem.querySelector('.faq-item__trigger');
+						if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+					}
+				});
+				
+				// Toggle current item
+				item.classList.toggle('is-open', !isOpen);
+				trigger.setAttribute('aria-expanded', String(!isOpen));
+			});
+		});
+
+		// Optimized Scroll Reveal with IntersectionObserver
+		const revealElements = document.querySelectorAll('.faq-section .u-reveal');
+		if (revealElements.length === 0) return;
+		
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						// Use requestAnimationFrame for smoother animation
+						requestAnimationFrame(() => {
+							entry.target.classList.add('is-active');
+						});
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{
+				root: null,
+				threshold: 0.15,
+				rootMargin: '0px 0px -80px 0px'
+			}
+		);
+		
+		revealElements.forEach((el) => observer.observe(el));
+	};
+
+	// Run on DOMContentLoaded or immediately if already loaded
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initFAQ);
+	} else {
+		initFAQ();
+	}
+</script>

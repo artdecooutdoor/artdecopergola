@@ -1,0 +1,81 @@
+---
+import '../styles/components/trust-bar.css';
+import { useTranslations } from '../i18n';
+import type { Locale } from '../types';
+
+interface Props {
+  locale?: string;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = useTranslations(locale as Locale);
+---
+
+<section class="stats-section">
+  <div class="container">
+    
+    <!-- LEFT COLUMN -->
+    <div class="stats-left">
+      
+      <!-- 5000+ PROJECTS -->
+      <div class="stat-block-stacked reveal-item delay-100">
+        <span class="stat-number-xl">5000+</span>
+        <span class="stat-label-spaced">{t('trustBar.projects')}</span>
+      </div>
+
+      <!-- 15+ EXPERIENCE -->
+      <div class="stat-block-inline reveal-item delay-200">
+        <span class="stat-number-l">15</span>
+        <div class="stat-text-wrapper">
+          <span class="plus-sign-inline">+</span>
+          <span class="stat-label-bold">{t('trustBar.experience')}</span>
+        </div>
+      </div>
+
+      <!-- 8 OFFICES -->
+      <div class="stat-block-inline reveal-item delay-300">
+        <span class="stat-number-l">8</span>
+        <div class="stat-text-wrapper">
+          <span class="stat-label-bold" style="margin-left: 1rem;">{t('trustBar.offices')}</span>
+        </div>
+      </div>
+
+      <div class="reveal-item delay-400">
+        <button class="quote-btn" onclick="event.preventDefault(); document.querySelector('footer').scrollIntoView({behavior: 'smooth', block: 'start'});">{t('trustBar.getQuote')}</button>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="stats-right">
+      <h2 class="heading-right reveal-item delay-100" set:html={t('trustBar.heading')}></h2>
+
+      <div class="dots-wrapper reveal-item delay-200">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+
+      <p class="description reveal-item delay-300" set:html={t('trustBar.description1')}></p>
+
+      <p class="description reveal-item delay-400" set:html={t('trustBar.description2')}></p>
+    </div>
+
+  </div>
+</section>
+
+<script is:inline>
+  // Intersection Observer для анимации элементов при скролле
+  const revealItems = document.querySelectorAll('.reveal-item');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-active');
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  revealItems.forEach(item => observer.observe(item));
+</script>

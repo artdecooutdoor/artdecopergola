@@ -1,0 +1,610 @@
+/* Retractable Pergola Roof Product Page Styles */
+
+:root {
+    --bg-color: #E8F0E6;
+    --accent-green: #2F4F2F;
+    --btn-gradient-start: #1a331a;
+    --btn-gradient-end: #2F4F2F;
+    --text-dark: #2F4F24;
+    --white: #ffffff;
+    --bg-card: #EFF7EE;
+    --bg-card-hover: #F5F9F5;
+    --bg-border: #c5dbbc;
+    --artdeco-light-olive: #81a760;
+    --font-main: 'Montserrat', sans-serif;
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    --ease-smooth: cubic-bezier(0.23, 1, 0.32, 1);
+    --section-text-muted: #E8EDE8;
+    --card-badge-sage: #C8DBC4;
+    --fw-light: 300;
+    --fw-bold: 700;
+    --fw-extra-bold: 800;
+    --fw-black: 900;
+    --duration-fast: 0.3s;
+    --duration-slow: 0.8s;
+    --duration-slower: 1s;
+    --duration-slowest: 1.5s;
+    --radius-medium: 12px;
+    --radius-large: 20px;
+    --co-swatch-width: 60px;
+    --co-swatch-height: 150px;
+}
+
+/* --- LAYOUT UTILS --- */
+.main-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 14rem 1rem 14rem 1rem;
+}
+
+@media (max-width: 1024px) {
+    .main-container {
+        padding: 3rem 3rem 1rem 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        padding: 3rem 2.5rem 1rem 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .main-container {
+        padding: 3rem 2rem 3rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-container {
+        padding: 2rem 1.75rem 2rem 0.75rem;
+    }
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    color: var(--accent-green);
+}
+
+/* 
+ * SECTION 1: MODEL SELECTOR 
+ */
+.model-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+.model-card {
+    background: #798e75;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 4px solid transparent;
+    display: flex;
+    flex-direction: column;
+}
+
+.model-card img {
+    width: 100%;
+    height: -webkit-fill-available;
+    border-radius: 10px;
+    object-fit: contain;
+    background: var(--bg-color);
+    padding: 1rem;
+}
+
+.model-card-footer {
+    padding: 1rem;
+    text-align: center;
+    background-color: #798e75;
+    color: var(--bg-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+}
+
+.model-card.active {
+    border-color: var(--artdeco-light-olive);
+    transform: translateY(-5px);
+    background-color: var(--artdeco-light-olive);
+    box-shadow: 0 10px 30px rgba(81, 132, 9, 0.15);
+}
+
+.model-card.active .model-card-footer {
+    background-color: var(--artdeco-light-olive);
+}
+
+/* 
+ * SECTION 2: STRUCTURAL DETAILS 
+ */
+.structural-section {
+    margin-bottom: 6rem;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.layout {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+    .layout {
+        grid-template-columns: 500px 1fr;
+        gap: 3rem;
+    }
+}
+
+.structural-info h2 {
+    font-size: 3rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
+
+.structural-desc {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-body);
+    margin-bottom: 2rem;
+    max-width: 600px;
+}
+
+/* 
+ * STRUCTURAL DETAILS - CARDS
+ */
+.grid-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 501px) {
+    .grid-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.card {
+    background: var(--bg-color);
+    border: 1px solid var(--bg-border);
+    border-radius: 20px;
+    padding: 1rem;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    gap: 1rem;
+    aspect-ratio: 1.6/1;
+    will-change: transform, opacity, box-shadow, border-color;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover, .card.active {
+    border: 6px solid #90A988;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(47, 58, 37, 0.1);
+}
+
+.card-meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 0 0 35%;
+}
+
+.card-id {
+    width: 30px;
+    height: 30px;
+    background-color: #DDE7D9;
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--accent-green);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.card:hover .card-id, .card.active .card-id {
+    background-color: #90A988;
+    color: #FFF;
+}
+
+.card-name {
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    line-height: 1.1;
+    color: var(--accent-green);
+}
+
+.card-img {
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+.card-img-src {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: opacity 0.3s ease;
+}
+
+/* 
+ * VISUALIZER / DIAGRAM
+ */
+.vis-container {
+    background: #dde7d9;
+    border-radius: 24px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    min-height: 500px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vis-frame {
+    width: 100%;
+    height: 100%;
+    background: #ecf5eb;
+    border-radius: 12px;
+    padding: 3rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.vis-frame-img {
+    width: 100%;
+    height: auto;
+    position: relative;
+    display: block;
+}
+
+.diagram-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+    transition: opacity 0.3s ease;
+}
+
+.marker-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* MARKERS */
+.marker {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: #90A988;
+    border: 3px solid #FFF;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    z-index: 2;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.3s, border-color 0.3s;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    background: var(--accent-green);
+    color: #FFF;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 97%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 7px;
+  border-style: double;
+  border-color: var(--accent-green) transparent transparent transparent;
+}
+
+.marker:hover, .marker.active {
+    transform: translate(-50%, -50%) scale(1.4);
+    border-color: var(--accent-green);
+    background-color: #FFF;
+    z-index: 10;
+}
+
+.marker:hover .tooltip, .marker.active .tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* PERGOLA MECHANICAL DATA SECTION */
+.pergola-section.mechanical-section {
+    background-color: #1f2d14;
+    background-image: 
+    radial-gradient(at 0% 100%, #7E9854 0px, transparent 65%),
+    radial-gradient(at 100% 0%, #7E9854 0px, transparent 65%);
+    background-attachment: fixed;
+}
+
+/* --- LOGO --- */
+.logo-products {
+    max-height: 150px;
+    display: inline;
+    align-items: center;
+    padding-bottom: 40px;
+    user-select: none;
+    cursor: pointer;
+    transition: transform 0.3s var(--ease-elastic);
+    text-decoration: none;
+    flex-shrink: 0;
+    min-width: fit-content;
+}
+
+.logo-products:hover { 
+    transform: scale(1.05); 
+}
+
+/* --- TYPOGRAPHY STYLES --- */
+.pergola-section h3.item-title {
+    font-size: 1.5rem;
+    font-weight: var(--fw-bold);
+    margin: 0 0 0.5rem 0;
+    text-transform: uppercase;
+    color: var(--white);
+}
+
+.pergola-section .item-block {
+    margin-bottom: 2.5rem;
+}
+
+/* 
+ * SECTION 3: COLOR OPTIONS
+ */
+.color-options-section {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    grid-template-areas: 
+        "title image"
+        "desc image"
+        "swatches image"
+        "button image";
+    gap: 1.5rem 4rem;
+    align-items: start;
+    margin-top: 4rem;
+}
+
+.co-title-wrapper { grid-area: title; }
+.co-desc-wrapper { grid-area: desc; }
+.co-swatches-wrapper { grid-area: swatches; margin-bottom: 1rem; }
+.co-btn-wrapper { grid-area: button; }
+.co-image-wrapper {
+    grid-area: image;
+    align-self: center;
+    width: 100%;
+}
+
+.co-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 0.95;
+    font-weight: 800;
+    color: var(--accent-green);
+    text-transform: uppercase;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.02em;
+}
+
+.co-title span { display: block; }
+
+.co-description {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    font-weight: 400;
+    color: var(--text-body);
+    margin: 0;
+    max-width: 540px;
+}
+
+/* Swatches */
+.co-swatches-container {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.co-swatch {
+    position: relative;
+    width: var(--co-swatch-width);
+    height: var(--co-swatch-height);
+    border-radius: 20px;
+    border-width: 6px;
+    border-style: solid;
+    cursor: pointer;
+    transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    outline: none;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.co-swatch:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px #cfd0cc;
+}
+
+.co-swatch.selected {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 5px 10px #a0a19e;
+}
+
+.co-swatch-label {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none;
+    font-family: 'Montserrat', sans-serif;
+    z-index: 2;
+}
+
+
+
+.co-product-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    display: block;
+    border-radius: 8px;
+    transition: opacity 0.3s ease;
+}
+
+/* 
+ * RESPONSIVENESS FOR CONFIGURATOR
+ */
+@media (max-width: 1024px) {
+    .model-selector-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .structural-info {
+        order: 0;
+    }
+    
+    .color-options-section {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "title"
+            "desc"
+            "image"
+            "swatches"
+            "button";
+        text-align: center;
+        gap: 2rem;
+    }
+
+    .co-title, .structural-info h2 {
+        font-size: 2.5rem;
+        margin: 0 auto 1rem;
+    }
+    .co-description, .structural-desc { margin: 0 auto 1rem; }
+    .co-swatches-container, .co-btn-wrapper { justify-content: center; }
+    .co-image-wrapper { width: 70%; margin: 0 auto; }
+    .grid-cards { max-width: 100%; margin: 0 auto; }
+    
+    .tooltip {
+    font-size: 0.65rem;
+    padding: 4px 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .model-selector-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .co-product-image {
+        transform: scale(1);
+    }
+
+    .grid-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .card {
+        padding: 0.8rem;
+        aspect-ratio: 1.5/1;
+    }
+
+    .card-id {
+        width: 25px;
+        height: 25px;
+        font-size: 0.9rem;
+    }
+
+    .card-name {
+        font-size: 0.85rem;
+    }
+
+    .co-swatches-container {
+        display: grid;
+        grid-template-columns: repeat(6, 0.1fr);
+        gap: 8px;
+        width: 100%;
+        max-width: 360px;
+        margin: 0 auto;
+    }
+    .tooltip {
+    font-size: 0.6rem;
+    padding: 3px 8px;
+    }
+    
+    .co-swatch {
+        width: 48px;
+        height: 115px;
+        border-width: 4px;
+        border-radius: 16px;
+    }
+
+    .co-swatch-label { font-size: 0.65rem; }
+    .co-image-wrapper { width: 90%; }
+    .vis-container { padding: 1rem; min-height: 250px; }
+    .section-header h1 { font-size: 2.2rem; }
+}
+
+@media (max-width: 480px) {
+    .tooltip {
+        font-size: 0.5rem;
+        padding: 2px 6px;
+    }
+}  

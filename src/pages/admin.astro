@@ -1,21 +1,14 @@
----
-// This route will serve the Sanity Studio admin panel
-// It should not be pre-rendered for SSR compatibility
-export const prerender = false;
-
-// Redirect to Sanity Studio
-return Astro.redirect('https://artdeco.sanity.studio');
----
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sanity Studio</title>
+    <meta http-equiv="refresh" content="0; url=https://artdeco.sanity.studio/" />
+    <title>Redirecting…</title>
   </head>
   <body>
-    <div id="sanity"></div>
-    <script type="module" src="/sanity-studio.js"></script>
+    <p>Redirecting to admin panel…</p>
+    <script>
+      window.location.href = "https://artdeco.sanity.studio/";
+    </script>
   </body>
 </html>

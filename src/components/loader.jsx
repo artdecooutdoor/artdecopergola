@@ -16,21 +16,39 @@ export default function Loader() {
     // Disable scrolling while loader is visible
     document.body.style.overflow = 'hidden';
 
-    const loadTimer = setTimeout(() => {
-      setExiting(true);
-    }, 1000);
+    let loadTimer;
+    let removeTimer;
 
-    const removeTimer = setTimeout(() => {
-      setLoading(false);
-      document.body.style.overflow = 'auto';
-    }, 1800);
+    // Listen for Spline ready event
+    const handleSplineReady = () => {
+      setExiting(true);
+      removeTimer = setTimeout(() => {
+        setLoading(false);
+        document.body.style.overflow = 'auto';
+      }, 800); // Smooth exit animation
+    };
+
+    // Fallback: if Spline doesn't load in 3 seconds, hide loader anyway
+    const fallbackTimer = setTimeout(() => {
+      if (loading && !exiting) {
+        setExiting(true);
+        removeTimer = setTimeout(() => {
+          setLoading(false);
+          document.body.style.overflow = 'auto';
+        }, 800);
+      }
+    }, 3000);
+
+    window.addEventListener('spline-ready', handleSplineReady);
 
     return () => {
       clearTimeout(loadTimer);
       clearTimeout(removeTimer);
+      clearTimeout(fallbackTimer);
+      window.removeEventListener('spline-ready', handleSplineReady);
       document.body.style.overflow = 'auto';
     };
-  }, []);
+  }, [loading, exiting]);
 
   if (!loading) return null;
 
@@ -91,7 +109,12 @@ export default function Loader() {
           width: 0%;
           height: 100%;
           background: #fff;
-          animation: loadProgress 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: loadProgress 2.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        /* Infinite progress animation - continues until Spline is ready */
+        .loading-line-bar {
+          animation: infiniteLoad 3s cubic-bezier(0.22, 1, 0.36, 1) infinite;
         }
 
         /* --- EXIT ANIMATIONS --- */
@@ -117,6 +140,13 @@ export default function Loader() {
 
         @keyframes loadProgress {
           0% { width: 0%; }
+          100% { width: 100%; }
+        }
+
+        /* Infinite progress bar - smoothly loops until Spline is ready */
+        @keyframes infiniteLoad {
+          0% { width: 10%; }
+          50% { width: 85%; }
           100% { width: 100%; }
         }
 

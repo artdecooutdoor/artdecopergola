@@ -7,6 +7,11 @@ export default function SplineHero() {
   const containerRef = useRef(null);
 
   useEffect(() => {
+    // Notify loader that Spline is ready
+    const notifyLoaderReady = () => {
+      window.dispatchEvent(new CustomEvent('spline-ready'));
+    };
+
     // Wait for DOM to be fully ready and container to have dimensions
     const checkAndLoad = () => {
       if (!containerRef.current) return;
@@ -63,6 +68,11 @@ export default function SplineHero() {
     };
   }, [isReady]);
 
+  const handleSplineLoad = () => {
+    // Notify loader that Spline is fully loaded
+    window.dispatchEvent(new CustomEvent('spline-ready'));
+  };
+
   return (
     <div 
       ref={containerRef}
@@ -77,7 +87,10 @@ export default function SplineHero() {
       }}
     >
       {isReady && isLoaded && (
-        <Spline scene="https://draft.spline.design/bLAZ8OQgI4ETVhl3/scene.splinecode" />
+        <Spline 
+          scene="https://draft.spline.design/bLAZ8OQgI4ETVhl3/scene.splinecode" 
+          onLoad={handleSplineLoad}
+        />
       )}
       
       {/* SEO H1 - hidden but indexable */}

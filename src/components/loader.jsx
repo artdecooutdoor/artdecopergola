@@ -16,8 +16,8 @@ export default function Loader() {
     // Disable scrolling while loader is visible
     document.body.style.overflow = 'hidden';
 
-    let loadTimer;
     let removeTimer;
+    let fallbackTimer;
 
     // Listen for Spline ready event
     const handleSplineReady = () => {
@@ -25,30 +25,28 @@ export default function Loader() {
       removeTimer = setTimeout(() => {
         setLoading(false);
         document.body.style.overflow = 'auto';
-      }, 800); // Smooth exit animation
+      }, 800);
     };
 
     // Fallback: if Spline doesn't load in 3 seconds, hide loader anyway
-    const fallbackTimer = setTimeout(() => {
-      if (loading && !exiting) {
-        setExiting(true);
-        removeTimer = setTimeout(() => {
-          setLoading(false);
-          document.body.style.overflow = 'auto';
-        }, 800);
-      }
+    fallbackTimer = setTimeout(() => {
+      setExiting(true);
+      removeTimer = setTimeout(() => {
+        setLoading(false);
+        document.body.style.overflow = 'auto';
+      }, 800);
     }, 3000);
 
     window.addEventListener('spline-ready', handleSplineReady);
 
     return () => {
-      clearTimeout(loadTimer);
       clearTimeout(removeTimer);
       clearTimeout(fallbackTimer);
       window.removeEventListener('spline-ready', handleSplineReady);
+      // Always restore scroll when component unmounts
       document.body.style.overflow = 'auto';
     };
-  }, [loading, exiting]);
+  }, []); // Empty dependency array - run only once
 
   if (!loading) return null;
 

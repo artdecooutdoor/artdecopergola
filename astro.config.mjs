@@ -39,23 +39,12 @@ export default defineConfig({
   // Build configuration
   build: {
     inlineStylesheets: 'auto',
-    format: 'file',
-    assets: '_astro',
   },
 
   // Vite configuration
   vite: {
     css: {
       devSourcemap: true,
-    },
-    build: {
-      cssCodeSplit: true,
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: false,
-        },
-      },
     },
   },
 

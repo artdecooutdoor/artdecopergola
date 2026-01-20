@@ -172,6 +172,7 @@ const t = useTranslations(locale);
 	@media (max-width: 1220px) {
 		.mobile-hero-content {
 			padding-left: 60px;
+			padding-bottom: 50px;
 		}
 	}
 	.hero-title {
@@ -229,10 +230,11 @@ const t = useTranslations(locale);
 	/* Mobile Video */
 	.mobile-video {
 		display: none;
-		max-width: 95%;
+		max-width: 100%;
 		border-radius: 24px;
 		overflow: hidden;
 		align-self: center;
+		transform: scale(1.02);
 	}
 
 	.mobile-video video {
@@ -244,7 +246,8 @@ const t = useTranslations(locale);
 	@media (max-width: 1024px) {
 		.mobile-video {
 			display: block;
-			padding-bottom: 50px;
+			padding-bottom: 20px;
+			padding-top: 75px;
 		}
 	}
 </style>

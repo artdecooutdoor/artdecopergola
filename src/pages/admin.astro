@@ -2,6 +2,9 @@
 // This route will serve the Sanity Studio admin panel
 // It should not be pre-rendered for SSR compatibility
 export const prerender = false;
+
+// Redirect to Sanity Studio
+return Astro.redirect('https://artdeco.sanity.studio');
 ---
 
 <!DOCTYPE html>

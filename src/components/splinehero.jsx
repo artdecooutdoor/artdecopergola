@@ -1,14 +1,37 @@
 import Spline from '@splinetool/react-spline';
 
 export default function SplineHero() {
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    // Delay Spline loading until interaction or after 3s
+    const timer = setTimeout(() => setIsLoaded(true), 3000);
+    
+    const handleInteraction = () => {
+      setIsLoaded(true);
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('scroll', handleInteraction);
+      clearTimeout(timer);
+    };
+
+    document.addEventListener('click', handleInteraction, { once: true });
+    document.addEventListener('scroll', handleInteraction, { once: true });
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="spline-hero-wrapper" style={{ 
-      width: '100%', 
-      height: '1100px',
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
-      <Spline scene="https://draft.spline.design/bLAZ8OQgI4ETVhl3/scene.splinecode" />
+    <div 
+      className="spline-hero-wrapper" 
+      style={{ 
+        width: '100%', 
+        height: '1100px',
+        position: 'relative',
+        overflow: 'hidden',
+        backgroundColor: '#d2f2b3'
+      }}
+    >
+      {isLoaded ? <Spline scene="https://draft.spline.design/bLAZ8OQgI4ETVhl3/scene.splinecode" /> : null}
       {/* SEO H1 - hidden but indexable */}
       <h1 style={{
         position: 'absolute',

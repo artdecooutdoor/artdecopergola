@@ -3,22 +3,38 @@ import Spline from '@splinetool/react-spline';
 
 export default function SplineHero() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const containerRef = useRef(null);
 
   useEffect(() => {
+    // Wait for DOM to be fully ready and container to have dimensions
+    const checkAndLoad = () => {
+      if (!containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      // Check if container has actual dimensions
+      if (rect.width > 0 && rect.height > 0) {
+        setIsReady(true);
+      }
+    };
+
+    // Initial check after a small delay
+    const timer = setTimeout(checkAndLoad, 100);
+
     // Intersection Observer for lazy loading
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Load Spline only when element becomes visible
+          if (entry.isIntersecting && entry.boundingClientRect.width > 0) {
+            // Only load when visible AND has dimensions
+            setIsReady(true);
             setIsLoaded(true);
             observer.unobserve(entry.target);
           }
         });
       },
       {
-        rootMargin: '50px', // Start loading 50px before viewport
+        rootMargin: '100px',
         threshold: 0.01
       }
     );
@@ -27,12 +43,25 @@ export default function SplineHero() {
       observer.observe(containerRef.current);
     }
 
+    // Also watch for resize to ensure dimensions are valid
+    const handleResize = () => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0 && !isReady) {
+        setIsReady(true);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
     return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
       if (containerRef.current) {
         observer.unobserve(containerRef.current);
       }
     };
-  }, []);
+  }, [isReady]);
 
   return (
     <div 
@@ -41,12 +70,13 @@ export default function SplineHero() {
       style={{ 
         width: '100%', 
         height: '1100px',
+        minHeight: '1100px',
         position: 'relative',
         overflow: 'hidden',
         backgroundColor: '#d2f2b3'
       }}
     >
-      {isLoaded && (
+      {isReady && isLoaded && (
         <Spline scene="https://draft.spline.design/bLAZ8OQgI4ETVhl3/scene.splinecode" />
       )}
       
@@ -82,6 +112,12 @@ export default function SplineHero() {
           display: none !important;
           opacity: 0 !important;
           visibility: hidden !important;
+        }
+        
+        .spline-hero-wrapper {
+          display: block;
+          width: 100%;
+          height: 1100px;
         }
         
         /* Hide on mobile to save performance */

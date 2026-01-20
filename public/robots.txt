@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /.env
+Disallow: /private
 
-Sitemap: https://yoursite.com/sitemap.xml
+Sitemap: https://artdecopergola.com/sitemap.xml
 
 

@@ -9,6 +9,17 @@ export default function SplineHero() {
       overflow: 'hidden'
     }}>
       <Spline scene="https://draft.spline.design/bLAZ8OQgI4ETVhl3/scene.splinecode" />
+      {/* SEO H1 - hidden but indexable */}
+      <h1 style={{
+        position: 'absolute',
+        left: '-9999px',
+        top: '-9999px',
+        width: '1px',
+        height: '1px',
+        overflow: 'hidden'
+      }}>
+        Premium Pergolas and Outdoor Living Solutions
+      </h1>
       {/* Overlay to hide Spline logo */}
       <div style={{
         position: 'absolute',

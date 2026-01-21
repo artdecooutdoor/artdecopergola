@@ -1,3 +1,5 @@
+export const prerender = false;
+
 import { Resend } from 'resend';
 import { createClient } from '@sanity/client';
 
@@ -6,7 +8,6 @@ const SANITY_API_TOKEN = import.meta.env.SANITY_API_TOKEN;
 
 const resend = new Resend(RESEND_API_KEY);
 
-// Create Sanity client with token inside API route
 const sanityClient = createClient({
   projectId: 'py6y7j4v',
   dataset: 'production',
@@ -18,28 +19,20 @@ const sanityClient = createClient({
 const ADMIN_EMAIL = 'artdeco.can@gmail.com';
 const FROM_EMAIL = 'onboarding@resend.dev';
 
-/**
- * Validate email format
- */
 function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
-/**
- * Handle newsletter subscription
- */
 async function handleNewsletter(data: any) {
   const { email } = data;
-
-  // Save to Sanity
+  
   await sanityClient.create({
     _type: 'newsletterSubscription',
     email,
     subscribedAt: new Date().toISOString(),
   });
 
-  // Send admin notification
   await resend.emails.send({
     from: FROM_EMAIL,
     to: [ADMIN_EMAIL],
@@ -47,7 +40,6 @@ async function handleNewsletter(data: any) {
     html: `<p>New subscriber: <strong>${email}</strong></p>`,
   });
 
-  // Send confirmation to user
   await resend.emails.send({
     from: FROM_EMAIL,
     to: [email],
@@ -55,7 +47,6 @@ async function handleNewsletter(data: any) {
     html: `
       <h2>Newsletter Subscription Confirmed</h2>
       <p>Thank you for subscribing to ArtDeco newsletter!</p>
-      <p>You will receive updates about our latest products and offers.</p>
       <p>Best regards,<br>ArtDeco Team</p>
     `,
   });
@@ -63,18 +54,13 @@ async function handleNewsletter(data: any) {
   return { success: true };
 }
 
-/**
- * Handle footer contact form
- */
 async function handleFooterContact(data: any) {
   const { email, firstName, lastName, phone, message } = data;
 
-  // Validate required fields
   if (!firstName || !lastName || !email || !phone || !message) {
     throw new Error('Missing required footer contact fields');
   }
 
-  // Save to Sanity as contactFormSubmission
   await sanityClient.create({
     _type: 'contactFormSubmission',
     firstName,
@@ -86,8 +72,8 @@ async function handleFooterContact(data: any) {
     submittedAt: new Date().toISOString(),
   });
 
-  // Send admin notification
-  const messageHtml = message ? message.replace(/\n/g, '<br>') : '';
+  const messageHtml = message.replace(/\n/g, '<br>');
+  
   await resend.emails.send({
     from: FROM_EMAIL,
     to: [ADMIN_EMAIL],
@@ -103,7 +89,6 @@ async function handleFooterContact(data: any) {
     `,
   });
 
-  // Send confirmation to user
   await resend.emails.send({
     from: FROM_EMAIL,
     to: [email],
@@ -118,18 +103,13 @@ async function handleFooterContact(data: any) {
   return { success: true };
 }
 
-/**
- * Handle city contact form (Global Network)
- */
 async function handleCityContact(data: any) {
   const { email, firstName, lastName, phone, message, city } = data;
 
-  // Validate required fields
   if (!firstName || !lastName || !email || !phone || !message || !city) {
     throw new Error('Missing required city contact fields');
   }
 
-  // Save to Sanity as contactFormByCity
   await sanityClient.create({
     _type: 'contactFormByCity',
     firstName,
@@ -141,8 +121,8 @@ async function handleCityContact(data: any) {
     submittedAt: new Date().toISOString(),
   });
 
-  // Send admin notification
-  const messageHtml = message ? message.replace(/\n/g, '<br>') : '';
+  const messageHtml = message.replace(/\n/g, '<br>');
+
   await resend.emails.send({
     from: FROM_EMAIL,
     to: [ADMIN_EMAIL],
@@ -159,7 +139,6 @@ async function handleCityContact(data: any) {
     `,
   });
 
-  // Send confirmation to user
   await resend.emails.send({
     from: FROM_EMAIL,
     to: [email],
@@ -174,18 +153,13 @@ async function handleCityContact(data: any) {
   return { success: true };
 }
 
-/**
- * Handle dealer application
- */
 async function handleDealer(data: any) {
   const { email, firstName, lastName, phone, country, city, postal, companyName, website } = data;
 
-  // Validate required fields for dealer
   if (!firstName || !lastName || !email || !phone || !country || !city) {
     throw new Error('Missing required dealer fields');
   }
 
-  // Save to Sanity
   const docToCreate: any = {
     _type: 'dealerApplication',
     firstName,
@@ -203,7 +177,6 @@ async function handleDealer(data: any) {
 
   await sanityClient.create(docToCreate);
 
-  // Send admin notification
   const adminHtml = `
     <h2>New Dealer Application</h2>
     <p><strong>Name:</strong> ${firstName} ${lastName}</p>
@@ -224,7 +197,6 @@ async function handleDealer(data: any) {
     html: adminHtml,
   });
 
-  // Send confirmation to user
   await resend.emails.send({
     from: FROM_EMAIL,
     to: [email],
@@ -239,28 +211,13 @@ async function handleDealer(data: any) {
   return { success: true };
 }
 
-/**
- * Main POST handler
- */
 export async function POST({ request }: any) {
   try {
-    let formData: any = {};
-
-    // Handle empty body
-    const contentType = request.headers.get('content-type');
-    if (contentType?.includes('application/json')) {
-      const text = await request.text();
-      if (text) {
-        formData = JSON.parse(text);
-      }
-    }
-
+    const formData = await request.json();
     const { type, email } = formData;
 
-    // Debug logging
     console.log('Form submission received:', { type, email });
 
-    // Validate required fields
     if (!email || !type) {
       console.warn('Missing email or type:', { email, type });
       return new Response(
@@ -272,7 +229,6 @@ export async function POST({ request }: any) {
       );
     }
 
-    // Validate email format
     if (!isValidEmail(email)) {
       console.warn('Invalid email format:', email);
       return new Response(
@@ -286,7 +242,6 @@ export async function POST({ request }: any) {
 
     let result;
 
-    // Route to appropriate handler based on type
     console.log('Routing to handler for type:', type);
 
     if (type === 'newsletter') {

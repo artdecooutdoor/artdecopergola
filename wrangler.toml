@@ -1,6 +1,7 @@
 name = "artdeco-api"
 main = "functions/api/sendemail.js"
 compatibility_date = "2025-01-21"
+pages_build_output_dir = "dist"
 
 [env.production]
 vars = { ENVIRONMENT = "production", PUBLIC_SITE_URL = "https://artdecopergola.com" }

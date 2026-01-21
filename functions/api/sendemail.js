@@ -68,14 +68,16 @@ async function handleNewsletter(data, resend, fromEmail, adminEmail, sanityClien
 
   // Save to Sanity
   try {
-    await sanityClient.create({
+    const docToCreate = {
       _type: "newsletterSubscription",
       email,
       subscribedAt: new Date().toISOString(),
-    });
+    };
+    
+    await sanityClient.create(docToCreate);
   } catch (err) {
     console.error("Sanity save error (newsletter):", err.message);
-    // Continue even if Sanity fails
+    throw err;
   }
 
   // Send admin notification
@@ -115,7 +117,7 @@ async function handleFooterContact(data, resend, fromEmail, adminEmail, sanityCl
 
   // Save to Sanity as contactFormSubmission
   try {
-    await sanityClient.create({
+    const docToCreate = {
       _type: "contactFormSubmission",
       firstName,
       lastName,
@@ -124,7 +126,9 @@ async function handleFooterContact(data, resend, fromEmail, adminEmail, sanityCl
       message,
       source: "footer",
       submittedAt: new Date().toISOString(),
-    });
+    };
+    
+    await sanityClient.create(docToCreate);
   } catch (err) {
     console.error("Sanity save error (footer contact):", err.message);
     throw err;
@@ -175,7 +179,7 @@ async function handleCityContact(data, resend, fromEmail, adminEmail, sanityClie
 
   // Save to Sanity as contactFormByCity
   try {
-    await sanityClient.create({
+    const docToCreate = {
       _type: "contactFormByCity",
       firstName,
       lastName,
@@ -184,7 +188,9 @@ async function handleCityContact(data, resend, fromEmail, adminEmail, sanityClie
       message,
       city,
       submittedAt: new Date().toISOString(),
-    });
+    };
+    
+    await sanityClient.create(docToCreate);
   } catch (err) {
     console.error("Sanity save error (city contact):", err.message);
     throw err;
@@ -236,7 +242,7 @@ async function handleDealer(data, resend, fromEmail, adminEmail, sanityClient) {
 
   // Save to Sanity
   try {
-    await sanityClient.create({
+    const docToCreate = {
       _type: "dealerApplication",
       firstName,
       lastName,
@@ -244,11 +250,14 @@ async function handleDealer(data, resend, fromEmail, adminEmail, sanityClient) {
       email,
       country,
       city,
-      postal: postal || null,
-      companyName: companyName || null,
-      website: website || null,
       appliedAt: new Date().toISOString(),
-    });
+    };
+    
+    if (postal) docToCreate.postal = postal;
+    if (companyName) docToCreate.companyName = companyName;
+    if (website) docToCreate.website = website;
+    
+    await sanityClient.create(docToCreate);
   } catch (err) {
     console.error("Sanity save error (dealer):", err.message);
     throw err;

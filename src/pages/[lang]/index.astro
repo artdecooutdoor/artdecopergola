@@ -23,13 +23,11 @@ const t = useTranslations(locale);
 ---
 
 <Layout title={t("hero.title")} description={t("hero.subtitle")}>
-	<!-- Loader Screen -->
-	<Loader client:load />
-
 	<!-- Desktop: Spline 3D Animation (hide on mobile) -->
-	<!-- Using client:visible for better performance - loads only when scrolled into view -->
 	<div class="desktop-hero">
-		<SplineHero client:visible />
+		<SplineHero client:only="react" />
+		<!-- Overlay to hide Spline logo - OUTSIDE React so it loads immediately -->
+		<div class="spline-logo-overlay"></div>
 	</div>
 
 	<!-- Mobile: Text + Button + Video (hide on desktop) -->
@@ -101,6 +99,19 @@ const t = useTranslations(locale);
 	/* Desktop: Show Spline and Mobile Hero Text */
 	.desktop-hero {
 		display: block;
+		position: relative;
+	}
+	
+	/* Overlay to hide Spline logo - loads immediately, not waiting for React */
+	.spline-logo-overlay {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		width: 350px;
+		height: 100px;
+		background-color: #d2f2b3;
+		z-index: 999999;
+		pointer-events: none;
 	}
 	.mobile-hero {
 		display: grid;

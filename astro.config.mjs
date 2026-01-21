@@ -1,19 +1,18 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
 import cloudflare from '@astrojs/cloudflare';
-
 import sanity from '@sanity/astro';
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'static',
+  output: 'server',
   adapter: cloudflare(),
   integrations: [
-    react(),
     sanity({
       projectId: 'py6y7j4v',
       dataset: 'production',
+      useCdn: true,
+      apiVersion: '2025-01-28',
     }),
   ],
 

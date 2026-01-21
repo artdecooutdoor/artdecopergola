@@ -334,7 +334,7 @@ const t = useTranslations(locale);
 				const website = formData.get("website") as string;
 
 				try {
-					const response = await fetch("/api/sendemail.json", {
+					const response = await fetch("/form", {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({

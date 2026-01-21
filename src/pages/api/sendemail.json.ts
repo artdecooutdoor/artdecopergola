@@ -1,5 +1,4 @@
-export const prerender = false;
-
+import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { createClient } from '@sanity/client';
 
@@ -13,33 +12,51 @@ const sanityClient = createClient({
   projectId: 'py6y7j4v',
   dataset: 'production',
   useCdn: false,
-  apiVersion: '2024-01-01',
+  apiVersion: '2025-01-28',
   token: SANITY_API_TOKEN,
 });
 
 const ADMIN_EMAIL = 'artdeco.can@gmail.com';
 const FROM_EMAIL = 'onboarding@resend.dev'; // Using Resend's verified domain
 
-export async function POST({ request }: any) {
+function isValidEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+export const POST: APIRoute = async ({ request }) => {
   try {
-    let formData: any = {};
-    
-    // Handle empty body
-    const contentType = request.headers.get('content-type');
-    if (contentType?.includes('application/json')) {
-      const text = await request.text();
-      if (text) {
-        formData = JSON.parse(text);
-      }
+    const formData = await request.json();
+    const { type, email, firstName, lastName, phone, message, country, city, postal, companyName, website } = formData;
+
+    // Validate required fields
+    if (!email || !type) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Missing required fields: email and type',
+        }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
     }
 
-    const { type, email, firstName, lastName, phone, message, country, city, postal, companyName, website } = formData;
+    // Validate email format
+    if (!isValidEmail(email)) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Invalid email format',
+        }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
 
     // Save to Sanity based on form type
     if (type === 'newsletter') {
       await sanityClient.create({
         _type: 'newsletterSubscription',
         email,
+        subscribedAt: new Date().toISOString(),
       });
 
       // Send admin notification
@@ -62,6 +79,7 @@ export async function POST({ request }: any) {
         email,
         message,
         source: 'footer',
+        submittedAt: new Date().toISOString(),
       });
 
       // Send admin notification
@@ -84,7 +102,7 @@ export async function POST({ request }: any) {
       }
     } 
     else if (type === 'dealer') {
-      const dealerDoc: any = {
+      await sanityClient.create({
         _type: 'dealerApplication',
         firstName,
         lastName,
@@ -92,14 +110,12 @@ export async function POST({ request }: any) {
         phone,
         country,
         city,
-      };
-      
-      // Add optional fields only if they exist
-      if (postal) dealerDoc.postal = postal;
-      if (companyName) dealerDoc.companyName = companyName;
-      if (website) dealerDoc.website = website;
-      
-      await sanityClient.create(dealerDoc);
+        postal,
+        companyName,
+        website,
+        status: 'pending',
+        appliedAt: new Date().toISOString(),
+      });
 
       // Send admin notification
       const dealerResult = await resend.emails.send({
@@ -131,6 +147,7 @@ export async function POST({ request }: any) {
         phone,
         message,
         city,
+        submittedAt: new Date().toISOString(),
       });
 
       // Send admin notification
@@ -156,13 +173,16 @@ export async function POST({ request }: any) {
 
     return new Response(
       JSON.stringify({ success: true, message: 'Form submitted successfully' }),
-      { status: 200 }
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error) {
     console.error('Form submission error:', error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Failed to submit form' }),
-      { status: 500 }
+      JSON.stringify({ 
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to submit form' 
+      }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
-}
+};

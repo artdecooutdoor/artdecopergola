@@ -4,3 +4,4 @@ compatibility_date = "2025-01-21"
 
 [env.production]
 vars = { ENVIRONMENT = "production", PUBLIC_SITE_URL = "https://artdecopergola.com" }
+

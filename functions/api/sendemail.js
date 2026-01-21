@@ -103,6 +103,113 @@ async function handleNewsletter(data, resend, fromEmail, adminEmail, sanityClien
 }
 
 /**
+ * Handle footer contact form
+ */
+async function handleFooterContact(data, resend, fromEmail, adminEmail, sanityClient) {
+  const { email, firstName, lastName, phone, message } = data;
+
+  // Save to Sanity as contactFormSubmission
+  try {
+    await sanityClient.create({
+      _type: "contactFormSubmission",
+      firstName,
+      lastName,
+      phone,
+      email,
+      message,
+      source: "footer",
+      submittedAt: new Date().toISOString(),
+    });
+  } catch (err) {
+    console.error("Sanity save error (footer contact):", err.message);
+  }
+
+  // Send admin notification
+  await resend.emails.send({
+    from: fromEmail,
+    to: [adminEmail],
+    subject: `New Contact Request from ${firstName} ${lastName} (Footer)`,
+    html: `
+      <h2>New Contact Request - Footer Form</h2>
+      <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Phone:</strong> ${phone}</p>
+      <p><strong>Message:</strong></p>
+      <p>${message.replace(/\n/g, "<br>")}</p>
+    `,
+    reply_to: email,
+  });
+
+  // Send confirmation to user
+  await resend.emails.send({
+    from: fromEmail,
+    to: [email],
+    subject: "We received your message",
+    html: `
+      <h2>Thank you for contacting ArtDeco</h2>
+      <p>We have received your message and will get back to you as soon as possible.</p>
+      <p>Best regards,<br>ArtDeco Team</p>
+    `,
+  });
+
+  return { success: true };
+}
+
+/**
+ * Handle city contact form (Global Network)
+ */
+async function handleCityContact(data, resend, fromEmail, adminEmail, sanityClient) {
+  const { email, firstName, lastName, phone, message, city } = data;
+
+  // Save to Sanity as contactFormByCity
+  try {
+    await sanityClient.create({
+      _type: "contactFormByCity",
+      firstName,
+      lastName,
+      phone,
+      email,
+      message,
+      city,
+      submittedAt: new Date().toISOString(),
+    });
+  } catch (err) {
+    console.error("Sanity save error (city contact):", err.message);
+  }
+
+  // Send admin notification
+  await resend.emails.send({
+    from: fromEmail,
+    to: [adminEmail],
+    subject: `New Inquiry from ${firstName} ${lastName} - ${city}`,
+    html: `
+      <h2>New Global Network Inquiry</h2>
+      <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Phone:</strong> ${phone}</p>
+      <p><strong>City:</strong> ${city}</p>
+      <p><strong>Message:</strong></p>
+      <p>${message.replace(/\n/g, "<br>")}</p>
+    `,
+    reply_to: email,
+  });
+
+  // Send confirmation to user
+  await resend.emails.send({
+    from: fromEmail,
+    to: [email],
+    subject: "We received your inquiry",
+    html: `
+      <h2>Thank you for your interest</h2>
+      <p>We have received your inquiry and will contact you shortly.</p>
+      <p>Best regards,<br>ArtDeco Team</p>
+    `,
+  });
+
+  return { success: true };
+}
+
+/**
  * Handle contact form submission
  */
 async function handleContact(data, resend, fromEmail, adminEmail, sanityClient) {
@@ -162,7 +269,7 @@ async function handleContact(data, resend, fromEmail, adminEmail, sanityClient) 
  * Handle dealer application
  */
 async function handleDealer(data, resend, fromEmail, adminEmail, sanityClient) {
-  const { email, firstName, lastName, phone, message } = data;
+  const { email, firstName, lastName, phone, country, city, postal, companyName, website } = data;
 
   // Save to Sanity
   try {
@@ -172,12 +279,15 @@ async function handleDealer(data, resend, fromEmail, adminEmail, sanityClient) {
       lastName,
       phone,
       email,
-      message,
-      submittedAt: new Date().toISOString(),
+      country,
+      city,
+      postal,
+      companyName,
+      website,
+      appliedAt: new Date().toISOString(),
     });
   } catch (err) {
     console.error("Sanity save error (dealer):", err.message);
-    // Continue even if Sanity fails
   }
 
   // Send admin notification
@@ -186,12 +296,15 @@ async function handleDealer(data, resend, fromEmail, adminEmail, sanityClient) {
     to: [adminEmail],
     subject: `Dealer Application from ${firstName} ${lastName}`,
     html: `
-      <h2>Dealer Application</h2>
+      <h2>New Dealer Application</h2>
       <p><strong>Name:</strong> ${firstName} ${lastName}</p>
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Phone:</strong> ${phone}</p>
-      <p><strong>Message:</strong></p>
-      <p>${message.replace(/\n/g, "<br>")}</p>
+      <p><strong>Country:</strong> ${country}</p>
+      <p><strong>City:</strong> ${city}</p>
+      ${postal ? `<p><strong>Postal:</strong> ${postal}</p>` : ''}
+      ${companyName ? `<p><strong>Company:</strong> ${companyName}</p>` : ''}
+      ${website ? `<p><strong>Website:</strong> <a href="${website}">${website}</a></p>` : ''}
     `,
     reply_to: email,
   });
@@ -275,8 +388,10 @@ export default {
       // Route to appropriate handler
       if (type === "newsletter") {
         result = await handleNewsletter(data, resend, fromEmail, adminEmail, sanityClient);
-      } else if (type === "contact" || type === "contact-city") {
-        result = await handleContact(data, resend, fromEmail, adminEmail, sanityClient);
+      } else if (type === "footer-contact") {
+        result = await handleFooterContact(data, resend, fromEmail, adminEmail, sanityClient);
+      } else if (type === "contact-city") {
+        result = await handleCityContact(data, resend, fromEmail, adminEmail, sanityClient);
       } else if (type === "dealer") {
         result = await handleDealer(data, resend, fromEmail, adminEmail, sanityClient);
       } else {

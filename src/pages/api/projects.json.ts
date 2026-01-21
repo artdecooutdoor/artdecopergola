@@ -1,8 +1,6 @@
 import type { APIRoute } from 'astro';
 import { sanityClient, imageUrl } from '../../utils/helpers';
 
-export const prerender = false;
-
 export const GET: APIRoute = async ({ url }) => {
 	try {
 		const locale = url.searchParams.get('lang') || 'en';

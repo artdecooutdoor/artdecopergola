@@ -1,8 +1,6 @@
 import type { APIRoute } from 'astro';
 import { sanityClient } from '../../utils/helpers';
 
-export const prerender = false;
-
 /**
  * DEBUG endpoint - shows raw Sanity data
  * Visit: http://localhost:4321/api/debug-projects.json

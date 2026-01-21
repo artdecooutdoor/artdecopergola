@@ -1,8 +1,6 @@
 import { Resend } from 'resend';
 import { sanityClient } from '../../utils/helpers';
 
-export const prerender = false;
-
 const RESEND_API_KEY = import.meta.env.RESEND_API_KEY;
 const resend = new Resend(RESEND_API_KEY);
 const ADMIN_EMAIL = 'artdeco.can@gmail.com';

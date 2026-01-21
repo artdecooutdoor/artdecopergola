@@ -108,6 +108,11 @@ async function handleNewsletter(data, resend, fromEmail, adminEmail, sanityClien
 async function handleFooterContact(data, resend, fromEmail, adminEmail, sanityClient) {
   const { email, firstName, lastName, phone, message } = data;
 
+  // Validate required fields
+  if (!firstName || !lastName || !email || !phone || !message) {
+    throw new Error("Missing required footer contact fields");
+  }
+
   // Save to Sanity as contactFormSubmission
   try {
     await sanityClient.create({
@@ -122,9 +127,11 @@ async function handleFooterContact(data, resend, fromEmail, adminEmail, sanityCl
     });
   } catch (err) {
     console.error("Sanity save error (footer contact):", err.message);
+    throw err;
   }
 
   // Send admin notification
+  const messageHtml = message ? message.replace(/\n/g, "<br>") : "";
   await resend.emails.send({
     from: fromEmail,
     to: [adminEmail],
@@ -135,7 +142,7 @@ async function handleFooterContact(data, resend, fromEmail, adminEmail, sanityCl
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Phone:</strong> ${phone}</p>
       <p><strong>Message:</strong></p>
-      <p>${message ? message.replace(/\n/g, "<br>") : ""}</p>
+      <p>${messageHtml}</p>
     `,
     reply_to: email,
   });
@@ -161,6 +168,11 @@ async function handleFooterContact(data, resend, fromEmail, adminEmail, sanityCl
 async function handleCityContact(data, resend, fromEmail, adminEmail, sanityClient) {
   const { email, firstName, lastName, phone, message, city } = data;
 
+  // Validate required fields
+  if (!firstName || !lastName || !email || !phone || !message || !city) {
+    throw new Error("Missing required city contact fields");
+  }
+
   // Save to Sanity as contactFormByCity
   try {
     await sanityClient.create({
@@ -175,9 +187,11 @@ async function handleCityContact(data, resend, fromEmail, adminEmail, sanityClie
     });
   } catch (err) {
     console.error("Sanity save error (city contact):", err.message);
+    throw err;
   }
 
   // Send admin notification
+  const messageHtml = message ? message.replace(/\n/g, "<br>") : "";
   await resend.emails.send({
     from: fromEmail,
     to: [adminEmail],
@@ -189,7 +203,7 @@ async function handleCityContact(data, resend, fromEmail, adminEmail, sanityClie
       <p><strong>Phone:</strong> ${phone}</p>
       <p><strong>City:</strong> ${city}</p>
       <p><strong>Message:</strong></p>
-      <p>${message ? message.replace(/\n/g, "<br>") : ""}</p>
+      <p>${messageHtml}</p>
     `,
     reply_to: email,
   });
@@ -215,6 +229,11 @@ async function handleCityContact(data, resend, fromEmail, adminEmail, sanityClie
 async function handleDealer(data, resend, fromEmail, adminEmail, sanityClient) {
   const { email, firstName, lastName, phone, country, city, postal, companyName, website } = data;
 
+  // Validate required fields for dealer
+  if (!firstName || !lastName || !email || !phone || !country || !city) {
+    throw new Error("Missing required dealer fields");
+  }
+
   // Save to Sanity
   try {
     await sanityClient.create({
@@ -225,31 +244,34 @@ async function handleDealer(data, resend, fromEmail, adminEmail, sanityClient) {
       email,
       country,
       city,
-      postal,
-      companyName,
-      website,
+      postal: postal || null,
+      companyName: companyName || null,
+      website: website || null,
       appliedAt: new Date().toISOString(),
     });
   } catch (err) {
     console.error("Sanity save error (dealer):", err.message);
+    throw err;
   }
 
   // Send admin notification
+  const adminHtml = `
+    <h2>New Dealer Application</h2>
+    <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Phone:</strong> ${phone}</p>
+    <p><strong>Country:</strong> ${country}</p>
+    <p><strong>City:</strong> ${city}</p>
+    ${postal ? `<p><strong>Postal:</strong> ${postal}</p>` : ""}
+    ${companyName ? `<p><strong>Company:</strong> ${companyName}</p>` : ""}
+    ${website ? `<p><strong>Website:</strong> <a href="${website}">${website}</a></p>` : ""}
+  `;
+
   await resend.emails.send({
     from: fromEmail,
     to: [adminEmail],
     subject: `Dealer Application from ${firstName} ${lastName}`,
-    html: `
-      <h2>New Dealer Application</h2>
-      <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone}</p>
-      <p><strong>Country:</strong> ${country}</p>
-      <p><strong>City:</strong> ${city}</p>
-      ${postal ? `<p><strong>Postal:</strong> ${postal}</p>` : ''}
-      ${companyName ? `<p><strong>Company:</strong> ${companyName}</p>` : ''}
-      ${website ? `<p><strong>Website:</strong> <a href="${website}">${website}</a></p>` : ''}
-    `,
+    html: adminHtml,
     reply_to: email,
   });
 
@@ -293,8 +315,12 @@ export default {
       const data = await request.json();
       const { type, email } = data;
 
+      // Debug logging
+      console.log("Form submission received:", { type, email, dataKeys: Object.keys(data) });
+
       // Validate required fields
       if (!email || !type) {
+        console.warn("Missing email or type:", { email, type });
         return new Response(
           JSON.stringify({
             success: false,
@@ -309,6 +335,7 @@ export default {
 
       // Validate email format
       if (!isValidEmail(email)) {
+        console.warn("Invalid email format:", email);
         return new Response(
           JSON.stringify({
             success: false,
@@ -329,7 +356,9 @@ export default {
 
       let result;
 
-      // Route to appropriate handler
+      // Route to appropriate handler based on type
+      console.log("Routing to handler for type:", type);
+      
       if (type === "newsletter") {
         result = await handleNewsletter(data, resend, fromEmail, adminEmail, sanityClient);
       } else if (type === "footer-contact") {
@@ -339,10 +368,11 @@ export default {
       } else if (type === "dealer") {
         result = await handleDealer(data, resend, fromEmail, adminEmail, sanityClient);
       } else {
+        console.error("Unknown form type:", type);
         return new Response(
           JSON.stringify({
             success: false,
-            error: "Unknown form type",
+            error: `Unknown form type: ${type}`,
           }),
           {
             status: 400,
@@ -351,12 +381,13 @@ export default {
         );
       }
 
+      console.log("Form processed successfully:", { type });
       return new Response(JSON.stringify(result), {
         status: 200,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     } catch (err) {
-      console.error("Email sending error:", err);
+      console.error("Email sending error:", err.message);
       console.error("Error stack:", err.stack);
       return new Response(
         JSON.stringify({

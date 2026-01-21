@@ -114,6 +114,18 @@ export default function SplineHero() {
         />
       )}
       
+      {/* Overlay to hide Spline logo */}
+      <div style={{
+        position: 'absolute',
+        bottom: '0',
+        right: '0',
+        width: '350px',
+        height: '100px',
+        backgroundColor: '#d2f2b3',
+        zIndex: 99999,
+        pointerEvents: 'none'
+      }} />
+      
       <style>{`
         .spline-hero-wrapper #logo,
         .spline-hero-wrapper a[href*="spline"],

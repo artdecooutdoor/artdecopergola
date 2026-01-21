@@ -1,3 +1,5 @@
+export const prerender = false;
+
 import { Resend } from 'resend';
 import { createClient } from '@sanity/client';
 
@@ -52,7 +54,7 @@ export async function POST({ request }: any) {
         console.error('Resend newsletter error:', newsResult.error);
       }
     } 
-    else if (type === 'contact') {
+    else if (type === 'footer-contact') {
       await sanityClient.create({
         _type: 'contactFormSubmission',
         firstName,
@@ -84,7 +86,7 @@ export async function POST({ request }: any) {
       }
     } 
     else if (type === 'dealer') {
-      await sanityClient.create({
+      const dealerDoc: any = {
         _type: 'dealerApplication',
         firstName,
         lastName,
@@ -92,12 +94,15 @@ export async function POST({ request }: any) {
         phone,
         country,
         city,
-        postal,
-        companyName,
-        website,
-        status: 'pending',
         appliedAt: new Date().toISOString(),
-      });
+      };
+      
+      // Add optional fields only if they exist
+      if (postal) dealerDoc.postal = postal;
+      if (companyName) dealerDoc.companyName = companyName;
+      if (website) dealerDoc.website = website;
+      
+      await sanityClient.create(dealerDoc);
 
       // Send admin notification
       const dealerResult = await resend.emails.send({

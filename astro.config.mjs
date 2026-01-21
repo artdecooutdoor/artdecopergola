@@ -10,7 +10,11 @@ export default defineConfig({
   output: 'static',
   adapter: cloudflare(),
   integrations: [
-    react(),
+    react({
+      // Отключаем SSR для React - рендер только в браузере
+      // Это исправляет ошибку "MessageChannel is not defined" на Cloudflare Workers
+      experimentalReactChildren: true,
+    }),
     sanity({
       projectId: 'py6y7j4v',
       dataset: 'production',

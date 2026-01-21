@@ -1,17 +1,13 @@
 import { Resend } from "resend";
 
-// Sanity client initialization
-const SANITY_PROJECT_ID = "py6y7j4v";
-const SANITY_DATASET = "production";
-
 /**
  * Initialize Sanity client for Cloudflare Workers
  */
-function getSanityClient(token) {
+function getSanityClient(token, projectId, dataset) {
   return {
     create: async (doc) => {
       const res = await fetch(
-        `https://${SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/mutate/${SANITY_DATASET}`,
+        `https://${projectId}.api.sanity.io/v2021-06-07/data/mutate/${dataset}`,
         {
           method: "POST",
           headers: {
@@ -71,7 +67,6 @@ async function handleNewsletter(data, resend, fromEmail, adminEmail, sanityClien
     const docToCreate = {
       _type: "newsletterSubscription",
       email,
-      subscribedAt: new Date().toISOString(),
     };
     
     await sanityClient.create(docToCreate);
@@ -125,7 +120,6 @@ async function handleFooterContact(data, resend, fromEmail, adminEmail, sanityCl
       email,
       message,
       source: "footer",
-      submittedAt: new Date().toISOString(),
     };
     
     await sanityClient.create(docToCreate);
@@ -187,7 +181,6 @@ async function handleCityContact(data, resend, fromEmail, adminEmail, sanityClie
       email,
       message,
       city,
-      submittedAt: new Date().toISOString(),
     };
     
     await sanityClient.create(docToCreate);
@@ -250,7 +243,6 @@ async function handleDealer(data, resend, fromEmail, adminEmail, sanityClient) {
       email,
       country,
       city,
-      appliedAt: new Date().toISOString(),
     };
     
     if (postal) docToCreate.postal = postal;
@@ -359,7 +351,9 @@ export default {
 
       // Initialize services
       const resend = new Resend(env.RESEND_API_KEY);
-      const sanityClient = getSanityClient(env.SANITY_API_TOKEN);
+      const sanityProjectId = env.SANITY_PROJECT_ID || "py6y7j4v";
+      const sanityDataset = env.SANITY_DATASET || "production";
+      const sanityClient = getSanityClient(env.SANITY_API_TOKEN, sanityProjectId, sanityDataset);
       const fromEmail = env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
       const adminEmail = env.RESEND_TO_EMAIL || "artdeco.can@gmail.com";
 

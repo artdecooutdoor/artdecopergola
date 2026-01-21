@@ -40,7 +40,6 @@ export async function POST({ request }: any) {
       await sanityClient.create({
         _type: 'newsletterSubscription',
         email,
-        subscribedAt: new Date().toISOString(),
       });
 
       // Send admin notification
@@ -63,7 +62,6 @@ export async function POST({ request }: any) {
         email,
         message,
         source: 'footer',
-        submittedAt: new Date().toISOString(),
       });
 
       // Send admin notification
@@ -94,7 +92,6 @@ export async function POST({ request }: any) {
         phone,
         country,
         city,
-        appliedAt: new Date().toISOString(),
       };
       
       // Add optional fields only if they exist
@@ -134,7 +131,6 @@ export async function POST({ request }: any) {
         phone,
         message,
         city,
-        submittedAt: new Date().toISOString(),
       });
 
       // Send admin notification

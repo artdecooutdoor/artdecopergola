@@ -10,8 +10,6 @@ import FAQ from "../../components/faq.astro";
 import Newsletter from "../../components/newsletter.astro";
 import { getLangFromUrl, useTranslations, getLocalizedPath } from "../../i18n";
 
-export const prerender = true;
-
 export async function getStaticPaths() {
 	return [
 		{ params: { lang: "en" } },

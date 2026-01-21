@@ -1,3 +1,13 @@
+---
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'ru' } },
+    { params: { lang: 'az' } },
+  ];
+}
+---
+
 <!DOCTYPE html>
 <html lang="en">
   <head>

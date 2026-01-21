@@ -10,11 +10,7 @@ export default defineConfig({
   output: 'static',
   adapter: cloudflare(),
   integrations: [
-    react({
-      // Отключаем SSR для React - рендер только в браузере
-      // Это исправляет ошибку "MessageChannel is not defined" на Cloudflare Workers
-      experimentalReactChildren: true,
-    }),
+    react(),
     sanity({
       projectId: 'py6y7j4v',
       dataset: 'production',
@@ -49,6 +45,11 @@ export default defineConfig({
   vite: {
     css: {
       devSourcemap: true,
+    },
+    // КРИТИЧНО: Исключаем React SSR для Cloudflare Workers
+    // Cloudflare Workers НЕ поддерживает MessageChannel, нужный для React SSR
+    ssr: {
+      external: ['react', 'react-dom', 'react-dom/server', 'react/jsx-runtime'],
     },
   },
 });

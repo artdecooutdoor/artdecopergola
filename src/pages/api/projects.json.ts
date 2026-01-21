@@ -1,5 +1,15 @@
 import type { APIRoute } from 'astro';
-import { sanityClient, imageUrl } from '../../utils/helpers';
+import { createClient } from '@sanity/client';
+import { imageUrl } from '../../utils/helpers';
+
+const SANITY_API_TOKEN = import.meta.env.SANITY_API_TOKEN;
+const sanityClient = createClient({
+	projectId: 'py6y7j4v',
+	dataset: 'production',
+	useCdn: false,
+	apiVersion: '2024-01-01',
+	token: SANITY_API_TOKEN,
+});
 
 export const GET: APIRoute = async ({ url }) => {
 	try {

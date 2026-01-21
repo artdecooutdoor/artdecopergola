@@ -1,0 +1,18 @@
+name = "artdeco-api"
+main = "functions/api/sendemail.js"
+compatibility_date = "2025-01-21"
+
+# Environment configuration for production
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+[[env.production.env.vars]]
+name = "PUBLIC_SITE_URL"
+value = "https://artdecopergola.com"
+
+# Define environment variables that will be injected at runtime
+# Note: These must be set via `wrangler secret put` or Cloudflare Dashboard
+# - RESEND_API_KEY
+# - RESEND_FROM_EMAIL
+# - RESEND_TO_EMAIL
+# - SANITY_API_TOKEN

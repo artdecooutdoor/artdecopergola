@@ -1,17 +1,39 @@
 name = "artdeco-api"
-main = "functions/api/sendemail.js"
 compatibility_date = "2025-01-21"
+
+# Route configuration - multiple API handlers
+[[routes]]
+pattern = "*/api/sendemail"
+zone_name = "artdecopergola.com"
+custom_domain = true
+script = "sendemail"
+
+[[routes]]
+pattern = "*/api/projects"
+zone_name = "artdecopergola.com"
+custom_domain = true
+script = "projects"
+
+# Multiple Worker definitions
+[[services]]
+binding = "sendemail"
+service = "artdeco-api"
+entrypoint = "sendemail"
+
+[[services]]
+binding = "projects"
+service = "artdeco-api"
+entrypoint = "projects"
 
 # Environment configuration for production
 [env.production]
 vars = { ENVIRONMENT = "production" }
 
-[[env.production.env.vars]]
+[[env.production.vars]]
 name = "PUBLIC_SITE_URL"
 value = "https://artdecopergola.com"
 
-# Define environment variables that will be injected at runtime
-# Note: These must be set via `wrangler secret put` or Cloudflare Dashboard
+# Secrets that must be set via `wrangler secret put`
 # - RESEND_API_KEY
 # - RESEND_FROM_EMAIL
 # - RESEND_TO_EMAIL

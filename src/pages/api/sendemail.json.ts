@@ -1,8 +1,20 @@
 import { Resend } from 'resend';
-import { sanityClient } from '../../utils/helpers';
+import { createClient } from '@sanity/client';
 
 const RESEND_API_KEY = import.meta.env.RESEND_API_KEY;
+const SANITY_API_TOKEN = import.meta.env.SANITY_API_TOKEN;
+
 const resend = new Resend(RESEND_API_KEY);
+
+// Create Sanity client with token inside API route
+const sanityClient = createClient({
+  projectId: 'py6y7j4v',
+  dataset: 'production',
+  useCdn: false,
+  apiVersion: '2024-01-01',
+  token: SANITY_API_TOKEN,
+});
+
 const ADMIN_EMAIL = 'artdeco.can@gmail.com';
 const FROM_EMAIL = 'onboarding@resend.dev'; // Using Resend's verified domain
 

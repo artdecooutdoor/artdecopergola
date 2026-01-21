@@ -36,7 +36,7 @@ export default defineConfig({
 
   // Build configuration
   build: {
-    inlineStylesheets: 'auto',
+    inlineStylesheets: 'always',
   },
 
   // Vite configuration

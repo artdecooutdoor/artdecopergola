@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const message = formData.get('message') as string;
 
       try {
-        const response = await fetch('/form', {
+        const response = await fetch('/api/sendemail.json', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 

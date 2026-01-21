@@ -114,13 +114,25 @@ export default function SplineHero() {
         />
       )}
       
+      {/* SEO H1 - hidden but indexable */}
+      <h1 style={{
+        position: 'absolute',
+        left: '-9999px',
+        top: '-9999px',
+        width: '1px',
+        height: '1px',
+        overflow: 'hidden'
+      }}>
+        Premium Pergolas and Outdoor Living Solutions
+      </h1>
+      
       {/* Overlay to hide Spline logo */}
       <div style={{
         position: 'absolute',
         bottom: '0',
         right: '0',
-        width: '350px',
-        height: '100px',
+        width: '200px',
+        height: '60px',
         backgroundColor: '#d2f2b3',
         zIndex: 99999,
         pointerEvents: 'none'
@@ -134,6 +146,12 @@ export default function SplineHero() {
           display: none !important;
           opacity: 0 !important;
           visibility: hidden !important;
+        }
+        
+        .spline-hero-wrapper {
+          display: block;
+          width: 100%;
+          height: 1100px;
         }
         
         /* Hide on mobile to save performance */

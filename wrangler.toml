@@ -1,7 +1,7 @@
-name = "artdecopergola"
-compatibility_date = "2025-01-28"
-compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = "dist"
+name = "artdeco-api"
+main = "functions/api/sendemail.js"
+compatibility_date = "2025-01-21"
 
 [env.production]
 vars = { ENVIRONMENT = "production", PUBLIC_SITE_URL = "https://artdecopergola.com" }
+

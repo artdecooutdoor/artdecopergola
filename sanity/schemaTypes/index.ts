@@ -9,6 +9,13 @@ const newsletterSubscription = {
       type: 'string',
       validation: (Rule: any) => Rule.required().email(),
     },
+    {
+      name: 'subscribedAt',
+      title: 'Subscribed At',
+      type: 'datetime',
+      initialValue: () => new Date().toISOString(),
+      readOnly: true,
+    },
   ],
 };
 
@@ -55,6 +62,13 @@ const contactFormSubmission = {
           { title: 'Footer', value: 'footer' },
         ],
       },
+    },
+    {
+      name: 'submittedAt',
+      title: 'Submitted At',
+      type: 'datetime',
+      initialValue: () => new Date().toISOString(),
+      readOnly: true,
     },
   ],
 };
@@ -115,6 +129,13 @@ const dealerApplication = {
       title: 'Website',
       type: 'url',
     },
+    {
+      name: 'appliedAt',
+      title: 'Applied At',
+      type: 'datetime',
+      initialValue: () => new Date().toISOString(),
+      readOnly: true,
+    },
   ],
 };
 
@@ -164,6 +185,13 @@ const contactFormByCity = {
           { title: 'Ankara', value: 'ankara' },
         ],
       },
+    },
+    {
+      name: 'submittedAt',
+      title: 'Submitted At',
+      type: 'datetime',
+      initialValue: () => new Date().toISOString(),
+      readOnly: true,
     },
   ],
 };

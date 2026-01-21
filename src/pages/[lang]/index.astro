@@ -23,9 +23,13 @@ const t = useTranslations(locale);
 ---
 
 <Layout title={t("hero.title")} description={t("hero.subtitle")}>
+	<!-- Loader Screen -->
+	<Loader client:load />
+
 	<!-- Desktop: Spline 3D Animation (hide on mobile) -->
+	<!-- Using client:visible for better performance - loads only when scrolled into view -->
 	<div class="desktop-hero">
-		<SplineHero client:only="react" />
+		<SplineHero client:visible />
 	</div>
 
 	<!-- Mobile: Text + Button + Video (hide on desktop) -->

@@ -133,7 +133,7 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
   const city = document.getElementById('cityHidden')?.value || 'baku';
 
   try {
-    const response = await fetch('/form', {
+    const response = await fetch('/api/sendemail.json', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 

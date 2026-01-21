@@ -8,7 +8,11 @@ import sanity from '@sanity/astro';
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    // КРИТИЧНО: Отключаем все renderers для SSR
+    // React будет работать ТОЛЬКО на клиенте
+    mode: 'directory',
+  }),
   integrations: [
     react(),
     sanity({
@@ -45,11 +49,6 @@ export default defineConfig({
   vite: {
     css: {
       devSourcemap: true,
-    },
-    // КРИТИЧНО: Исключаем React SSR для Cloudflare Workers
-    // Cloudflare Workers НЕ поддерживает MessageChannel, нужный для React SSR
-    ssr: {
-      external: ['react', 'react-dom', 'react-dom/server', 'react/jsx-runtime'],
     },
   },
 });

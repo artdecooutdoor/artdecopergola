@@ -334,7 +334,10 @@ const t = useTranslations(locale);
 				const website = formData.get("website") as string;
 
 				try {
-					const response = await fetch("/api/sendemail.json", {
+					// Use different endpoints for local dev vs production
+					const endpoint = import.meta.env.DEV ? "/api/sendemail.json" : "/api/form";
+					
+					const response = await fetch(endpoint, {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({

@@ -133,7 +133,14 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
   const city = document.getElementById('cityHidden')?.value || 'baku';
 
   try {
-    const response = await fetch('/api/sendemail.json', {
+    // Use different endpoints for local dev vs production
+    // DEV endpoint: /api/sendemail.json (Astro API)
+    // PROD endpoint: /api/form (Cloudflare Worker)
+    const endpoint = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+      ? '/api/sendemail.json' 
+      : '/api/form';
+    
+    const response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 

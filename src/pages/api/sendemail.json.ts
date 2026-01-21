@@ -1,5 +1,3 @@
-export const prerender = false;
-
 import { Resend } from 'resend';
 import { createClient } from '@sanity/client';
 
@@ -8,6 +6,7 @@ const SANITY_API_TOKEN = import.meta.env.SANITY_API_TOKEN;
 
 const resend = new Resend(RESEND_API_KEY);
 
+// Create Sanity client with token inside API route
 const sanityClient = createClient({
   projectId: 'py6y7j4v',
   dataset: 'production',
@@ -17,263 +16,151 @@ const sanityClient = createClient({
 });
 
 const ADMIN_EMAIL = 'artdeco.can@gmail.com';
-const FROM_EMAIL = 'onboarding@resend.dev';
-
-function isValidEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-async function handleNewsletter(data: any) {
-  const { email } = data;
-  
-  await sanityClient.create({
-    _type: 'newsletterSubscription',
-    email,
-    subscribedAt: new Date().toISOString(),
-  });
-
-  await resend.emails.send({
-    from: FROM_EMAIL,
-    to: [ADMIN_EMAIL],
-    subject: 'New Newsletter Subscription',
-    html: `<p>New subscriber: <strong>${email}</strong></p>`,
-  });
-
-  await resend.emails.send({
-    from: FROM_EMAIL,
-    to: [email],
-    subject: 'Welcome to ArtDeco Newsletter',
-    html: `
-      <h2>Newsletter Subscription Confirmed</h2>
-      <p>Thank you for subscribing to ArtDeco newsletter!</p>
-      <p>Best regards,<br>ArtDeco Team</p>
-    `,
-  });
-
-  return { success: true };
-}
-
-async function handleFooterContact(data: any) {
-  const { email, firstName, lastName, phone, message } = data;
-
-  if (!firstName || !lastName || !email || !phone || !message) {
-    throw new Error('Missing required footer contact fields');
-  }
-
-  await sanityClient.create({
-    _type: 'contactFormSubmission',
-    firstName,
-    lastName,
-    phone,
-    email,
-    message,
-    source: 'footer',
-    submittedAt: new Date().toISOString(),
-  });
-
-  const messageHtml = message.replace(/\n/g, '<br>');
-  
-  await resend.emails.send({
-    from: FROM_EMAIL,
-    to: [ADMIN_EMAIL],
-    subject: `New Contact Request from ${firstName} ${lastName} (Footer)`,
-    replyTo: email,
-    html: `
-      <h2>New Contact Request - Footer Form</h2>
-      <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone}</p>
-      <p><strong>Message:</strong></p>
-      <p>${messageHtml}</p>
-    `,
-  });
-
-  await resend.emails.send({
-    from: FROM_EMAIL,
-    to: [email],
-    subject: 'We received your message',
-    html: `
-      <h2>Thank you for contacting ArtDeco</h2>
-      <p>We have received your message and will get back to you as soon as possible.</p>
-      <p>Best regards,<br>ArtDeco Team</p>
-    `,
-  });
-
-  return { success: true };
-}
-
-async function handleCityContact(data: any) {
-  const { email, firstName, lastName, phone, message, city } = data;
-
-  if (!firstName || !lastName || !email || !phone || !message || !city) {
-    throw new Error('Missing required city contact fields');
-  }
-
-  await sanityClient.create({
-    _type: 'contactFormByCity',
-    firstName,
-    lastName,
-    phone,
-    email,
-    message,
-    city,
-    submittedAt: new Date().toISOString(),
-  });
-
-  const messageHtml = message.replace(/\n/g, '<br>');
-
-  await resend.emails.send({
-    from: FROM_EMAIL,
-    to: [ADMIN_EMAIL],
-    subject: `New Inquiry from ${firstName} ${lastName} - ${city}`,
-    replyTo: email,
-    html: `
-      <h2>New Global Network Inquiry</h2>
-      <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone}</p>
-      <p><strong>City:</strong> ${city}</p>
-      <p><strong>Message:</strong></p>
-      <p>${messageHtml}</p>
-    `,
-  });
-
-  await resend.emails.send({
-    from: FROM_EMAIL,
-    to: [email],
-    subject: 'We received your inquiry',
-    html: `
-      <h2>Thank you for your interest</h2>
-      <p>We have received your inquiry and will contact you shortly.</p>
-      <p>Best regards,<br>ArtDeco Team</p>
-    `,
-  });
-
-  return { success: true };
-}
-
-async function handleDealer(data: any) {
-  const { email, firstName, lastName, phone, country, city, postal, companyName, website } = data;
-
-  if (!firstName || !lastName || !email || !phone || !country || !city) {
-    throw new Error('Missing required dealer fields');
-  }
-
-  const docToCreate: any = {
-    _type: 'dealerApplication',
-    firstName,
-    lastName,
-    phone,
-    email,
-    country,
-    city,
-    appliedAt: new Date().toISOString(),
-  };
-
-  if (postal) docToCreate.postal = postal;
-  if (companyName) docToCreate.companyName = companyName;
-  if (website) docToCreate.website = website;
-
-  await sanityClient.create(docToCreate);
-
-  const adminHtml = `
-    <h2>New Dealer Application</h2>
-    <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-    <p><strong>Email:</strong> ${email}</p>
-    <p><strong>Phone:</strong> ${phone}</p>
-    <p><strong>Country:</strong> ${country}</p>
-    <p><strong>City:</strong> ${city}</p>
-    ${postal ? `<p><strong>Postal:</strong> ${postal}</p>` : ''}
-    ${companyName ? `<p><strong>Company:</strong> ${companyName}</p>` : ''}
-    ${website ? `<p><strong>Website:</strong> <a href="${website}">${website}</a></p>` : ''}
-  `;
-
-  await resend.emails.send({
-    from: FROM_EMAIL,
-    to: [ADMIN_EMAIL],
-    subject: `Dealer Application from ${firstName} ${lastName}`,
-    replyTo: email,
-    html: adminHtml,
-  });
-
-  await resend.emails.send({
-    from: FROM_EMAIL,
-    to: [email],
-    subject: 'Dealer Application Received',
-    html: `
-      <h2>Thank you for your interest</h2>
-      <p>We have received your dealer application and will review it shortly.</p>
-      <p>Best regards,<br>ArtDeco Team</p>
-    `,
-  });
-
-  return { success: true };
-}
+const FROM_EMAIL = 'onboarding@resend.dev'; // Using Resend's verified domain
 
 export async function POST({ request }: any) {
   try {
-    const formData = await request.json();
-    const { type, email } = formData;
-
-    console.log('Form submission received:', { type, email });
-
-    if (!email || !type) {
-      console.warn('Missing email or type:', { email, type });
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: 'Missing required fields: email and type',
-        }),
-        { status: 400 }
-      );
+    let formData: any = {};
+    
+    // Handle empty body
+    const contentType = request.headers.get('content-type');
+    if (contentType?.includes('application/json')) {
+      const text = await request.text();
+      if (text) {
+        formData = JSON.parse(text);
+      }
     }
 
-    if (!isValidEmail(email)) {
-      console.warn('Invalid email format:', email);
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: 'Invalid email format',
-        }),
-        { status: 400 }
-      );
-    }
+    const { type, email, firstName, lastName, phone, message, country, city, postal, companyName, website } = formData;
 
-    let result;
-
-    console.log('Routing to handler for type:', type);
-
+    // Save to Sanity based on form type
     if (type === 'newsletter') {
-      result = await handleNewsletter(formData);
-    } else if (type === 'footer-contact') {
-      result = await handleFooterContact(formData);
-    } else if (type === 'contact-city') {
-      result = await handleCityContact(formData);
-    } else if (type === 'dealer') {
-      result = await handleDealer(formData);
-    } else {
-      console.error('Unknown form type:', type);
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: `Unknown form type: ${type}`,
-        }),
-        { status: 400 }
-      );
+      await sanityClient.create({
+        _type: 'newsletterSubscription',
+        email,
+        subscribedAt: new Date().toISOString(),
+      });
+
+      // Send admin notification
+      const newsResult = await resend.emails.send({
+        from: FROM_EMAIL,
+        to: [ADMIN_EMAIL],
+        subject: 'New Newsletter Subscription',
+        html: `<p>New subscriber: <strong>${email}</strong></p>`,
+      });
+      if (newsResult.error) {
+        console.error('Resend newsletter error:', newsResult.error);
+      }
+    } 
+    else if (type === 'contact') {
+      await sanityClient.create({
+        _type: 'contactFormSubmission',
+        firstName,
+        lastName,
+        phone,
+        email,
+        message,
+        source: 'footer',
+        submittedAt: new Date().toISOString(),
+      });
+
+      // Send admin notification
+      const contactResult = await resend.emails.send({
+        from: FROM_EMAIL,
+        to: [ADMIN_EMAIL],
+        replyTo: email,
+        subject: `New Contact from ${firstName} ${lastName}`,
+        html: `
+          <h2>New Contact Form</h2>
+          <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+          <p><strong>Message:</strong></p>
+          <p>${message.replace(/\n/g, '<br>')}</p>
+        `,
+      });
+      if (contactResult.error) {
+        console.error('Resend contact error:', contactResult.error);
+      }
+    } 
+    else if (type === 'dealer') {
+      await sanityClient.create({
+        _type: 'dealerApplication',
+        firstName,
+        lastName,
+        email,
+        phone,
+        country,
+        city,
+        postal,
+        companyName,
+        website,
+        status: 'pending',
+        appliedAt: new Date().toISOString(),
+      });
+
+      // Send admin notification
+      const dealerResult = await resend.emails.send({
+        from: FROM_EMAIL,
+        to: [ADMIN_EMAIL],
+        replyTo: email,
+        subject: `New Dealer Application from ${companyName || firstName}`,
+        html: `
+          <h2>New Dealer Application</h2>
+          <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+          <p><strong>Company:</strong> ${companyName || 'N/A'}</p>
+          <p><strong>Website:</strong> ${website || 'N/A'}</p>
+          <p><strong>Location:</strong> ${city}, ${country}</p>
+          <p><strong>Postal:</strong> ${postal || 'N/A'}</p>
+        `,
+      });
+      if (dealerResult.error) {
+        console.error('Resend dealer error:', dealerResult.error);
+      }
+    }
+    else if (type === 'contact-city') {
+      await sanityClient.create({
+        _type: 'contactFormByCity',
+        firstName,
+        lastName,
+        email,
+        phone,
+        message,
+        city,
+        submittedAt: new Date().toISOString(),
+      });
+
+      // Send admin notification
+      const contactCityResult = await resend.emails.send({
+        from: FROM_EMAIL,
+        to: [ADMIN_EMAIL],
+        replyTo: email,
+        subject: `New Contact from ${firstName} ${lastName} (${city})`,
+        html: `
+          <h2>New Contact Form</h2>
+          <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+          <p><strong>City:</strong> ${city}</p>
+          <p><strong>Message:</strong></p>
+          <p>${message.replace(/\n/g, '<br>')}</p>
+        `,
+      });
+      if (contactCityResult.error) {
+        console.error('Resend contact-city error:', contactCityResult.error);
+      }
     }
 
-    console.log('Form processed successfully:', { type });
-    return new Response(JSON.stringify(result), {
-      status: 200,
-    });
-  } catch (err) {
-    console.error('Form submission error:', err);
     return new Response(
-      JSON.stringify({
-        success: false,
-        error: err instanceof Error ? err.message : 'Failed to submit form',
-      }),
+      JSON.stringify({ success: true, message: 'Form submitted successfully' }),
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Form submission error:', error);
+    return new Response(
+      JSON.stringify({ error: error instanceof Error ? error.message : 'Failed to submit form' }),
       { status: 500 }
     );
   }

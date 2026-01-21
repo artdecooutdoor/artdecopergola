@@ -71,13 +71,12 @@ async function handleNewsletter(data, resend, fromEmail, adminEmail, sanityClien
     const docToCreate = {
       _type: "newsletterSubscription",
       email,
-      subscribedAt: new Date().toISOString(),
     };
     
     await sanityClient.create(docToCreate);
   } catch (err) {
     console.error("Sanity save error (newsletter):", err.message);
-    throw err;
+    // Continue even if Sanity fails
   }
 
   // Send admin notification
@@ -125,7 +124,6 @@ async function handleFooterContact(data, resend, fromEmail, adminEmail, sanityCl
       email,
       message,
       source: "footer",
-      submittedAt: new Date().toISOString(),
     };
     
     await sanityClient.create(docToCreate);
@@ -187,7 +185,6 @@ async function handleCityContact(data, resend, fromEmail, adminEmail, sanityClie
       email,
       message,
       city,
-      submittedAt: new Date().toISOString(),
     };
     
     await sanityClient.create(docToCreate);
@@ -250,7 +247,6 @@ async function handleDealer(data, resend, fromEmail, adminEmail, sanityClient) {
       email,
       country,
       city,
-      appliedAt: new Date().toISOString(),
     };
     
     if (postal) docToCreate.postal = postal;

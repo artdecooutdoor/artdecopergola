@@ -9,12 +9,6 @@ const newsletterSubscription = {
       type: 'string',
       validation: (Rule: any) => Rule.required().email(),
     },
-    {
-      name: 'subscribedAt',
-      title: 'Subscribed At',
-      type: 'datetime',
-      readOnly: true,
-    },
   ],
 };
 
@@ -51,7 +45,6 @@ const contactFormSubmission = {
       name: 'message',
       title: 'Message',
       type: 'text',
-      validation: (Rule: any) => Rule.required(),
     },
     {
       name: 'source',
@@ -62,13 +55,6 @@ const contactFormSubmission = {
           { title: 'Footer', value: 'footer' },
         ],
       },
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
-      name: 'submittedAt',
-      title: 'Submitted At',
-      type: 'datetime',
-      readOnly: true,
     },
   ],
 };
@@ -129,12 +115,6 @@ const dealerApplication = {
       title: 'Website',
       type: 'url',
     },
-    {
-      name: 'appliedAt',
-      title: 'Applied At',
-      type: 'datetime',
-      readOnly: true,
-    },
   ],
 };
 
@@ -171,7 +151,6 @@ const contactFormByCity = {
       name: 'message',
       title: 'Message',
       type: 'text',
-      validation: (Rule: any) => Rule.required(),
     },
     {
       name: 'city',
@@ -185,13 +164,6 @@ const contactFormByCity = {
           { title: 'Ankara', value: 'ankara' },
         ],
       },
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
-      name: 'submittedAt',
-      title: 'Submitted At',
-      type: 'datetime',
-      readOnly: true,
     },
   ],
 };

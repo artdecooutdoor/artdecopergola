@@ -27,7 +27,7 @@ const t = useTranslations(locale);
 	<Loader client:only="react" />
 
 	<!-- Desktop: Spline 3D Animation (hide on mobile) -->
-	<!-- Using client:only to avoid SSR issues on Cloudflare Workers -->
+	<!-- Using client:only to prevent SSR issues on Cloudflare Workers -->
 	<div class="desktop-hero">
 		<SplineHero client:only="react" />
 	</div>

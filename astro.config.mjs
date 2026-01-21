@@ -8,11 +8,7 @@ import sanity from '@sanity/astro';
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
-  adapter: cloudflare({
-    // КРИТИЧНО: Отключаем все renderers для SSR
-    // React будет работать ТОЛЬКО на клиенте
-    mode: 'directory',
-  }),
+  adapter: cloudflare(),
   integrations: [
     react(),
     sanity({

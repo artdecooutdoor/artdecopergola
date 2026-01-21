@@ -79,9 +79,8 @@ const t = useTranslations(locale);
 
 		async function loadProjects() {
 			try {
-				// Fetch from Cloudflare Worker (live data from Sanity)
 				const url = `/api/projects.json?lang=${locale}`;
-				console.log('[Projects Page] Fetching from Worker:', url);
+				console.log('[Projects Page] Fetching from:', url);
 				
 				const response = await fetch(url);
 				console.log('[Projects Page] Response status:', response.status);

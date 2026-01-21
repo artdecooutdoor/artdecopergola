@@ -135,7 +135,7 @@ async function handleFooterContact(data, resend, fromEmail, adminEmail, sanityCl
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Phone:</strong> ${phone}</p>
       <p><strong>Message:</strong></p>
-      <p>${message.replace(/\n/g, "<br>")}</p>
+      <p>${message ? message.replace(/\n/g, "<br>") : ""}</p>
     `,
     reply_to: email,
   });
@@ -189,7 +189,7 @@ async function handleCityContact(data, resend, fromEmail, adminEmail, sanityClie
       <p><strong>Phone:</strong> ${phone}</p>
       <p><strong>City:</strong> ${city}</p>
       <p><strong>Message:</strong></p>
-      <p>${message.replace(/\n/g, "<br>")}</p>
+      <p>${message ? message.replace(/\n/g, "<br>") : ""}</p>
     `,
     reply_to: email,
   });
@@ -202,62 +202,6 @@ async function handleCityContact(data, resend, fromEmail, adminEmail, sanityClie
     html: `
       <h2>Thank you for your interest</h2>
       <p>We have received your inquiry and will contact you shortly.</p>
-      <p>Best regards,<br>ArtDeco Team</p>
-    `,
-  });
-
-  return { success: true };
-}
-
-/**
- * Handle contact form submission
- */
-async function handleContact(data, resend, fromEmail, adminEmail, sanityClient) {
-  const { email, firstName, lastName, phone, message, city } = data;
-
-  // Save to Sanity
-  try {
-    await sanityClient.create({
-      _type: "contactFormSubmission",
-      firstName,
-      lastName,
-      phone,
-      email,
-      city,
-      message,
-      source: "website",
-      submittedAt: new Date().toISOString(),
-    });
-  } catch (err) {
-    console.error("Sanity save error (contact):", err.message);
-    // Continue even if Sanity fails
-  }
-
-  // Send admin notification
-  await resend.emails.send({
-    from: fromEmail,
-    to: [adminEmail],
-    subject: `New Contact Request from ${firstName} ${lastName}`,
-    html: `
-      <h2>New Contact Request</h2>
-      <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone}</p>
-      ${city ? `<p><strong>City:</strong> ${city}</p>` : ""}
-      <p><strong>Message:</strong></p>
-      <p>${message.replace(/\n/g, "<br>")}</p>
-    `,
-    reply_to: email,
-  });
-
-  // Send confirmation to user
-  await resend.emails.send({
-    from: fromEmail,
-    to: [email],
-    subject: "We received your message",
-    html: `
-      <h2>Thank you for contacting ArtDeco</h2>
-      <p>We have received your message and will get back to you as soon as possible.</p>
       <p>Best regards,<br>ArtDeco Team</p>
     `,
   });
@@ -413,6 +357,7 @@ export default {
       });
     } catch (err) {
       console.error("Email sending error:", err);
+      console.error("Error stack:", err.stack);
       return new Response(
         JSON.stringify({
           success: false,

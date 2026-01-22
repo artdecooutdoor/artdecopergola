@@ -1,0 +1,15 @@
+name = "artdeco-admin"
+main = "dist/index.js"
+site = { path = "dist" }
+compatibility_date = "2025-01-28"
+compatibility_flags = ["nodejs_compat"]
+
+[env.production]
+name = "artdeco-admin"
+routes = [
+  { pattern = "admin.artdecopergola.com", zone_id = "" }
+]
+
+[build]
+command = "npm run build"
+cwd = "."

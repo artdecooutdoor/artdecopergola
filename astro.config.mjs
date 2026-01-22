@@ -4,9 +4,12 @@ import react from '@astrojs/react';
 
 import sanity from '@sanity/astro';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // https://astro.build/config
 export default defineConfig({
-  output: 'static',
+  output: 'server',
+  adapter: cloudflare(),
   integrations: [
     react(),
     sanity({

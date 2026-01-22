@@ -87,7 +87,7 @@ const t = useTranslations(locale);
 
 		async function loadProjects() {
 			try {
-				const url = `functions/api/projects?lang=${locale}`;
+				const url = `/api/projects.json?lang=${locale}`;
 				console.log("[Projects Page] Fetching from:", url);
 
 				const response = await fetch(url);

@@ -1,17 +1,17 @@
 ---
-import Layout from '../../layouts/layout.astro';
-import { useTranslations } from '../../i18n/index';
-import '../../styles/pages/projects.css';
+import Layout from "../../layouts/layout.astro";
+import { useTranslations } from "../../i18n/index";
+import "../../styles/pages/projects.css";
 
 export async function getStaticPaths() {
 	return [
-		{ params: { lang: 'en' } },
-		{ params: { lang: 'ru' } },
-		{ params: { lang: 'az' } },
+		{ params: { lang: "en" } },
+		{ params: { lang: "ru" } },
+		{ params: { lang: "az" } },
 	];
 }
 
-const locale: string = (Astro.params.lang as string) || 'en';
+const locale: string = (Astro.params.lang as string) || "en";
 const t = useTranslations(locale);
 ---
 
@@ -19,8 +19,8 @@ const t = useTranslations(locale);
 	<section class="portfolio-view">
 		<div class="container">
 			<header class="header-area js-reveal">
-				<span class="eyebrow">{t('projects.portfolio')}</span>
-				<h2 class="display-title" set:html={t('projects.heading')}></h2>
+				<span class="eyebrow">{t("projects.portfolio")}</span>
+				<h2 class="display-title" set:html={t("projects.heading")} />
 			</header>
 			<div class="project-grid" id="projectGrid"></div>
 		</div>
@@ -39,7 +39,9 @@ const t = useTranslations(locale);
 				</div>
 				<div class="spec-item">
 					<span class="spec-label">Type</span>
-					<span class="spec-value" id="mType">Residential Architecture</span>
+					<span class="spec-value" id="mType"
+						>Residential Architecture</span
+					>
 				</div>
 				<div class="modal-desc" id="mDesc"></div>
 			</div>
@@ -50,26 +52,32 @@ const t = useTranslations(locale);
 	<div class="fullscreen-viewer" id="fsViewer">
 		<div class="close-circle" id="closeFs"></div>
 		<div class="nav-arrow nav-prev" id="fsPrev">
-			<svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+			<svg viewBox="0 0 24 24"
+				><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+				></path></svg
+			>
 		</div>
-		<img id="fsImg" src="" alt="">
+		<img id="fsImg" src="" alt="" />
 		<div class="nav-arrow nav-next" id="fsNext">
-			<svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+			<svg viewBox="0 0 24 24"
+				><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+				></path></svg
+			>
 		</div>
 	</div>
 
 	<script is:inline>
-		const locale = document.documentElement.lang || 'en';
-		console.log('[Projects Page] Current locale:', locale);
+		const locale = document.documentElement.lang || "en";
+		console.log("[Projects Page] Current locale:", locale);
 
-		const grid = document.getElementById('projectGrid');
-		const modal = document.getElementById('projectModal');
-		const closeModal = document.getElementById('closeModal');
-		const fsViewer = document.getElementById('fsViewer');
-		const fsImg = document.getElementById('fsImg');
-		const closeFs = document.getElementById('closeFs');
-		const fsPrev = document.getElementById('fsPrev');
-		const fsNext = document.getElementById('fsNext');
+		const grid = document.getElementById("projectGrid");
+		const modal = document.getElementById("projectModal");
+		const closeModal = document.getElementById("closeModal");
+		const fsViewer = document.getElementById("fsViewer");
+		const fsImg = document.getElementById("fsImg");
+		const closeFs = document.getElementById("closeFs");
+		const fsPrev = document.getElementById("fsPrev");
+		const fsNext = document.getElementById("fsNext");
 
 		let projects = [];
 		let currentProjectImages = [];
@@ -79,24 +87,36 @@ const t = useTranslations(locale);
 
 		async function loadProjects() {
 			try {
-				const url = `/api/projects.json?lang=${locale}`;
-				console.log('[Projects Page] Fetching from:', url);
-				
+				const url = `functions/api/projects?lang=${locale}`;
+				console.log("[Projects Page] Fetching from:", url);
+
 				const response = await fetch(url);
-				console.log('[Projects Page] Response status:', response.status);
-				
+				console.log(
+					"[Projects Page] Response status:",
+					response.status,
+				);
+
 				if (response.ok) {
 					const data = await response.json();
-					console.log('[Projects Page] Received data:', data);
-					
+					console.log("[Projects Page] Received data:", data);
+
 					projects = data.data || [];
-					console.log('[Projects Page] Projects loaded:', projects.length);
+					console.log(
+						"[Projects Page] Projects loaded:",
+						projects.length,
+					);
 				} else {
-					console.error('[Projects Page] API returned error status:', response.status);
+					console.error(
+						"[Projects Page] API returned error status:",
+						response.status,
+					);
 					projects = [];
 				}
 			} catch (error) {
-				console.error('[Projects Page] Failed to load projects:', error);
+				console.error(
+					"[Projects Page] Failed to load projects:",
+					error,
+				);
 				projects = [];
 			}
 			render();
@@ -104,8 +124,10 @@ const t = useTranslations(locale);
 
 		function render() {
 			if (!grid) return;
-			
-			grid.innerHTML = projects.map(p => `
+
+			grid.innerHTML = projects
+				.map(
+					(p) => `
 				<div class="project-card js-reveal" onclick="openP(${p.id})">
 					<img src="${p.mainImg}" class="card-media" alt="${p.title}" loading="lazy">
 					<div class="card-info">
@@ -113,38 +135,45 @@ const t = useTranslations(locale);
 						<h3 class="card-title">${p.title}</h3>
 					</div>
 				</div>
-			`).join('');
-			
+			`,
+				)
+				.join("");
+
 			setTimeout(() => {
-				const headerArea = document.querySelector('.header-area');
+				const headerArea = document.querySelector(".header-area");
 				if (headerArea) {
-					headerArea.classList.add('reveal');
+					headerArea.classList.add("reveal");
 				}
 
-				const obs = new IntersectionObserver((entries) => {
-					entries.forEach(e => { 
-						if(e.isIntersecting) {
-							e.target.classList.add('reveal');
-						}
-					});
-				}, { threshold: 0.1 });
-				document.querySelectorAll('.js-reveal').forEach(el => obs.observe(el));
+				const obs = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((e) => {
+							if (e.isIntersecting) {
+								e.target.classList.add("reveal");
+							}
+						});
+					},
+					{ threshold: 0.1 },
+				);
+				document
+					.querySelectorAll(".js-reveal")
+					.forEach((el) => obs.observe(el));
 			}, 100);
 		}
 
 		window.openP = (id) => {
-			const p = projects.find(x => x.id === id);
+			const p = projects.find((x) => x.id === id);
 			if (!p) return;
-			
+
 			currentProjectImages = p.gallery;
-			
-			document.getElementById('mTitle').innerText = p.title;
-			document.getElementById('mLoc').innerText = p.location;
-			document.getElementById('mType').innerText = p.type;
-			document.getElementById('mDesc').innerText = p.description;
-			
-			let galleryHtml = '';
-			
+
+			document.getElementById("mTitle").innerText = p.title;
+			document.getElementById("mLoc").innerText = p.location;
+			document.getElementById("mType").innerText = p.type;
+			document.getElementById("mDesc").innerText = p.description;
+
+			let galleryHtml = "";
+
 			if (p.videoUrl) {
 				galleryHtml += `
 					<div class="video-container">
@@ -157,33 +186,40 @@ const t = useTranslations(locale);
 					</div>
 				`;
 			}
-			
-			galleryHtml += p.gallery.map((img, idx) => `
+
+			galleryHtml += p.gallery
+				.map(
+					(img, idx) => `
 				<img src="${img}" onclick="openFsImg(${idx})" loading="lazy">
-			`).join('');
-			
-			document.getElementById('modalGallery').innerHTML = galleryHtml;
-			
-			modal.style.display = 'flex';
-			document.body.style.overflow = 'hidden';
-			document.getElementById('modalGallery').scrollTop = 0;
+			`,
+				)
+				.join("");
+
+			document.getElementById("modalGallery").innerHTML = galleryHtml;
+
+			modal.style.display = "flex";
+			document.body.style.overflow = "hidden";
+			document.getElementById("modalGallery").scrollTop = 0;
 		};
 
 		window.openFsImg = (index) => {
 			currentImgIndex = index;
 			updateFsImg();
-			fsViewer.style.display = 'flex';
+			fsViewer.style.display = "flex";
 		};
 
 		function updateFsImg() {
-			fsImg.style.opacity = '0';
+			fsImg.style.opacity = "0";
 			setTimeout(() => {
 				fsImg.src = currentProjectImages[currentImgIndex];
-				fsImg.style.opacity = '1';
+				fsImg.style.opacity = "1";
 			}, 50);
-			
-			fsPrev.style.display = currentImgIndex === 0 ? 'none' : 'flex';
-			fsNext.style.display = currentImgIndex === currentProjectImages.length - 1 ? 'none' : 'flex';
+
+			fsPrev.style.display = currentImgIndex === 0 ? "none" : "flex";
+			fsNext.style.display =
+				currentImgIndex === currentProjectImages.length - 1
+					? "none"
+					: "flex";
 		}
 
 		fsPrev.onclick = (e) => {
@@ -202,14 +238,22 @@ const t = useTranslations(locale);
 			}
 		};
 
-		fsViewer.addEventListener('touchstart', (e) => {
-			touchStartX = e.changedTouches[0].screenX;
-		}, {passive: true});
+		fsViewer.addEventListener(
+			"touchstart",
+			(e) => {
+				touchStartX = e.changedTouches[0].screenX;
+			},
+			{ passive: true },
+		);
 
-		fsViewer.addEventListener('touchend', (e) => {
-			touchEndX = e.changedTouches[0].screenX;
-			handleFsSwipe();
-		}, {passive: true});
+		fsViewer.addEventListener(
+			"touchend",
+			(e) => {
+				touchEndX = e.changedTouches[0].screenX;
+				handleFsSwipe();
+			},
+			{ passive: true },
+		);
 
 		function handleFsSwipe() {
 			const threshold = 60;
@@ -227,41 +271,50 @@ const t = useTranslations(locale);
 		}
 
 		const handleCloseModal = () => {
-			const gallery = document.getElementById('modalGallery');
-			const iframe = gallery.querySelector('iframe');
-			if (iframe) iframe.src = '';
-			
-			modal.style.display = 'none';
-			document.body.style.overflow = 'auto';
+			const gallery = document.getElementById("modalGallery");
+			const iframe = gallery.querySelector("iframe");
+			if (iframe) iframe.src = "";
+
+			modal.style.display = "none";
+			document.body.style.overflow = "auto";
 		};
 
 		const handleCloseFs = () => {
-			fsViewer.style.display = 'none';
-			fsImg.src = '';
+			fsViewer.style.display = "none";
+			fsImg.src = "";
 		};
 
 		closeModal.onclick = handleCloseModal;
 		closeFs.onclick = handleCloseFs;
 
-		modal.onclick = (e) => { if (e.target === modal) handleCloseModal(); };
-		fsViewer.onclick = (e) => { if (e.target === fsViewer) handleCloseFs(); };
+		modal.onclick = (e) => {
+			if (e.target === modal) handleCloseModal();
+		};
+		fsViewer.onclick = (e) => {
+			if (e.target === fsViewer) handleCloseFs();
+		};
 
-		document.addEventListener('keydown', (e) => {
-			if (e.key === 'Escape') {
-				if (fsViewer.style.display === 'flex') handleCloseFs();
-				else if (modal.style.display === 'flex') handleCloseModal();
-			} else if (fsViewer.style.display === 'flex') {
-				if (e.key === 'ArrowRight' && currentImgIndex < currentProjectImages.length - 1) {
-					currentImgIndex++; updateFsImg();
+		document.addEventListener("keydown", (e) => {
+			if (e.key === "Escape") {
+				if (fsViewer.style.display === "flex") handleCloseFs();
+				else if (modal.style.display === "flex") handleCloseModal();
+			} else if (fsViewer.style.display === "flex") {
+				if (
+					e.key === "ArrowRight" &&
+					currentImgIndex < currentProjectImages.length - 1
+				) {
+					currentImgIndex++;
+					updateFsImg();
 				}
-				if (e.key === 'ArrowLeft' && currentImgIndex > 0) {
-					currentImgIndex--; updateFsImg();
+				if (e.key === "ArrowLeft" && currentImgIndex > 0) {
+					currentImgIndex--;
+					updateFsImg();
 				}
 			}
 		});
 
-		if (document.readyState === 'loading') {
-			document.addEventListener('DOMContentLoaded', loadProjects);
+		if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", loadProjects);
 		} else {
 			loadProjects();
 		}

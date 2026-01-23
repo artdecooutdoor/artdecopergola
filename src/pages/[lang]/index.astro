@@ -73,7 +73,9 @@ const t = useTranslations(locale);
 			<div class="reveal-item delay-200">
 				<a
 					href={getLocalizedPath("/about", locale)}
-					class="read-more-btn">{t("common.readMore")}</a
+					class="read-more-btn"
+					aria-label={t("common.readMore") + " about Art Deco"}
+				>{t("common.readMore")}</a
 				>
 			</div>
 		</div>

@@ -44,5 +44,8 @@ export default defineConfig({
     css: {
       devSourcemap: true,
     },
+    build: {
+      sourcemap: 'hidden', // Generate source maps but don't inline them
+    },
   },
 });
